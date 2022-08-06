@@ -1,0 +1,5 @@
+tmain: fn = () => {
+	var1: double = 1.0;
+	var2: double = 4.0;
+	printd(var1 + var2);
+}
