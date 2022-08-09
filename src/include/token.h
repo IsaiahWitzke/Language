@@ -1,17 +1,12 @@
 #pragma once
 
-#include <string>
-
-extern std::string IdentifierStr; // Filled in if tok_identifier
-extern double NumVal;             // Filled in if tok_number
-
 // The lexer returns tokens [0-255] if it is an unknown character, otherwise one
 // of these for known things.
 enum Token {
 	tok_eof = -1,
 
 	// commands
-	tok_def = -2,
+	tok_func = -2,
 	tok_extern = -3,
 
 	// primary
@@ -31,8 +26,16 @@ enum Token {
 
 	// var definition
 	tok_var = -13,
-	tok_colon = -14,
-};
 
-/// gettok - Return the next token from standard input.
-int gettok();
+	// types
+	tok_i128 = -15,
+	tok_i64 = -16,
+	tok_i32 = -17,
+	tok_i16 = -18,
+	tok_f128 = -19,
+	tok_f64 = -20,
+	tok_f32 = -21,
+	tok_f16 = -22,
+
+	tok_unknown = -100
+};

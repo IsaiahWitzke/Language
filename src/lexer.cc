@@ -16,8 +16,8 @@ int gettok() {
 		while (isalnum((LastChar = getchar())))
 			IdentifierStr += LastChar;
 
-		if (IdentifierStr == "def")
-			return tok_def;
+		if (IdentifierStr == "func")
+			return tok_func;
 		if (IdentifierStr == "extern")
 			return tok_extern;
 		if (IdentifierStr == "if")
@@ -36,6 +36,22 @@ int gettok() {
 			return tok_unary;
 		if (IdentifierStr == "var")
 			return tok_var;
+		if (IdentifierStr == "i16")
+			return tok_i16;
+		if (IdentifierStr == "i32")
+			return tok_i32;
+		if (IdentifierStr == "i64")
+			return tok_i64;
+		if (IdentifierStr == "i128")
+			return tok_i128;
+		if (IdentifierStr == "f16")
+			return tok_f16;
+		if (IdentifierStr == "f32")
+			return tok_f32;
+		if (IdentifierStr == "f64")
+			return tok_f64;
+		if (IdentifierStr == "f128")
+			return tok_f128;
 		return tok_identifier;
 	}
 
@@ -50,14 +66,21 @@ int gettok() {
 		return tok_number;
 	}
 
-	if (LastChar == '#') {
-		// Comment until end of line.
-		do
-			LastChar = getchar();
-		while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
+	if (LastChar == '/') {
+		// potentially a comment?
+		LastChar = getchar();
+		if (LastChar == '/') {
+			// Comment until end of line.
+			do {
+				LastChar = getchar();
+			} while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
 
-		if (LastChar != EOF)
-			return gettok();
+			if (LastChar != EOF) { return gettok(); }
+		}
+		else {
+			// not a comment, just a divide operator!
+			return '/';
+		}
 	}
 
 	// Check for end of file.  Don't eat the EOF.

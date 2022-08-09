@@ -20,13 +20,17 @@ std::map<std::string, AllocaInst*> NamedValues;
 std::map<std::string, std::unique_ptr<PrototypeAST>> FunctionProtos;
 ExitOnError ExitOnErr;
 
-void InitializeModuleAndPassManager() {
+void InitializeModuleAndPassManager(const string &moduleName) {
 	// Open a new module.
 	TheContext = std::make_unique<LLVMContext>();
-	TheModule = std::make_unique<Module>("my cool jit", *TheContext);
+	TheModule = std::make_unique<Module>(moduleName, *TheContext);
 
 	// Create a new builder for the module.
 	Builder = std::make_unique<IRBuilder<>>(*TheContext);
+}
+
+void ModuleAST::codegen() {
+	InitializeModuleAndPassManager(name);
 }
 
 bool outputObjCode(const std::string &fName) {

@@ -52,8 +52,7 @@ std::unique_ptr<ExprAST> ParseIfExpr();
 /// forexpr ::= 'for' identifier '=' expr ',' expr (',' expr)? 'in' expression
 std::unique_ptr<ExprAST> ParseForExpr();
 
-/// varexpr ::= 'var' identifier ('=' expression)?
-//                    (',' identifier ('=' expression)?)* 'in' expression
+/// varexpr ::= identifier ':' ('int' | 'float' | 'double' | 'func') ('=' expression)?
 std::unique_ptr<ExprAST> ParseVarExpr();
 
 /// primary

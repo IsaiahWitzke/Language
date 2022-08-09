@@ -15,7 +15,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS)) $(shell llvm-config --cxxflags)
 COMPILE_FLAGS ?= $(INC_FLAGS) -MMD -MP -g -O3
 LDFLAGS ?= $(shell llvm-config --ldflags --system-libs --libs all) -lpthread -lncurses
 
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+$(BUILD_DIR)/$(TARGET_EXEC): lexer $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
 # assembly
@@ -35,14 +35,22 @@ $(BUILD_DIR)/%.cc.o: %.cc
 
 
 .PHONY: clean
-
 clean:
 	$(RM) -r $(BUILD_DIR)
 
 .PHONY: run
-
 run:
 	$(BUILD_DIR)/$(TARGET_EXEC)
+
+.PHONY: parser
+parser:
+	yacc --defines=src/include/y.tab.h -o src/parser/y.tab.c src/parser/my_parser.y
+# $(CC) -o src/lexer/lexer $(INC_FLAGS) src/lexer/lex.yy.c
+
+.PHONY: lexer
+lexer: parser
+	flex -o src/lexer/lex.yy.c src/lexer/my_lexer.lex 
+# $(CC) -o src/lexer/lexer $(INC_FLAGS) src/lexer/lex.yy.c
 
 -include $(DEPS)
 

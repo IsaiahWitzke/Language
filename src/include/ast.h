@@ -3,15 +3,23 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "llvm/IR/Value.h"
-#include "llvm/IR/Function.h"
 
 //===----------------------------------------------------------------------===//
 // Abstract Syntax Tree (aka Parse Tree)
 //===----------------------------------------------------------------------===//
 
-using namespace llvm;
 using namespace std;
+
+/// ModuleAST - The parent AST from which all actual code lives
+class ModuleAST {
+private:
+	vector<unique_ptr<StmtAST>> topLevelStmts;
+	string name;
+public:
+	ModuleAST(string name = "") : name(name) {}
+
+	void codegen();
+};
 
 /// ExprAST - Base class for all expression nodes.
 class ExprAST {
@@ -33,13 +41,16 @@ public:
 
 /// VariableExprAST - Expression class for referencing a variable, like "a".
 class VariableExprAST : public ExprAST {
-	string Name;
+	string name;
+	Type::BasicType type;
 
 public:
-	VariableExprAST(const string& Name) : Name(Name) {}
+	VariableExprAST(const string& name, const Type::BasicType type)
+		: name(name), type(type) {}
 
 	Value* codegen() override;
-	const string& getName() const { return Name; }
+	const string& getName() const { return name; }
+	const Type::BasicType& getType() const { return type; }
 };
 
 /// UnaryExprAST - Expression class for a unary operator.
@@ -107,16 +118,19 @@ public:
 	Value* codegen() override;
 };
 
-/// VarExprAST - Expression class for var/in
+/// VarExprAST - Expression class for variable declaration
 class VarExprAST : public ExprAST {
-	vector<pair<string, unique_ptr<ExprAST>>> VarNames;
-	unique_ptr<ExprAST> Body;
+	string name;
+	Type::BasicType type;
+	unique_ptr<ExprAST> initAst;
+	unique_ptr<FunctionAST> funcAst;
 
 public:
-	VarExprAST(
-		vector<pair<string, unique_ptr<ExprAST>>> VarNames,
-		unique_ptr<ExprAST> Body)
-		: VarNames(move(VarNames)), Body(move(Body)) {}
+	VarExprAST(string name, Type::BasicType type, unique_ptr<ExprAST> init)
+		: name(name), type(type), init(move(init)) {}
+
+	VarExprAST(string name, Type::BasicType type, unique_ptr<FunctionAST> func)
+		: name(name), type(type), init(move(init)) {}
 
 	Value* codegen() override;
 };
