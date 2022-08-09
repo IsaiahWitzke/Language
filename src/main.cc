@@ -12,10 +12,7 @@ using namespace llvm::sys;
 //===----------------------------------------------------------------------===//
 
 int main() {
-	setupBinopPrecedence();
 	// Prime the first token.
-	fprintf(stderr, "ready> ");
-	getNextToken();
 
 	InitializeModuleAndPassManager();
 
