@@ -4,11 +4,26 @@ addable = new Generic(implements:
 )
 
 
-tmain: (x: i64) -> i32 = {
+main: () -> i32 = {
 	var1: f64 = 1.0;
 	var2: f64 = 4.0;
 	stdOut(var1 + var2);
 	return 21;
 }
 
-funcFactory: fn<fn<i32>> = 
+main();
+
+MyType: type = {}
+
+funcFactory: () -> List<(_: i32) -> i32> = {
+	x: i64 = 5;
+	retList: List<(_: i32) -> i32> = List<typeOf(retList)>();
+	for i: i32 in [1..10] {
+		retList.append((x: i32) -> i32 {
+			println(i);
+			return x;
+		});
+	}
+
+	return retList;
+}

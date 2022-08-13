@@ -1,26 +1,21 @@
-#include "lexer.h"
+// #include "lexer.h"
 #include "ast.h"
-#include "parser.h"
-#include "codegen.h"
-#include "lib.h"
+// #include "parser.h"
+// #include "codegen.h"
+// #include "lib.h"
 
 using namespace llvm;
 using namespace llvm::sys;
 
-//===----------------------------------------------------------------------===//
-// Main driver code.
-//===----------------------------------------------------------------------===//
-
 int main() {
 	// Prime the first token.
-
-	InitializeModuleAndPassManager();
+	// InitializeModuleAndPassManager();
 
 	// Run the main "interpreter loop" now.
-	MainLoop();
+	// MainLoop();
 
-	if (!outputObjCode(std::string("output.o")))
-		return 1;
+	// if (!outputObjCode(std::string("output.o")))
+	// 	return 1;
 
 	return 0;
 }

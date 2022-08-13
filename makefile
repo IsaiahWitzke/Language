@@ -44,7 +44,7 @@ run:
 
 .PHONY: parser
 parser:
-	yacc --defines=src/include/y.tab.h -o src/parser/y.tab.c src/parser/my_parser.y
+	bison --defines=src/include/y.tab.h -o src/parser/y.tab.cc src/parser/my_parser.yy
 # $(CC) -o src/lexer/lexer $(INC_FLAGS) src/lexer/lex.yy.c
 
 .PHONY: lexer

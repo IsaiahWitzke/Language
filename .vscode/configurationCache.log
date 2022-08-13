@@ -1,1 +1,1 @@
-{"buildTargets":[".PHONY","build/a.out","clean"],"launchTargets":["c:\\Users\\witzk\\OneDrive\\Desktop\\Projects\\Language\\build>a.out()"],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
+{"buildTargets":[".PHONY","build/a.out","clean","lexer","make.exe","parser","process_begin","run"],"launchTargets":["c:\\Users\\witzk\\OneDrive\\Desktop\\Projects\\Language\\build>a.out()"],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

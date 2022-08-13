@@ -118,6 +118,7 @@ AllocaInst* CreateEntryBlockAlloca(Function* TheFunction,
 	return TmpB.CreateAlloca(Type::getDoubleTy(*TheContext), nullptr, VarName);
 }
 
+#if FALSE
 Value* NumberExprAST::codegen() {
 	return ConstantFP::get(*TheContext, APFloat(Val));
 }
@@ -484,3 +485,5 @@ Function* FunctionAST::codegen() {
 		BinopPrecedence.erase(P.getOperatorName());
 	return nullptr;
 }
+
+#endif

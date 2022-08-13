@@ -71,9 +71,12 @@
 void yyerror(char *s);
 #include <stdio.h>
 #include <stdlib.h>
+#include "ast.h"
+#include <memory>
 
+using namespace std;
 
-#line 77 "src/parser/y.tab.c"
+#line 80 "src/parser/y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -151,10 +154,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 8 "src/parser/my_parser.y"
-int num; char *id;
+#line 11 "src/parser/my_parser.y"
+int num; char *id; unique_ptr<TermAST> t_term;
 
-#line 158 "src/parser/y.tab.c"
+#line 161 "src/parser/y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -530,9 +533,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    18,    18,    21,    22,    25,    26,    27,    30,    32,
-      33,    37,    40,    41,    43,    44,    48,    49,    50,    51,
-      52,    53,    54,    55,    58,    61,    62,    63,    66,    67
+       0,    22,    22,    25,    26,    29,    30,    31,    34,    36,
+      37,    41,    44,    45,    47,    48,    52,    53,    54,    55,
+      56,    57,    58,    59,    62,    65,    66,    67,    70,    71
 };
 #endif
 
@@ -1347,169 +1350,169 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 18 "src/parser/my_parser.y"
+#line 22 "src/parser/my_parser.y"
                                 {;}
-#line 1353 "src/parser/y.tab.c"
+#line 1356 "src/parser/y.tab.c"
     break;
 
   case 3:
-#line 21 "src/parser/my_parser.y"
+#line 25 "src/parser/my_parser.y"
                                 {;}
-#line 1359 "src/parser/y.tab.c"
+#line 1362 "src/parser/y.tab.c"
     break;
 
   case 4:
-#line 22 "src/parser/my_parser.y"
+#line 26 "src/parser/my_parser.y"
                                 {;}
-#line 1365 "src/parser/y.tab.c"
+#line 1368 "src/parser/y.tab.c"
     break;
 
   case 5:
-#line 25 "src/parser/my_parser.y"
+#line 29 "src/parser/my_parser.y"
                                         {;}
-#line 1371 "src/parser/y.tab.c"
+#line 1374 "src/parser/y.tab.c"
     break;
 
   case 6:
-#line 26 "src/parser/my_parser.y"
+#line 30 "src/parser/my_parser.y"
                                         {;}
-#line 1377 "src/parser/y.tab.c"
+#line 1380 "src/parser/y.tab.c"
     break;
 
   case 7:
-#line 27 "src/parser/my_parser.y"
+#line 31 "src/parser/my_parser.y"
                                         {;}
-#line 1383 "src/parser/y.tab.c"
+#line 1386 "src/parser/y.tab.c"
     break;
 
   case 8:
-#line 30 "src/parser/my_parser.y"
+#line 34 "src/parser/my_parser.y"
                                                         {;}
-#line 1389 "src/parser/y.tab.c"
+#line 1392 "src/parser/y.tab.c"
     break;
 
   case 9:
-#line 32 "src/parser/my_parser.y"
+#line 36 "src/parser/my_parser.y"
                                                 {;}
-#line 1395 "src/parser/y.tab.c"
+#line 1398 "src/parser/y.tab.c"
     break;
 
   case 10:
-#line 33 "src/parser/my_parser.y"
+#line 37 "src/parser/my_parser.y"
                                                                         {;}
-#line 1401 "src/parser/y.tab.c"
+#line 1404 "src/parser/y.tab.c"
     break;
 
   case 11:
-#line 37 "src/parser/my_parser.y"
+#line 41 "src/parser/my_parser.y"
                                                         {;}
-#line 1407 "src/parser/y.tab.c"
+#line 1410 "src/parser/y.tab.c"
     break;
 
   case 12:
-#line 40 "src/parser/my_parser.y"
+#line 44 "src/parser/my_parser.y"
                                                                                                 {;}
-#line 1413 "src/parser/y.tab.c"
+#line 1416 "src/parser/y.tab.c"
     break;
 
   case 13:
-#line 41 "src/parser/my_parser.y"
+#line 45 "src/parser/my_parser.y"
                                                                                         {;}
-#line 1419 "src/parser/y.tab.c"
+#line 1422 "src/parser/y.tab.c"
     break;
 
   case 14:
-#line 43 "src/parser/my_parser.y"
+#line 47 "src/parser/my_parser.y"
                         {;}
-#line 1425 "src/parser/y.tab.c"
+#line 1428 "src/parser/y.tab.c"
     break;
 
   case 15:
-#line 44 "src/parser/my_parser.y"
+#line 48 "src/parser/my_parser.y"
                                 {;}
-#line 1431 "src/parser/y.tab.c"
+#line 1434 "src/parser/y.tab.c"
     break;
 
   case 16:
-#line 48 "src/parser/my_parser.y"
+#line 52 "src/parser/my_parser.y"
                                         {;}
-#line 1437 "src/parser/y.tab.c"
+#line 1440 "src/parser/y.tab.c"
     break;
 
   case 17:
-#line 49 "src/parser/my_parser.y"
+#line 53 "src/parser/my_parser.y"
                                                 {;}
-#line 1443 "src/parser/y.tab.c"
+#line 1446 "src/parser/y.tab.c"
     break;
 
   case 18:
-#line 50 "src/parser/my_parser.y"
+#line 54 "src/parser/my_parser.y"
                                                 {;}
-#line 1449 "src/parser/y.tab.c"
+#line 1452 "src/parser/y.tab.c"
     break;
 
   case 19:
-#line 51 "src/parser/my_parser.y"
+#line 55 "src/parser/my_parser.y"
                                                 {;}
-#line 1455 "src/parser/y.tab.c"
+#line 1458 "src/parser/y.tab.c"
     break;
 
   case 20:
-#line 52 "src/parser/my_parser.y"
+#line 56 "src/parser/my_parser.y"
                                                 {;}
-#line 1461 "src/parser/y.tab.c"
+#line 1464 "src/parser/y.tab.c"
     break;
 
   case 21:
-#line 53 "src/parser/my_parser.y"
+#line 57 "src/parser/my_parser.y"
                                                 {;}
-#line 1467 "src/parser/y.tab.c"
+#line 1470 "src/parser/y.tab.c"
     break;
 
   case 22:
-#line 54 "src/parser/my_parser.y"
+#line 58 "src/parser/my_parser.y"
                                                 {;}
-#line 1473 "src/parser/y.tab.c"
+#line 1476 "src/parser/y.tab.c"
     break;
 
   case 23:
-#line 55 "src/parser/my_parser.y"
+#line 59 "src/parser/my_parser.y"
                                                 {;}
-#line 1479 "src/parser/y.tab.c"
+#line 1482 "src/parser/y.tab.c"
     break;
 
   case 25:
-#line 61 "src/parser/my_parser.y"
+#line 65 "src/parser/my_parser.y"
                                         {;}
-#line 1485 "src/parser/y.tab.c"
+#line 1488 "src/parser/y.tab.c"
     break;
 
   case 26:
-#line 62 "src/parser/my_parser.y"
+#line 66 "src/parser/my_parser.y"
                                         {;}
-#line 1491 "src/parser/y.tab.c"
+#line 1494 "src/parser/y.tab.c"
     break;
 
   case 27:
-#line 63 "src/parser/my_parser.y"
+#line 67 "src/parser/my_parser.y"
                                         {;}
-#line 1497 "src/parser/y.tab.c"
+#line 1500 "src/parser/y.tab.c"
     break;
 
   case 28:
-#line 66 "src/parser/my_parser.y"
-                                {;}
-#line 1503 "src/parser/y.tab.c"
+#line 70 "src/parser/my_parser.y"
+                                {(yyval.t_term) = make_unique<TermAST>((yyvsp[0].num), nullptr);}
+#line 1506 "src/parser/y.tab.c"
     break;
 
   case 29:
-#line 67 "src/parser/my_parser.y"
-                                        {;}
-#line 1509 "src/parser/y.tab.c"
+#line 71 "src/parser/my_parser.y"
+                                        {(yyval.t_term) = make_unique<TermAST>(0, (yyvsp[0].id));}
+#line 1512 "src/parser/y.tab.c"
     break;
 
 
-#line 1513 "src/parser/y.tab.c"
+#line 1516 "src/parser/y.tab.c"
 
       default: break;
     }
@@ -1741,7 +1744,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 69 "src/parser/my_parser.y"
+#line 73 "src/parser/my_parser.y"
 
 
 void yyerror (char *s) {

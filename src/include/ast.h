@@ -13,83 +13,111 @@ using namespace std;
 /// ModuleAST - The parent AST from which all actual code lives
 class ModuleAST {
 private:
+	string name;
 	vector<unique_ptr<StmtAST>> topLevelStmts;
-	string name;
 public:
-	ModuleAST(string name = "") : name(name) {}
-
-	void codegen();
+	ModuleAST(
+		string name,
+		vector<unique_ptr<StmtAST>> topLevelStmts
+	) : name(name), topLevelStmts(move(topLevelStmts)) {}
 };
 
-/// ExprAST - Base class for all expression nodes.
+class StmtAST {
+	unique_ptr<ExprAST> expr;
+	unique_ptr<VarDecAST> varDec;
+	unique_ptr<VarDefAST> varDef;
+public:
+	StmtAST(
+		unique_ptr<ExprAST> e,
+		unique_ptr<VarDecAST> varDec,
+		unique_ptr<VarDefAST> varDef
+	) : expr(move(e)), varDec(move(varDec)), varDef(move(varDef)) {}
+};
+
+class VarDecAST {
+	string name;
+	unique_ptr<TypeAST> type;
+	// unique_ptr<FunctionDecAST> funcDec;	// variables can "hold functions"
+public:
+	VarDecAST(
+		string name,
+		unique_ptr<TypeAST> type
+	) : name(name), type(type), init(move(init)) {}
+};
+
+class VarDefAST {
+	unique_ptr<VarDecAST> varDec;
+	unique_ptr<ExprAST> initExpr;
+	vector<unique_ptr<StmtAST>> initFuncStmts;
+public:
+	VarDefAST(
+		unique_ptr<VarDecAST> varDec,
+		unique_ptr<ExprAST> initExpr,
+		vector<unique_ptr<StmtAST>> initFuncStmts
+	) : varDec(move(varDec)), initExpr(move(initExpr)), initFuncStmts(move(initFuncStmts)) {}
+}
+
+class TypeAST {
+	// can be just a "normal" type
+	Type::BasicType basicType;
+	// or we can store the type of a function
+	unique_ptr<FunctionTypeAst> functionType;
+public:
+	TypeAST(
+		Type::BasicType basicType,
+		unique_ptr<FunctionTypeAst> functionType
+	) : basicType(basicType), functionType(move(functionType)) {}
+}
+
+class FunctionTypeAst {
+	vector<unique_ptr<VarDecAST>> params;
+	unique_ptr<TypeAST> returnType;
+public:
+	FunctionTypeAst(
+		vector<unique_ptr<VarDecAST>> params,
+		unique_ptr<TypeAST> returnType
+	) : params(move(params)), returnType(move(returnType)) {}
+};
+
 class ExprAST {
+	unique_ptr<TermAST> term;
+	unique_ptr<ExprAST> lhsExpr;
+	char opcode;
+	unique_ptr<TermAST> rhsTerm;
 public:
-	virtual ~ExprAST() = default;
+	ExprAST(
+		unique_ptr<TermAST> term,
+		unique_ptr<ExprAST> lhsExpr,
+		char opcode,
+		unique_ptr<TermAST> rhsTerm
+	) : term(move(term)), lhsExpr(move(lhsExpr)), opcode(opcode), rhsTerm(move(rhsTerm)) {}
 
-	virtual Value* codegen() = 0;
 };
 
-/// NumberExprAST - Expression class for numeric literals like "1.0".
-class NumberExprAST : public ExprAST {
-	double Val;
+/// Expression class for function calls.
+class FunctionCallAST {
+	unique_ptr<ExprAST> callee;
+	vector<unique_ptr<ExprAST>> args;
 
 public:
-	NumberExprAST(double Val) : Val(Val) {}
-
-	Value* codegen() override;
+	CallExprAST(
+		unique_ptr<ExprAST> callee,
+		vector<unique_ptr<ExprAST>> args
+	) : callee(move(Callee)), args(move(Args)) {}
 };
 
-/// VariableExprAST - Expression class for referencing a variable, like "a".
-class VariableExprAST : public ExprAST {
-	string name;
-	Type::BasicType type;
-
+class TermAST {
+	int num;
+	string id;
+	unique_ptr<FunctionCallAST> funcCall;
 public:
-	VariableExprAST(const string& name, const Type::BasicType type)
-		: name(name), type(type) {}
-
-	Value* codegen() override;
-	const string& getName() const { return name; }
-	const Type::BasicType& getType() const { return type; }
+	TermAST(
+		int num,
+		char *id,
+		unique_ptr<FunctionCallAST> funcCall
+	) : num(num), id(id), funcCall(move(funcCall)) {}
 };
 
-/// UnaryExprAST - Expression class for a unary operator.
-class UnaryExprAST : public ExprAST {
-	char Opcode;
-	unique_ptr<ExprAST> Operand;
-
-public:
-	UnaryExprAST(char Opcode, unique_ptr<ExprAST> Operand)
-		: Opcode(Opcode), Operand(move(Operand)) {}
-
-	Value* codegen() override;
-};
-
-/// BinaryExprAST - Expression class for a binary operator.
-class BinaryExprAST : public ExprAST {
-	char Op;
-	unique_ptr<ExprAST> LHS, RHS;
-
-public:
-	BinaryExprAST(char Op, unique_ptr<ExprAST> LHS,
-		unique_ptr<ExprAST> RHS)
-		: Op(Op), LHS(move(LHS)), RHS(move(RHS)) {}
-
-	Value* codegen() override;
-};
-
-/// CallExprAST - Expression class for function calls.
-class CallExprAST : public ExprAST {
-	string Callee;
-	vector<unique_ptr<ExprAST>> Args;
-
-public:
-	CallExprAST(const string& Callee,
-		vector<unique_ptr<ExprAST>> Args)
-		: Callee(Callee), Args(move(Args)) {}
-
-	Value* codegen() override;
-};
 
 /// IfExprAST - Expression class for if/then/else.
 class IfExprAST : public ExprAST {
@@ -118,61 +146,14 @@ public:
 	Value* codegen() override;
 };
 
-/// VarExprAST - Expression class for variable declaration
-class VarExprAST : public ExprAST {
+/// VarExprAST - Expression class for variable references
+class VarExprAST {
 	string name;
 	Type::BasicType type;
-	unique_ptr<ExprAST> initAst;
-	unique_ptr<FunctionAST> funcAst;
+	unique_ptr<ExprAST> init;
+	unique_ptr<FunctionAST> func;	// variables can "hold functions"
 
 public:
 	VarExprAST(string name, Type::BasicType type, unique_ptr<ExprAST> init)
-		: name(name), type(type), init(move(init)) {}
-
-	VarExprAST(string name, Type::BasicType type, unique_ptr<FunctionAST> func)
-		: name(name), type(type), init(move(init)) {}
-
-	Value* codegen() override;
-};
-
-/// PrototypeAST - This class represents the "prototype" for a function,
-/// which captures its name, and its argument names (thus implicitly the number
-/// of arguments the function takes), as well as if it is an operator.
-class PrototypeAST {
-	string Name;
-	vector<string> Args;
-	bool IsOperator;
-	unsigned Precedence; // Precedence if a binary op.
-
-public:
-	PrototypeAST(const string& Name, vector<string> Args,
-		bool IsOperator = false, unsigned Prec = 0)
-		: Name(Name), Args(move(Args)), IsOperator(IsOperator),
-		Precedence(Prec) {}
-
-	Function* codegen();
-	const string& getName() const { return Name; }
-
-	bool isUnaryOp() const { return IsOperator && Args.size() == 1; }
-	bool isBinaryOp() const { return IsOperator && Args.size() == 2; }
-
-	char getOperatorName() const {
-		assert(isUnaryOp() || isBinaryOp());
-		return Name[Name.size() - 1];
-	}
-
-	unsigned getBinaryPrecedence() const { return Precedence; }
-};
-
-/// FunctionAST - This class represents a function definition itself.
-class FunctionAST {
-	unique_ptr<PrototypeAST> Proto;
-	unique_ptr<ExprAST> Body;
-
-public:
-	FunctionAST(unique_ptr<PrototypeAST> Proto,
-		unique_ptr<ExprAST> Body)
-		: Proto(move(Proto)), Body(move(Body)) {}
-
-	Function* codegen();
+		: name(name), type(type), init(move(init), func(move(func))) {}
 };
