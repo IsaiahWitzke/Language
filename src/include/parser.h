@@ -415,16 +415,7 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // tok_number
-      // tok_i128
-      // tok_i64
-      // tok_i32
-      // tok_i16
-      // tok_f128
-      // tok_f64
-      // tok_f32
-      // tok_f16
-      // basic_type
+      // tok_inum
       char dummy1[sizeof (int)];
 
       // tok_identifier
@@ -512,26 +503,26 @@ namespace yy {
     YYerror = 1,                   // error
     YYUNDEF = 2,                   // "invalid token"
     tok_identifier = 3,            // tok_identifier
-    tok_number = 4,                // tok_number
-    tok_i128 = 5,                  // tok_i128
-    tok_i64 = 6,                   // tok_i64
-    tok_i32 = 7,                   // tok_i32
-    tok_i16 = 8,                   // tok_i16
-    tok_f128 = 9,                  // tok_f128
-    tok_f64 = 10,                  // tok_f64
-    tok_f32 = 11,                  // tok_f32
-    tok_f16 = 12,                  // tok_f16
-    tok_eq = 13,                   // "="
-    tok_minus = 14,                // "-"
-    tok_plus = 15,                 // "+"
-    tok_lparen = 16,               // "("
-    tok_rparen = 17,               // ")"
-    tok_lcurly = 18,               // "{"
-    tok_rcurly = 19,               // "}"
-    tok_colon = 20,                // ":"
-    tok_semi_colon = 21,           // ";"
-    tok_coma = 22,                 // ","
-    tok_arrow = 23                 // "->"
+    tok_inum = 4,                  // tok_inum
+    tok_eq = 5,                    // "="
+    tok_minus = 6,                 // "-"
+    tok_plus = 7,                  // "+"
+    tok_lparen = 8,                // "("
+    tok_rparen = 9,                // ")"
+    tok_lcurly = 10,               // "{"
+    tok_rcurly = 11,               // "}"
+    tok_colon = 12,                // ":"
+    tok_semi_colon = 13,           // ";"
+    tok_coma = 14,                 // ","
+    tok_arrow = 15,                // "->"
+    tok_i128 = 16,                 // "i128"
+    tok_i64 = 17,                  // "i64"
+    tok_i32 = 18,                  // "i32"
+    tok_i16 = 19,                  // "i16"
+    tok_f128 = 20,                 // "f128"
+    tok_f64 = 21,                  // "f64"
+    tok_f32 = 22,                  // "f32"
+    tok_f16 = 23                   // "f16"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -554,26 +545,26 @@ namespace yy {
         S_YYerror = 1,                           // error
         S_YYUNDEF = 2,                           // "invalid token"
         S_tok_identifier = 3,                    // tok_identifier
-        S_tok_number = 4,                        // tok_number
-        S_tok_i128 = 5,                          // tok_i128
-        S_tok_i64 = 6,                           // tok_i64
-        S_tok_i32 = 7,                           // tok_i32
-        S_tok_i16 = 8,                           // tok_i16
-        S_tok_f128 = 9,                          // tok_f128
-        S_tok_f64 = 10,                          // tok_f64
-        S_tok_f32 = 11,                          // tok_f32
-        S_tok_f16 = 12,                          // tok_f16
-        S_tok_eq = 13,                           // "="
-        S_tok_minus = 14,                        // "-"
-        S_tok_plus = 15,                         // "+"
-        S_tok_lparen = 16,                       // "("
-        S_tok_rparen = 17,                       // ")"
-        S_tok_lcurly = 18,                       // "{"
-        S_tok_rcurly = 19,                       // "}"
-        S_tok_colon = 20,                        // ":"
-        S_tok_semi_colon = 21,                   // ";"
-        S_tok_coma = 22,                         // ","
-        S_tok_arrow = 23,                        // "->"
+        S_tok_inum = 4,                          // tok_inum
+        S_tok_eq = 5,                            // "="
+        S_tok_minus = 6,                         // "-"
+        S_tok_plus = 7,                          // "+"
+        S_tok_lparen = 8,                        // "("
+        S_tok_rparen = 9,                        // ")"
+        S_tok_lcurly = 10,                       // "{"
+        S_tok_rcurly = 11,                       // "}"
+        S_tok_colon = 12,                        // ":"
+        S_tok_semi_colon = 13,                   // ";"
+        S_tok_coma = 14,                         // ","
+        S_tok_arrow = 15,                        // "->"
+        S_tok_i128 = 16,                         // "i128"
+        S_tok_i64 = 17,                          // "i64"
+        S_tok_i32 = 18,                          // "i32"
+        S_tok_i16 = 19,                          // "i16"
+        S_tok_f128 = 20,                         // "f128"
+        S_tok_f64 = 21,                          // "f64"
+        S_tok_f32 = 22,                          // "f32"
+        S_tok_f16 = 23,                          // "f16"
         S_YYACCEPT = 24,                         // $accept
         S_module = 25,                           // module
         S_stmts = 26,                            // stmts
@@ -622,16 +613,7 @@ namespace yy {
       {
         switch (this->kind ())
     {
-      case symbol_kind::S_tok_number: // tok_number
-      case symbol_kind::S_tok_i128: // tok_i128
-      case symbol_kind::S_tok_i64: // tok_i64
-      case symbol_kind::S_tok_i32: // tok_i32
-      case symbol_kind::S_tok_i16: // tok_i16
-      case symbol_kind::S_tok_f128: // tok_f128
-      case symbol_kind::S_tok_f64: // tok_f64
-      case symbol_kind::S_tok_f32: // tok_f32
-      case symbol_kind::S_tok_f16: // tok_f16
-      case symbol_kind::S_basic_type: // basic_type
+      case symbol_kind::S_tok_inum: // tok_inum
         value.move< int > (std::move (that.value));
         break;
 
@@ -900,16 +882,7 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
-      case symbol_kind::S_tok_number: // tok_number
-      case symbol_kind::S_tok_i128: // tok_i128
-      case symbol_kind::S_tok_i64: // tok_i64
-      case symbol_kind::S_tok_i32: // tok_i32
-      case symbol_kind::S_tok_i16: // tok_i16
-      case symbol_kind::S_tok_f128: // tok_f128
-      case symbol_kind::S_tok_f64: // tok_f64
-      case symbol_kind::S_tok_f32: // tok_f32
-      case symbol_kind::S_tok_f16: // tok_f16
-      case symbol_kind::S_basic_type: // basic_type
+      case symbol_kind::S_tok_inum: // tok_inum
         value.template destroy< int > ();
         break;
 
@@ -1064,7 +1037,7 @@ switch (yykind)
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::YYUNDEF)
-                   || (token::tok_eq <= tok && tok <= token::tok_arrow));
+                   || (token::tok_eq <= tok && tok <= token::tok_f16));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1076,7 +1049,7 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT ((token::tok_number <= tok && tok <= token::tok_f16));
+        YY_ASSERT (tok == token::tok_inum);
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1204,136 +1177,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_tok_number (int v)
+      make_tok_inum (int v)
       {
-        return symbol_type (token::tok_number, std::move (v));
+        return symbol_type (token::tok_inum, std::move (v));
       }
 #else
       static
       symbol_type
-      make_tok_number (const int& v)
+      make_tok_inum (const int& v)
       {
-        return symbol_type (token::tok_number, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_i128 (int v)
-      {
-        return symbol_type (token::tok_i128, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_i128 (const int& v)
-      {
-        return symbol_type (token::tok_i128, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_i64 (int v)
-      {
-        return symbol_type (token::tok_i64, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_i64 (const int& v)
-      {
-        return symbol_type (token::tok_i64, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_i32 (int v)
-      {
-        return symbol_type (token::tok_i32, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_i32 (const int& v)
-      {
-        return symbol_type (token::tok_i32, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_i16 (int v)
-      {
-        return symbol_type (token::tok_i16, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_i16 (const int& v)
-      {
-        return symbol_type (token::tok_i16, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_f128 (int v)
-      {
-        return symbol_type (token::tok_f128, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_f128 (const int& v)
-      {
-        return symbol_type (token::tok_f128, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_f64 (int v)
-      {
-        return symbol_type (token::tok_f64, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_f64 (const int& v)
-      {
-        return symbol_type (token::tok_f64, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_f32 (int v)
-      {
-        return symbol_type (token::tok_f32, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_f32 (const int& v)
-      {
-        return symbol_type (token::tok_f32, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_tok_f16 (int v)
-      {
-        return symbol_type (token::tok_f16, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_tok_f16 (const int& v)
-      {
-        return symbol_type (token::tok_f16, v);
+        return symbol_type (token::tok_inum, v);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1499,6 +1352,126 @@ switch (yykind)
       make_tok_arrow ()
       {
         return symbol_type (token::tok_arrow);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_i128 ()
+      {
+        return symbol_type (token::tok_i128);
+      }
+#else
+      static
+      symbol_type
+      make_tok_i128 ()
+      {
+        return symbol_type (token::tok_i128);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_i64 ()
+      {
+        return symbol_type (token::tok_i64);
+      }
+#else
+      static
+      symbol_type
+      make_tok_i64 ()
+      {
+        return symbol_type (token::tok_i64);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_i32 ()
+      {
+        return symbol_type (token::tok_i32);
+      }
+#else
+      static
+      symbol_type
+      make_tok_i32 ()
+      {
+        return symbol_type (token::tok_i32);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_i16 ()
+      {
+        return symbol_type (token::tok_i16);
+      }
+#else
+      static
+      symbol_type
+      make_tok_i16 ()
+      {
+        return symbol_type (token::tok_i16);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_f128 ()
+      {
+        return symbol_type (token::tok_f128);
+      }
+#else
+      static
+      symbol_type
+      make_tok_f128 ()
+      {
+        return symbol_type (token::tok_f128);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_f64 ()
+      {
+        return symbol_type (token::tok_f64);
+      }
+#else
+      static
+      symbol_type
+      make_tok_f64 ()
+      {
+        return symbol_type (token::tok_f64);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_f32 ()
+      {
+        return symbol_type (token::tok_f32);
+      }
+#else
+      static
+      symbol_type
+      make_tok_f32 ()
+      {
+        return symbol_type (token::tok_f32);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_f16 ()
+      {
+        return symbol_type (token::tok_f16);
+      }
+#else
+      static
+      symbol_type
+      make_tok_f16 ()
+      {
+        return symbol_type (token::tok_f16);
       }
 #endif
 
@@ -1805,7 +1778,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 63,     ///< Last index in yytable_.
+      yylast_ = 53,     ///< Last index in yytable_.
       yynnts_ = 14,  ///< Number of nonterminal symbols.
       yyfinal_ = 15 ///< Termination state number.
     };
@@ -1831,16 +1804,7 @@ switch (yykind)
   {
     switch (this->kind ())
     {
-      case symbol_kind::S_tok_number: // tok_number
-      case symbol_kind::S_tok_i128: // tok_i128
-      case symbol_kind::S_tok_i64: // tok_i64
-      case symbol_kind::S_tok_i32: // tok_i32
-      case symbol_kind::S_tok_i16: // tok_i16
-      case symbol_kind::S_tok_f128: // tok_f128
-      case symbol_kind::S_tok_f64: // tok_f64
-      case symbol_kind::S_tok_f32: // tok_f32
-      case symbol_kind::S_tok_f16: // tok_f16
-      case symbol_kind::S_basic_type: // basic_type
+      case symbol_kind::S_tok_inum: // tok_inum
         value.copy< int > (YY_MOVE (that.value));
         break;
 
@@ -1927,16 +1891,7 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
-      case symbol_kind::S_tok_number: // tok_number
-      case symbol_kind::S_tok_i128: // tok_i128
-      case symbol_kind::S_tok_i64: // tok_i64
-      case symbol_kind::S_tok_i32: // tok_i32
-      case symbol_kind::S_tok_i16: // tok_i16
-      case symbol_kind::S_tok_f128: // tok_f128
-      case symbol_kind::S_tok_f64: // tok_f64
-      case symbol_kind::S_tok_f32: // tok_f32
-      case symbol_kind::S_tok_f16: // tok_f16
-      case symbol_kind::S_basic_type: // basic_type
+      case symbol_kind::S_tok_inum: // tok_inum
         value.move< int > (YY_MOVE (s.value));
         break;
 
@@ -2057,7 +2012,7 @@ switch (yykind)
 
 
 } // yy
-#line 2061 "src/include/parser.h"
+#line 2016 "src/include/parser.h"
 
 
 

@@ -14,8 +14,9 @@ using Token = yy::parser::token;
 /* %option outfile="src/lexer/scanner.cc" */
 
 %%
+i64							{ cout << "HI\n"; return Token::tok_i64; }
 [a-zA-Z][_a-zA-Z0-9]*		return yy::parser::make_tok_identifier(yytext);
-[1-9][0-9]*					return yy::parser::make_tok_i64(atoi(yytext));
+[1-9][0-9]*					return yy::parser::make_tok_inum(atoi(yytext));
 [ \t\r\n]					;
 .							{ECHO;}
 

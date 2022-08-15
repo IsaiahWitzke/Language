@@ -104,12 +104,12 @@ public:
 
 /// Expression class for function calls.
 class FunctionCallAST {
-	unique_ptr<ExprAST> callee;
+	unique_ptr<TermAST> callee;
 	vector<unique_ptr<ExprAST>> args;
 
 public:
 	FunctionCallAST(
-		unique_ptr<ExprAST> callee,
+		unique_ptr<TermAST> callee,
 		vector<unique_ptr<ExprAST>> args
 	) : callee(move(callee)), args(move(args)) {}
 };
@@ -118,10 +118,13 @@ class TermAST {
 	int num;
 	string id;
 	unique_ptr<FunctionCallAST> funcCall;
+	unique_ptr<ExprAST> expr;
+
 public:
 	TermAST(
 		int num,
 		string id,
-		unique_ptr<FunctionCallAST> funcCall
-	) : num(num), id(id), funcCall(move(funcCall)) {}
+		unique_ptr<FunctionCallAST> funcCall,
+		unique_ptr<ExprAST> expr
+	) : num(num), id(id), funcCall(move(funcCall)), expr(move(expr)) {}
 };

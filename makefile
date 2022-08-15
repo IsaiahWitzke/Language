@@ -50,7 +50,7 @@ run:
 	$(BUILD_DIR)/$(TARGET_EXEC)
 
 parser:
-	bison --defines=$(PARSER_HH) -o $(PARSER_CC) $(PARSER_YY)
+	bison --defines=$(PARSER_HH) -Wcounterexamples -o $(PARSER_CC) $(PARSER_YY)
 # $(CC) -o src/lexer/lexer $(INC_FLAGS) src/lexer/lex.yy.c
 
 lexer: 

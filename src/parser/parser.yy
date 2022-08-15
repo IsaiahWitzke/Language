@@ -36,7 +36,7 @@ using namespace std;
 
 /* %token tok_eof tok_func tok_extern tok_if tok_then tok_else tok_for tok_in */
 %token <std::string> tok_identifier;
-%token <int> tok_number tok_i128 tok_i64 tok_i32 tok_i16 tok_f128 tok_f64 tok_f32 tok_f16 ;
+%token <int> tok_inum;
 %token
   tok_eq			"="
   tok_minus			"-"
@@ -49,6 +49,14 @@ using namespace std;
   tok_semi_colon	";"
   tok_coma			","
   tok_arrow			"->"
+  tok_i128 			"i128"
+  tok_i64 			"i64"
+  tok_i32			"i32"
+  tok_i16			"i16"
+  tok_f128			"f128"
+  tok_f64			"f64"
+  tok_f32			"f32"
+  tok_f16			"f16"
 ;
 %nterm <unique_ptr<ModuleAST>>			module;
 %nterm <vector<unique_ptr<StmtAST>>> 	stmts;
@@ -62,7 +70,11 @@ using namespace std;
 %nterm <unique_ptr<TypeAST>> 			type;
 %nterm <unique_ptr<FunctionTypeAST>> 	function_type;
 %nterm <unique_ptr<FunctionCallAST>> 	function_call;
-%nterm <int>						 	basic_type;
+%nterm								 	basic_type;
+
+/* precedences */
+
+%left "-" "+"
 
 %%
 
@@ -82,16 +94,16 @@ stmts	: stmt {
 		}
 		;
 
-stmt	: expr { $$ = make_unique<StmtAST>(move($1), nullptr, nullptr); }
-		| variable_dec tok_semi_colon	{ $$ = make_unique<StmtAST>(nullptr, move($1), nullptr); }
-		| variable_def tok_semi_colon	{ $$ = make_unique<StmtAST>(nullptr, nullptr, move($1)); }
+stmt	: expr ";" { $$ = make_unique<StmtAST>(move($1), nullptr, nullptr); }
+		| variable_dec ";" { $$ = make_unique<StmtAST>(nullptr, move($1), nullptr); }
+		| variable_def ";" { $$ = make_unique<StmtAST>(nullptr, nullptr, move($1)); }
 		;
 
 variable_def	: variable_dec "=" expr tok_semi_colon	{
 					$$ = make_unique<VarDefAST>(move($1), move($3), vector<unique_ptr<StmtAST>>());
 				}
 				/* function definition */
-				| variable_dec tok_eq tok_lcurly stmts tok_rcurly {
+				| variable_dec "=" "{" stmts "}" {
 					$$ = make_unique<VarDefAST>(move($1), unique_ptr<ExprAST>(nullptr), move($4));
 				}
 
@@ -99,7 +111,11 @@ variable_def	: variable_dec "=" expr tok_semi_colon	{
 variable_dec	: tok_identifier tok_colon type	{$$ = make_unique<VarDecAST>($1, move($3));}
 				;
 
-variable_decs	: variable_dec {
+variable_decs	: %empty {
+					yy::parser::error("HI");
+					$$ = vector<unique_ptr<VarDecAST>>();
+				}
+				| variable_dec {
 					$$ = vector<unique_ptr<VarDecAST>>();
 					$$.push_back(move($1));
 				}
@@ -108,38 +124,32 @@ variable_decs	: variable_dec {
 				}
 				;
 
-type	: basic_type	{ $$ = make_unique<TypeAST>($1, unique_ptr<FunctionTypeAST>(nullptr)); }
+type	: basic_type	{ $$ = make_unique<TypeAST>(yy::parser::token::tok_i64, unique_ptr<FunctionTypeAST>(nullptr)); }
 		| function_type	{ $$ = make_unique<TypeAST>(0, move($1)); }
 		/* | tok_identifier {;} */
 		;
 
-basic_type : tok_i16 | tok_i32 | tok_i64 | tok_i128 | tok_f16 | tok_f32 | tok_f64 | tok_f128 ;
+basic_type : tok_i16 | tok_i32 | tok_i64 { cout << "hiiii" << endl; } | tok_i128 | tok_f16 | tok_f32 | tok_f64 | tok_f128 ;
 
 /* (varName1: type1, varName2: type2, ...) -> returnType */
-function_type 	: tok_lparen variable_decs tok_rparen tok_arrow type {
+function_type 	: "(" variable_decs ")" "->" type {
 					$$ = make_unique<FunctionTypeAST>(move($2), move($5));
 				}
 				;
 
-expr 	: term {
-			$$ = make_unique<ExprAST>(move($1), nullptr, 0, nullptr);
-		}
-		| expr tok_plus term {
-			$$ = make_unique<ExprAST>(nullptr, move($1), '+', move($3));
-		}
-		| expr tok_minus term {
-			$$ = make_unique<ExprAST>(nullptr, move($1), '-', move($3));
-		}
-		| tok_lparen expr tok_rparen { $$ = move($2); }
+expr 	: term 			{ $$ = make_unique<ExprAST>(move($1), nullptr, 0, nullptr); }
+		| expr "+" term { $$ = make_unique<ExprAST>(nullptr, move($1), '+', move($3)); }
+		/* | expr "-" term { $$ = make_unique<ExprAST>(nullptr, move($1), '-', move($3)); } */
 		;
 
-term	: tok_number		{ $$ = make_unique<TermAST>($1, nullptr, unique_ptr<FunctionCallAST>(nullptr)); }
-		| tok_identifier	{ $$ = make_unique<TermAST>(0, $1, unique_ptr<FunctionCallAST>(nullptr)); }
-		| function_call		{ $$ = make_unique<TermAST>(0, nullptr, move($1)); }
+term	: tok_inum			{ $$ = make_unique<TermAST>($1, nullptr, unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
+		| "(" expr ")" 		{ $$ = make_unique<TermAST>(0, nullptr, unique_ptr<FunctionCallAST>(nullptr), move($2)); }
+		| tok_identifier	{ $$ = make_unique<TermAST>(0, $1, unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
+		| function_call		{ $$ = make_unique<TermAST>(0, nullptr, move($1), unique_ptr<ExprAST>(nullptr)); }
 		;
 
 /* will make sure later on in contextual analysis that typeof(expr) is a func */
-function_call	: expr tok_lparen arg_list tok_rparen	{
+function_call	: term "(" arg_list ")" {
 					$$ = make_unique<FunctionCallAST>(move($1), move($3));
 				}
 
@@ -147,7 +157,7 @@ arg_list 	: expr {
 				$$ = vector<unique_ptr<ExprAST>>();
 				$$.push_back(move($1));
 			}
-			| arg_list tok_coma expr {
+			| arg_list "," expr {
 				$1.push_back(move($3));
 				$$ = move($1);
 			}

@@ -4,12 +4,9 @@ File not found - *.c
 FIND: Parameter format not correct
 
 make.exe: Entering directory `c:/Users/witzk/OneDrive/Desktop/Projects/Language'
-bison --defines=src/include/parser.h -o src/parser.cc src/parser/parser.yy
+bison --defines=src/include/parser.h -Wcounterexamples -o src/parser.cc src/parser/parser.yy
  
 flex -o src/scanner.cc src/lexer/scanner.ll
- 
-mkdir -p build/src/
-g++ -I/usr/lib/llvm-15/lib -I/usr/include  -MMD -MP -g -O3  -c src/scanner.cc -o build/src/scanner.cc.o
  
 g++ ./build/src/parser.cc.o ./build/src/scanner.cc.o -o build/a.out  -lpthread -lncurses
  
