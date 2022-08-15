@@ -21,12 +21,11 @@ using namespace std;
 // The parsing context.
 %param { driver& drv }
 
+%locations
 
-/*
 %define parse.trace
 %define parse.error detailed
 %define parse.lac full
-*/
 
 %code {
 #include "parser_driver.h"
@@ -57,6 +56,7 @@ using namespace std;
   tok_f64			"f64"
   tok_f32			"f32"
   tok_f16			"f16"
+  tok_eof			YYEOF
 ;
 %nterm <unique_ptr<ModuleAST>>			module;
 %nterm <vector<unique_ptr<StmtAST>>> 	stmts;
@@ -80,13 +80,14 @@ using namespace std;
 
 %start module;
 
-
-module	: stmts	{$$ = make_unique<ModuleAST>("test", move($1));}
+module	: stmts	{
+			$$ = make_unique<ModuleAST>("test", move($1));
+			drv.result = move($$);
+		}
 		;
 
-stmts	: stmt {
+stmts	: %empty {
 			$$ = vector<unique_ptr<StmtAST>>();
-			$$.push_back(move($1));
 		}
 		| stmts stmt {
 			$1.push_back(move($2));
@@ -95,11 +96,11 @@ stmts	: stmt {
 		;
 
 stmt	: expr ";" { $$ = make_unique<StmtAST>(move($1), nullptr, nullptr); }
-		| variable_dec ";" { $$ = make_unique<StmtAST>(nullptr, move($1), nullptr); }
-		| variable_def ";" { $$ = make_unique<StmtAST>(nullptr, nullptr, move($1)); }
+		| variable_dec { $$ = make_unique<StmtAST>(nullptr, move($1), nullptr); }
+		| variable_def { $$ = make_unique<StmtAST>(nullptr, nullptr, move($1)); }
 		;
 
-variable_def	: variable_dec "=" expr tok_semi_colon	{
+variable_def	: variable_dec "=" expr ";" {
 					$$ = make_unique<VarDefAST>(move($1), move($3), vector<unique_ptr<StmtAST>>());
 				}
 				/* function definition */
@@ -108,11 +109,10 @@ variable_def	: variable_dec "=" expr tok_semi_colon	{
 				}
 
 
-variable_dec	: tok_identifier tok_colon type	{$$ = make_unique<VarDecAST>($1, move($3));}
+variable_dec	: tok_identifier ":" type	{$$ = make_unique<VarDecAST>($1, move($3));}
 				;
 
 variable_decs	: %empty {
-					yy::parser::error("HI");
 					$$ = vector<unique_ptr<VarDecAST>>();
 				}
 				| variable_dec {
@@ -129,7 +129,7 @@ type	: basic_type	{ $$ = make_unique<TypeAST>(yy::parser::token::tok_i64, unique
 		/* | tok_identifier {;} */
 		;
 
-basic_type : tok_i16 | tok_i32 | tok_i64 { cout << "hiiii" << endl; } | tok_i128 | tok_f16 | tok_f32 | tok_f64 | tok_f128 ;
+basic_type : tok_i16 | tok_i32 | tok_i64 | tok_i128 | tok_f16 | tok_f32 | tok_f64 | tok_f128 ;
 
 /* (varName1: type1, varName2: type2, ...) -> returnType */
 function_type 	: "(" variable_decs ")" "->" type {
@@ -142,8 +142,8 @@ expr 	: term 			{ $$ = make_unique<ExprAST>(move($1), nullptr, 0, nullptr); }
 		/* | expr "-" term { $$ = make_unique<ExprAST>(nullptr, move($1), '-', move($3)); } */
 		;
 
-term	: tok_inum			{ $$ = make_unique<TermAST>($1, nullptr, unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
-		| "(" expr ")" 		{ $$ = make_unique<TermAST>(0, nullptr, unique_ptr<FunctionCallAST>(nullptr), move($2)); }
+term	: tok_inum			{ $$ = make_unique<TermAST>($1, "", unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
+		| "(" expr ")" 		{ $$ = make_unique<TermAST>(0, "", unique_ptr<FunctionCallAST>(nullptr), move($2)); }
 		| tok_identifier	{ $$ = make_unique<TermAST>(0, $1, unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
 		| function_call		{ $$ = make_unique<TermAST>(0, nullptr, move($1), unique_ptr<ExprAST>(nullptr)); }
 		;
@@ -164,6 +164,6 @@ arg_list 	: expr {
 
 %%
 
-void yy::parser::error (const std::string& m) {
-	std::cerr << m << '\n';
+void yy::parser::error (const location_type& l, const std::string& m) {
+	std::cerr << l << ": " << m << '\n';
 }

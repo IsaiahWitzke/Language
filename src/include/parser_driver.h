@@ -2,7 +2,11 @@
 
 #include <string>
 #include <map>
+#include <memory>
+#include "ast.h"
 #include "parser.h"
+
+using namespace std;
 
 // Give Flex the prototype of yylex we want ...
 # define YY_DECL \
@@ -19,7 +23,7 @@ public:
 
 	map<string, int> variables;
 
-	int result;
+	unique_ptr<ModuleAST> result;
 	 // Run the parser on file F.  Return 0 on success.
 	int parse (const std::string& f);
 	// The name of the file being parsed.
@@ -32,5 +36,5 @@ public:
 	// Whether to generate scanner debug traces.
 	bool trace_scanning;
 	// The token's location used by the scanner.
-	// yy::location location;
+	yy::location location;
 };

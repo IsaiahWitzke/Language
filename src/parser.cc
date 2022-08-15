@@ -42,7 +42,7 @@
 
 
 // Unqualified %code blocks.
-#line 31 "src/parser/parser.yy"
+#line 30 "src/parser/parser.yy"
 
 #include "parser_driver.h"
 
@@ -71,6 +71,25 @@
 # endif
 #endif
 
+#define YYRHSLOC(Rhs, K) ((Rhs)[K].location)
+/* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
+   If N is 0, then set CURRENT to the empty location which ends
+   the previous symbol: RHS[0] (always defined).  */
+
+# ifndef YYLLOC_DEFAULT
+#  define YYLLOC_DEFAULT(Current, Rhs, N)                               \
+    do                                                                  \
+      if (N)                                                            \
+        {                                                               \
+          (Current).begin  = YYRHSLOC (Rhs, 1).begin;                   \
+          (Current).end    = YYRHSLOC (Rhs, N).end;                     \
+        }                                                               \
+      else                                                              \
+        {                                                               \
+          (Current).begin = (Current).end = YYRHSLOC (Rhs, 0).end;      \
+        }                                                               \
+    while (false)
+# endif
 
 
 // Enable debugging if requested.
@@ -119,7 +138,7 @@
 #define YYRECOVERING()  (!!yyerrstatus_)
 
 namespace yy {
-#line 123 "src/parser.cc"
+#line 142 "src/parser.cc"
 
   /// Build a parser object.
   parser::parser (driver& drv_yyarg)
@@ -129,6 +148,7 @@ namespace yy {
 #else
     :
 #endif
+      yy_lac_established_ (false),
       drv (drv_yyarg)
   {}
 
@@ -183,7 +203,7 @@ namespace yy {
   {}
 
   parser::stack_symbol_type::stack_symbol_type (YY_RVREF (stack_symbol_type) that)
-    : super_type (YY_MOVE (that.state))
+    : super_type (YY_MOVE (that.state), YY_MOVE (that.location))
   {
     switch (that.kind ())
     {
@@ -254,7 +274,7 @@ namespace yy {
   }
 
   parser::stack_symbol_type::stack_symbol_type (state_type s, YY_MOVE_REF (symbol_type) that)
-    : super_type (s)
+    : super_type (s, YY_MOVE (that.location))
   {
     switch (that.kind ())
     {
@@ -389,6 +409,7 @@ namespace yy {
         break;
     }
 
+    location = that.location;
     return *this;
   }
 
@@ -458,6 +479,7 @@ namespace yy {
         break;
     }
 
+    location = that.location;
     // that is emptied.
     that.state = empty_state;
     return *this;
@@ -485,7 +507,8 @@ namespace yy {
       {
         symbol_kind_type yykind = yysym.kind ();
         yyo << (yykind < YYNTOKENS ? "token" : "nterm")
-            << ' ' << yysym.name () << " (";
+            << ' ' << yysym.name () << " ("
+            << yysym.location << ": ";
         YY_USE (yykind);
         yyo << ')';
       }
@@ -586,8 +609,15 @@ namespace yy {
     /// The lookahead symbol.
     symbol_type yyla;
 
+    /// The locations where the error started and ended.
+    stack_symbol_type yyerror_range[3];
+
     /// The return value of parse ().
     int yyresult;
+
+    // Discard the LAC context in case there still is one left from a
+    // previous invocation.
+    yy_lac_discard_ ("init");
 
 #if YY_EXCEPTIONS
     try
@@ -663,6 +693,8 @@ namespace yy {
     yyn += yyla.kind ();
     if (yyn < 0 || yylast_ < yyn || yycheck_[yyn] != yyla.kind ())
       {
+        if (!yy_lac_establish_ (yyla.kind ()))
+          goto yyerrlab;
         goto yydefault;
       }
 
@@ -672,6 +704,9 @@ namespace yy {
       {
         if (yy_table_value_is_error_ (yyn))
           goto yyerrlab;
+        if (!yy_lac_establish_ (yyla.kind ()))
+          goto yyerrlab;
+
         yyn = -yyn;
         goto yyreduce;
       }
@@ -682,6 +717,7 @@ namespace yy {
 
     // Shift the lookahead token.
     yypush_ ("Shifting", state_type (yyn), YY_MOVE (yyla));
+    yy_lac_discard_ ("shift");
     goto yynewstate;
 
 
@@ -769,6 +805,12 @@ namespace yy {
     }
 
 
+      // Default location.
+      {
+        stack_type::slice range (yystack_, yylen);
+        YYLLOC_DEFAULT (yylhs.location, range, yylen);
+        yyerror_range[1].location = yylhs.location;
+      }
 
       // Perform the reduction.
       YY_REDUCE_PRINT (yyn);
@@ -779,76 +821,77 @@ namespace yy {
           switch (yyn)
             {
   case 2: // module: stmts
-#line 84 "src/parser/parser.yy"
-                {yylhs.value.as < unique_ptr<ModuleAST> > () = make_unique<ModuleAST>("test", move(yystack_[0].value.as < vector<unique_ptr<StmtAST>> > ()));}
-#line 785 "src/parser.cc"
+#line 83 "src/parser/parser.yy"
+                {
+			yylhs.value.as < unique_ptr<ModuleAST> > () = make_unique<ModuleAST>("test", move(yystack_[0].value.as < vector<unique_ptr<StmtAST>> > ()));
+			drv.result = move(yylhs.value.as < unique_ptr<ModuleAST> > ());
+		}
+#line 830 "src/parser.cc"
     break;
 
-  case 3: // stmts: stmt
-#line 87 "src/parser/parser.yy"
-               {
+  case 3: // stmts: %empty
+#line 89 "src/parser/parser.yy"
+                 {
 			yylhs.value.as < vector<unique_ptr<StmtAST>> > () = vector<unique_ptr<StmtAST>>();
-			yylhs.value.as < vector<unique_ptr<StmtAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<StmtAST> > ()));
 		}
-#line 794 "src/parser.cc"
+#line 838 "src/parser.cc"
     break;
 
   case 4: // stmts: stmts stmt
-#line 91 "src/parser/parser.yy"
+#line 92 "src/parser/parser.yy"
                              {
 			yystack_[1].value.as < vector<unique_ptr<StmtAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<StmtAST> > ()));
 			yylhs.value.as < vector<unique_ptr<StmtAST>> > () = move(yystack_[1].value.as < vector<unique_ptr<StmtAST>> > ());
 		}
-#line 803 "src/parser.cc"
+#line 847 "src/parser.cc"
     break;
 
   case 5: // stmt: expr ";"
-#line 97 "src/parser/parser.yy"
-                   { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<StmtAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ()), nullptr, nullptr); }
-#line 809 "src/parser.cc"
-    break;
-
-  case 6: // stmt: variable_dec ";"
 #line 98 "src/parser/parser.yy"
-                                   { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<StmtAST>(nullptr, move(yystack_[1].value.as < unique_ptr<VarDecAST> > ()), nullptr); }
-#line 815 "src/parser.cc"
+                   { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<StmtAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ()), nullptr, nullptr); }
+#line 853 "src/parser.cc"
     break;
 
-  case 7: // stmt: variable_def ";"
+  case 6: // stmt: variable_dec
 #line 99 "src/parser/parser.yy"
-                                   { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<StmtAST>(nullptr, nullptr, move(yystack_[1].value.as < unique_ptr<VarDefAST> > ())); }
-#line 821 "src/parser.cc"
+                               { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<StmtAST>(nullptr, move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()), nullptr); }
+#line 859 "src/parser.cc"
+    break;
+
+  case 7: // stmt: variable_def
+#line 100 "src/parser/parser.yy"
+                               { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<StmtAST>(nullptr, nullptr, move(yystack_[0].value.as < unique_ptr<VarDefAST> > ())); }
+#line 865 "src/parser.cc"
     break;
 
   case 8: // variable_def: variable_dec "=" expr ";"
-#line 102 "src/parser/parser.yy"
-                                                        {
+#line 103 "src/parser/parser.yy"
+                                            {
 					yylhs.value.as < unique_ptr<VarDefAST> > () = make_unique<VarDefAST>(move(yystack_[3].value.as < unique_ptr<VarDecAST> > ()), move(yystack_[1].value.as < unique_ptr<ExprAST> > ()), vector<unique_ptr<StmtAST>>());
 				}
-#line 829 "src/parser.cc"
+#line 873 "src/parser.cc"
     break;
 
   case 9: // variable_def: variable_dec "=" "{" stmts "}"
-#line 106 "src/parser/parser.yy"
+#line 107 "src/parser/parser.yy"
                                                                  {
 					yylhs.value.as < unique_ptr<VarDefAST> > () = make_unique<VarDefAST>(move(yystack_[4].value.as < unique_ptr<VarDecAST> > ()), unique_ptr<ExprAST>(nullptr), move(yystack_[1].value.as < vector<unique_ptr<StmtAST>> > ()));
 				}
-#line 837 "src/parser.cc"
+#line 881 "src/parser.cc"
     break;
 
   case 10: // variable_dec: tok_identifier ":" type
-#line 111 "src/parser/parser.yy"
+#line 112 "src/parser/parser.yy"
                                                 {yylhs.value.as < unique_ptr<VarDecAST> > () = make_unique<VarDecAST>(yystack_[2].value.as < std::string > (), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));}
-#line 843 "src/parser.cc"
+#line 887 "src/parser.cc"
     break;
 
   case 11: // variable_decs: %empty
-#line 114 "src/parser/parser.yy"
+#line 115 "src/parser/parser.yy"
                          {
-					yy::parser::error("HI");
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 				}
-#line 852 "src/parser.cc"
+#line 895 "src/parser.cc"
     break;
 
   case 12: // variable_decs: variable_dec
@@ -857,7 +900,7 @@ namespace yy {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 861 "src/parser.cc"
+#line 904 "src/parser.cc"
     break;
 
   case 13: // variable_decs: variable_decs "," variable_dec
@@ -865,25 +908,19 @@ namespace yy {
                                                                        {
 					yystack_[2].value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 869 "src/parser.cc"
+#line 912 "src/parser.cc"
     break;
 
   case 14: // type: basic_type
 #line 127 "src/parser/parser.yy"
                         { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<TypeAST>(yy::parser::token::tok_i64, unique_ptr<FunctionTypeAST>(nullptr)); }
-#line 875 "src/parser.cc"
+#line 918 "src/parser.cc"
     break;
 
   case 15: // type: function_type
 #line 128 "src/parser/parser.yy"
                                 { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<TypeAST>(0, move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ())); }
-#line 881 "src/parser.cc"
-    break;
-
-  case 18: // basic_type: "i64"
-#line 132 "src/parser/parser.yy"
-                                         { cout << "hiiii" << endl; }
-#line 887 "src/parser.cc"
+#line 924 "src/parser.cc"
     break;
 
   case 24: // function_type: "(" variable_decs ")" "->" type
@@ -891,43 +928,43 @@ namespace yy {
                                                   {
 					yylhs.value.as < unique_ptr<FunctionTypeAST> > () = make_unique<FunctionTypeAST>(move(yystack_[3].value.as < vector<unique_ptr<VarDecAST>> > ()), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));
 				}
-#line 895 "src/parser.cc"
+#line 932 "src/parser.cc"
     break;
 
   case 25: // expr: term
 #line 140 "src/parser/parser.yy"
                                 { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<ExprAST>(move(yystack_[0].value.as < unique_ptr<TermAST> > ()), nullptr, 0, nullptr); }
-#line 901 "src/parser.cc"
+#line 938 "src/parser.cc"
     break;
 
   case 26: // expr: expr "+" term
 #line 141 "src/parser/parser.yy"
                                 { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<ExprAST>(nullptr, move(yystack_[2].value.as < unique_ptr<ExprAST> > ()), '+', move(yystack_[0].value.as < unique_ptr<TermAST> > ())); }
-#line 907 "src/parser.cc"
+#line 944 "src/parser.cc"
     break;
 
   case 27: // term: tok_inum
 #line 145 "src/parser/parser.yy"
-                                        { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<TermAST>(yystack_[0].value.as < int > (), nullptr, unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
-#line 913 "src/parser.cc"
+                                        { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<TermAST>(yystack_[0].value.as < int > (), "", unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
+#line 950 "src/parser.cc"
     break;
 
   case 28: // term: "(" expr ")"
 #line 146 "src/parser/parser.yy"
-                                        { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<TermAST>(0, nullptr, unique_ptr<FunctionCallAST>(nullptr), move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 919 "src/parser.cc"
+                                        { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<TermAST>(0, "", unique_ptr<FunctionCallAST>(nullptr), move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
+#line 956 "src/parser.cc"
     break;
 
   case 29: // term: tok_identifier
 #line 147 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<TermAST>(0, yystack_[0].value.as < std::string > (), unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
-#line 925 "src/parser.cc"
+#line 962 "src/parser.cc"
     break;
 
   case 30: // term: function_call
 #line 148 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<TermAST>(0, nullptr, move(yystack_[0].value.as < unique_ptr<FunctionCallAST> > ()), unique_ptr<ExprAST>(nullptr)); }
-#line 931 "src/parser.cc"
+#line 968 "src/parser.cc"
     break;
 
   case 31: // function_call: term "(" arg_list ")"
@@ -935,7 +972,7 @@ namespace yy {
                                         {
 					yylhs.value.as < unique_ptr<FunctionCallAST> > () = make_unique<FunctionCallAST>(move(yystack_[3].value.as < unique_ptr<TermAST> > ()), move(yystack_[1].value.as < vector<unique_ptr<ExprAST>> > ()));
 				}
-#line 939 "src/parser.cc"
+#line 976 "src/parser.cc"
     break;
 
   case 32: // arg_list: expr
@@ -944,7 +981,7 @@ namespace yy {
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 			}
-#line 948 "src/parser.cc"
+#line 985 "src/parser.cc"
     break;
 
   case 33: // arg_list: arg_list "," expr
@@ -953,11 +990,11 @@ namespace yy {
 				yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = move(yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ());
 			}
-#line 957 "src/parser.cc"
+#line 994 "src/parser.cc"
     break;
 
 
-#line 961 "src/parser.cc"
+#line 998 "src/parser.cc"
 
             default:
               break;
@@ -989,11 +1026,13 @@ namespace yy {
     if (!yyerrstatus_)
       {
         ++yynerrs_;
-        std::string msg = YY_("syntax error");
-        error (YY_MOVE (msg));
+        context yyctx (*this, yyla);
+        std::string msg = yysyntax_error_ (yyctx);
+        error (yyla.location, YY_MOVE (msg));
       }
 
 
+    yyerror_range[1].location = yyla.location;
     if (yyerrstatus_ == 3)
       {
         /* If just tried and failed to reuse lookahead token after an
@@ -1055,6 +1094,7 @@ namespace yy {
         if (yystack_.size () == 1)
           YYABORT;
 
+        yyerror_range[1].location = yystack_[0].location;
         yy_destroy_ ("Error: popping", yystack_[0]);
         yypop_ ();
         YY_STACK_PRINT ();
@@ -1062,8 +1102,11 @@ namespace yy {
     {
       stack_symbol_type error_token;
 
+      yyerror_range[2].location = yyla.location;
+      YYLLOC_DEFAULT (error_token.location, yyerror_range, 2);
 
       // Shift the error token.
+      yy_lac_discard_ ("error recovery");
       error_token.state = state_type (yyn);
       yypush_ ("Shifting", YY_MOVE (error_token));
     }
@@ -1127,140 +1170,386 @@ namespace yy {
   void
   parser::error (const syntax_error& yyexc)
   {
-    error (yyexc.what ());
+    error (yyexc.location, yyexc.what ());
   }
 
-#if YYDEBUG || 0
   const char *
   parser::symbol_name (symbol_kind_type yysymbol)
   {
-    return yytname_[yysymbol];
+    static const char *const yy_sname[] =
+    {
+    "end of file", "error", "invalid token", "tok_identifier", "tok_inum",
+  "=", "-", "+", "(", ")", "{", "}", ":", ";", ",", "->", "i128", "i64",
+  "i32", "i16", "f128", "f64", "f32", "f16", "tok_eof", "$accept",
+  "module", "stmts", "stmt", "variable_def", "variable_dec",
+  "variable_decs", "type", "basic_type", "function_type", "expr", "term",
+  "function_call", "arg_list", YY_NULLPTR
+    };
+    return yy_sname[yysymbol];
   }
-#endif // #if YYDEBUG || 0
+
+
+
+  // parser::context.
+  parser::context::context (const parser& yyparser, const symbol_type& yyla)
+    : yyparser_ (yyparser)
+    , yyla_ (yyla)
+  {}
+
+  int
+  parser::context::expected_tokens (symbol_kind_type yyarg[], int yyargn) const
+  {
+    // Actual number of expected tokens
+    int yycount = 0;
+
+#if YYDEBUG
+    // Execute LAC once. We don't care if it is successful, we
+    // only do it for the sake of debugging output.
+    if (!yyparser_.yy_lac_established_)
+      yyparser_.yy_lac_check_ (yyla_.kind ());
+#endif
+
+    for (int yyx = 0; yyx < YYNTOKENS; ++yyx)
+      {
+        symbol_kind_type yysym = YY_CAST (symbol_kind_type, yyx);
+        if (yysym != symbol_kind::S_YYerror
+            && yysym != symbol_kind::S_YYUNDEF
+            && yyparser_.yy_lac_check_ (yysym))
+          {
+            if (!yyarg)
+              ++yycount;
+            else if (yycount == yyargn)
+              return 0;
+            else
+              yyarg[yycount++] = yysym;
+          }
+      }
+    if (yyarg && yycount == 0 && 0 < yyargn)
+      yyarg[0] = symbol_kind::S_YYEMPTY;
+    return yycount;
+  }
 
 
 
 
+  bool
+  parser::yy_lac_check_ (symbol_kind_type yytoken) const
+  {
+    // Logically, the yylac_stack's lifetime is confined to this function.
+    // Clear it, to get rid of potential left-overs from previous call.
+    yylac_stack_.clear ();
+    // Reduce until we encounter a shift and thereby accept the token.
+#if YYDEBUG
+    YYCDEBUG << "LAC: checking lookahead " << symbol_name (yytoken) << ':';
+#endif
+    std::ptrdiff_t lac_top = 0;
+    while (true)
+      {
+        state_type top_state = (yylac_stack_.empty ()
+                                ? yystack_[lac_top].state
+                                : yylac_stack_.back ());
+        int yyrule = yypact_[+top_state];
+        if (yy_pact_value_is_default_ (yyrule)
+            || (yyrule += yytoken) < 0 || yylast_ < yyrule
+            || yycheck_[yyrule] != yytoken)
+          {
+            // Use the default action.
+            yyrule = yydefact_[+top_state];
+            if (yyrule == 0)
+              {
+                YYCDEBUG << " Err\n";
+                return false;
+              }
+          }
+        else
+          {
+            // Use the action from yytable.
+            yyrule = yytable_[yyrule];
+            if (yy_table_value_is_error_ (yyrule))
+              {
+                YYCDEBUG << " Err\n";
+                return false;
+              }
+            if (0 < yyrule)
+              {
+                YYCDEBUG << " S" << yyrule << '\n';
+                return true;
+              }
+            yyrule = -yyrule;
+          }
+        // By now we know we have to simulate a reduce.
+        YYCDEBUG << " R" << yyrule - 1;
+        // Pop the corresponding number of values from the stack.
+        {
+          std::ptrdiff_t yylen = yyr2_[yyrule];
+          // First pop from the LAC stack as many tokens as possible.
+          std::ptrdiff_t lac_size = std::ptrdiff_t (yylac_stack_.size ());
+          if (yylen < lac_size)
+            {
+              yylac_stack_.resize (std::size_t (lac_size - yylen));
+              yylen = 0;
+            }
+          else if (lac_size)
+            {
+              yylac_stack_.clear ();
+              yylen -= lac_size;
+            }
+          // Only afterwards look at the main stack.
+          // We simulate popping elements by incrementing lac_top.
+          lac_top += yylen;
+        }
+        // Keep top_state in sync with the updated stack.
+        top_state = (yylac_stack_.empty ()
+                     ? yystack_[lac_top].state
+                     : yylac_stack_.back ());
+        // Push the resulting state of the reduction.
+        state_type state = yy_lr_goto_state_ (top_state, yyr1_[yyrule]);
+        YYCDEBUG << " G" << int (state);
+        yylac_stack_.push_back (state);
+      }
+  }
+
+  // Establish the initial context if no initial context currently exists.
+  bool
+  parser::yy_lac_establish_ (symbol_kind_type yytoken)
+  {
+    /* Establish the initial context for the current lookahead if no initial
+       context is currently established.
+
+       We define a context as a snapshot of the parser stacks.  We define
+       the initial context for a lookahead as the context in which the
+       parser initially examines that lookahead in order to select a
+       syntactic action.  Thus, if the lookahead eventually proves
+       syntactically unacceptable (possibly in a later context reached via a
+       series of reductions), the initial context can be used to determine
+       the exact set of tokens that would be syntactically acceptable in the
+       lookahead's place.  Moreover, it is the context after which any
+       further semantic actions would be erroneous because they would be
+       determined by a syntactically unacceptable token.
+
+       yy_lac_establish_ should be invoked when a reduction is about to be
+       performed in an inconsistent state (which, for the purposes of LAC,
+       includes consistent states that don't know they're consistent because
+       their default reductions have been disabled).
+
+       For parse.lac=full, the implementation of yy_lac_establish_ is as
+       follows.  If no initial context is currently established for the
+       current lookahead, then check if that lookahead can eventually be
+       shifted if syntactic actions continue from the current context.  */
+    if (yy_lac_established_)
+      return true;
+    else
+      {
+#if YYDEBUG
+        YYCDEBUG << "LAC: initial context established for "
+                 << symbol_name (yytoken) << '\n';
+#endif
+        yy_lac_established_ = true;
+        return yy_lac_check_ (yytoken);
+      }
+  }
+
+  // Discard any previous initial lookahead context.
+  void
+  parser::yy_lac_discard_ (const char* event)
+  {
+   /* Discard any previous initial lookahead context because of Event,
+      which may be a lookahead change or an invalidation of the currently
+      established initial context for the current lookahead.
+
+      The most common example of a lookahead change is a shift.  An example
+      of both cases is syntax error recovery.  That is, a syntax error
+      occurs when the lookahead is syntactically erroneous for the
+      currently established initial context, so error recovery manipulates
+      the parser stacks to try to find a new initial context in which the
+      current lookahead is syntactically acceptable.  If it fails to find
+      such a context, it discards the lookahead.  */
+    if (yy_lac_established_)
+      {
+        YYCDEBUG << "LAC: initial context discarded due to "
+                 << event << '\n';
+        yy_lac_established_ = false;
+      }
+  }
 
 
+  int
+  parser::yy_syntax_error_arguments_ (const context& yyctx,
+                                                 symbol_kind_type yyarg[], int yyargn) const
+  {
+    /* There are many possibilities here to consider:
+       - If this state is a consistent state with a default action, then
+         the only way this function was invoked is if the default action
+         is an error action.  In that case, don't check for expected
+         tokens because there are none.
+       - The only way there can be no lookahead present (in yyla) is
+         if this state is a consistent state with a default action.
+         Thus, detecting the absence of a lookahead is sufficient to
+         determine that there is no unexpected or expected token to
+         report.  In that case, just report a simple "syntax error".
+       - Don't assume there isn't a lookahead just because this state is
+         a consistent state with a default action.  There might have
+         been a previous inconsistent state, consistent state with a
+         non-default action, or user semantic action that manipulated
+         yyla.  (However, yyla is currently not documented for users.)
+         In the first two cases, it might appear that the current syntax
+         error should have been detected in the previous state when
+         yy_lac_check was invoked.  However, at that time, there might
+         have been a different syntax error that discarded a different
+         initial context during error recovery, leaving behind the
+         current lookahead.
+    */
+
+    if (!yyctx.lookahead ().empty ())
+      {
+        if (yyarg)
+          yyarg[0] = yyctx.token ();
+        int yyn = yyctx.expected_tokens (yyarg ? yyarg + 1 : yyarg, yyargn - 1);
+        return yyn + 1;
+      }
+    return 0;
+  }
+
+  // Generate an error message.
+  std::string
+  parser::yysyntax_error_ (const context& yyctx) const
+  {
+    // Its maximum.
+    enum { YYARGS_MAX = 5 };
+    // Arguments of yyformat.
+    symbol_kind_type yyarg[YYARGS_MAX];
+    int yycount = yy_syntax_error_arguments_ (yyctx, yyarg, YYARGS_MAX);
+
+    char const* yyformat = YY_NULLPTR;
+    switch (yycount)
+      {
+#define YYCASE_(N, S)                         \
+        case N:                               \
+          yyformat = S;                       \
+        break
+      default: // Avoid compiler warnings.
+        YYCASE_ (0, YY_("syntax error"));
+        YYCASE_ (1, YY_("syntax error, unexpected %s"));
+        YYCASE_ (2, YY_("syntax error, unexpected %s, expecting %s"));
+        YYCASE_ (3, YY_("syntax error, unexpected %s, expecting %s or %s"));
+        YYCASE_ (4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
+        YYCASE_ (5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
+#undef YYCASE_
+      }
+
+    std::string yyres;
+    // Argument number.
+    std::ptrdiff_t yyi = 0;
+    for (char const* yyp = yyformat; *yyp; ++yyp)
+      if (yyp[0] == '%' && yyp[1] == 's' && yyi < yycount)
+        {
+          yyres += symbol_name (yyarg[yyi++]);
+          ++yyp;
+        }
+      else
+        yyres += *yyp;
+    return yyres;
+  }
 
 
-
-  const signed char parser::yypact_ninf_ = -22;
+  const signed char parser::yypact_ninf_ = -20;
 
   const signed char parser::yytable_ninf_ = -1;
 
   const signed char
   parser::yypact_[] =
   {
-      35,     5,   -22,    38,     9,    35,   -22,    19,     1,     3,
-      10,   -22,     4,   -22,    -2,   -22,   -22,   -22,    26,   -22,
-      38,   -22,    38,    30,   -22,   -22,   -22,   -22,   -22,   -22,
-     -22,   -22,   -22,   -22,   -22,   -22,    35,    24,    10,     6,
-      36,     5,   -22,    39,     0,   -22,   -22,    38,    20,    30,
-     -22,     6,     4,   -22,   -22
+     -20,     5,    31,   -20,    -3,   -20,    33,   -20,   -20,     7,
+      18,    14,   -20,    -2,   -20,    35,    20,    33,   -20,    33,
+      26,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,
+     -20,   -20,   -20,   -20,    19,    14,    38,    -7,    -3,   -20,
+      34,     0,   -20,   -20,    33,    25,    26,   -20,    38,    -2,
+     -20,   -20
   };
 
   const signed char
   parser::yydefact_[] =
   {
-       0,    29,    27,     0,     0,     2,     3,     0,     0,     0,
-      25,    30,     0,    29,     0,     1,     4,     7,     0,     6,
-       0,     5,     0,    11,    19,    18,    17,    16,    23,    22,
-      21,    20,    10,    14,    15,    28,     0,     0,    26,    32,
-       0,     0,    12,     0,     0,     8,    31,     0,     0,     0,
-       9,    33,     0,    13,    24
+       3,     0,     2,     1,    29,    27,     0,     4,     7,     6,
+       0,    25,    30,     0,    29,     0,     0,     0,     5,     0,
+      11,    19,    18,    17,    16,    23,    22,    21,    20,    10,
+      14,    15,    28,     3,     0,    26,    32,     0,     0,    12,
+       0,     0,     8,    31,     0,     0,     0,     9,    33,     0,
+      13,    24
   };
 
   const signed char
   parser::yypgoto_[] =
   {
-     -22,   -22,    11,    -4,   -22,   -21,   -22,    -1,   -22,   -22,
-      -3,    29,   -22,   -22
+     -20,   -20,    13,   -20,   -20,   -19,   -20,   -16,   -20,   -20,
+      -6,    30,   -20,   -20
   };
 
   const signed char
   parser::yydefgoto_[] =
   {
-       0,     4,     5,     6,     7,     8,    43,    32,    33,    34,
-       9,    10,    11,    40
+       0,     1,     2,     7,     8,     9,    40,    29,    30,    31,
+      10,    11,    12,    37
   };
 
   const signed char
   parser::yytable_[] =
   {
-      14,    16,    42,     1,     2,    20,    18,    35,     3,    15,
-      20,    50,    23,    20,    19,    37,    21,    12,    22,    39,
-      24,    25,    26,    27,    28,    29,    30,    31,    53,    13,
-       2,    20,    17,    41,     3,    52,    36,    45,     1,     2,
-      16,    13,     2,     3,    51,    46,     3,    44,    48,    38,
-      47,    54,     0,    49
+      15,    39,    43,     4,     5,     3,    20,    44,     6,    13,
+      34,    47,    16,    36,    21,    22,    23,    24,    25,    26,
+      27,    28,    19,    14,     5,    17,    17,    50,     6,    38,
+      33,    18,    42,    51,     4,     5,    14,     5,    48,     6,
+      49,     6,    17,    45,    32,    17,    41,    35,    46
   };
 
   const signed char
   parser::yycheck_[] =
   {
-       3,     5,    23,     3,     4,     7,     5,     9,     8,     0,
-       7,    11,     8,     7,    13,    18,    13,    12,     8,    22,
-      16,    17,    18,    19,    20,    21,    22,    23,    49,     3,
-       4,     7,    13,     3,     8,    15,    10,    13,     3,     4,
-      44,     3,     4,     8,    47,     9,     8,    36,     9,    20,
-      14,    52,    -1,    14
+       6,    20,     9,     3,     4,     0,     8,    14,     8,    12,
+      16,    11,     5,    19,    16,    17,    18,    19,    20,    21,
+      22,    23,     8,     3,     4,     7,     7,    46,     8,     3,
+      10,    13,    13,    49,     3,     4,     3,     4,    44,     8,
+      15,     8,     7,     9,     9,     7,    33,    17,    14
   };
 
   const signed char
   parser::yystos_[] =
   {
-       0,     3,     4,     8,    25,    26,    27,    28,    29,    34,
-      35,    36,    12,     3,    34,     0,    27,    13,     5,    13,
-       7,    13,     8,     8,    16,    17,    18,    19,    20,    21,
-      22,    23,    31,    32,    33,     9,    10,    34,    35,    34,
-      37,     3,    29,    30,    26,    13,     9,    14,     9,    14,
-      11,    34,    15,    29,    31
+       0,    26,    27,     0,     3,     4,     8,    28,    29,    30,
+      35,    36,    37,    12,     3,    35,     5,     7,    13,     8,
+       8,    16,    17,    18,    19,    20,    21,    22,    23,    32,
+      33,    34,     9,    10,    35,    36,    35,    38,     3,    30,
+      31,    27,    13,     9,    14,     9,    14,    11,    35,    15,
+      30,    32
   };
 
   const signed char
   parser::yyr1_[] =
   {
-       0,    24,    25,    26,    26,    27,    27,    27,    28,    28,
-      29,    30,    30,    30,    31,    31,    32,    32,    32,    32,
-      32,    32,    32,    32,    33,    34,    34,    35,    35,    35,
-      35,    36,    37,    37
+       0,    25,    26,    27,    27,    28,    28,    28,    29,    29,
+      30,    31,    31,    31,    32,    32,    33,    33,    33,    33,
+      33,    33,    33,    33,    34,    35,    35,    36,    36,    36,
+      36,    37,    38,    38
   };
 
   const signed char
   parser::yyr2_[] =
   {
-       0,     2,     1,     1,     2,     2,     2,     2,     4,     5,
+       0,     2,     1,     0,     2,     2,     1,     1,     4,     5,
        3,     0,     1,     3,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     5,     1,     3,     1,     3,     1,
        1,     4,     1,     3
   };
 
 
-#if YYDEBUG
-  // YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-  // First, the terminals, then, starting at \a YYNTOKENS, nonterminals.
-  const char*
-  const parser::yytname_[] =
-  {
-  "\"end of file\"", "error", "\"invalid token\"", "tok_identifier",
-  "tok_inum", "\"=\"", "\"-\"", "\"+\"", "\"(\"", "\")\"", "\"{\"",
-  "\"}\"", "\":\"", "\";\"", "\",\"", "\"->\"", "\"i128\"", "\"i64\"",
-  "\"i32\"", "\"i16\"", "\"f128\"", "\"f64\"", "\"f32\"", "\"f16\"",
-  "$accept", "module", "stmts", "stmt", "variable_def", "variable_dec",
-  "variable_decs", "type", "basic_type", "function_type", "expr", "term",
-  "function_call", "arg_list", YY_NULLPTR
-  };
-#endif
 
 
 #if YYDEBUG
   const unsigned char
   parser::yyrline_[] =
   {
-       0,    84,    84,    87,    91,    97,    98,    99,   102,   106,
-     111,   114,   118,   122,   127,   128,   132,   132,   132,   132,
+       0,    83,    83,    89,    92,    98,    99,   100,   103,   107,
+     112,   115,   118,   122,   127,   128,   132,   132,   132,   132,
      132,   132,   132,   132,   135,   140,   141,   145,   146,   147,
      148,   152,   156,   160
   };
@@ -1294,11 +1583,11 @@ namespace yy {
 
 
 } // yy
-#line 1298 "src/parser.cc"
+#line 1587 "src/parser.cc"
 
 #line 165 "src/parser/parser.yy"
 
 
-void yy::parser::error (const std::string& m) {
-	std::cerr << m << '\n';
+void yy::parser::error (const location_type& l, const std::string& m) {
+	std::cerr << l << ": " << m << '\n';
 }

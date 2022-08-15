@@ -1,5 +1,5 @@
 testVar: i64 = 4;
-test_main: () -> i32 = {
+test_main: () -> i64 = {
 	var1: i64 = 1;
 	var2: i64 = 4;
 }

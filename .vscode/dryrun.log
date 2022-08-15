@@ -5,6 +5,7 @@ FIND: Parameter format not correct
 
 make.exe: Entering directory `c:/Users/witzk/OneDrive/Desktop/Projects/Language'
 bison --defines=src/include/parser.h -Wcounterexamples -o src/parser.cc src/parser/parser.yy
+mv src/location.hh src/include/location.hh
  
 flex -o src/scanner.cc src/lexer/scanner.ll
  

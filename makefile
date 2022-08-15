@@ -3,11 +3,13 @@ TARGET_EXEC ?= a.out
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 
-SCANNER_CC ?= src/scanner.cc
-SCANNER_LL ?= src/lexer/scanner.ll
-PARSER_CC ?= src/parser.cc
-PARSER_HH ?= src/include/parser.h
-PARSER_YY ?= src/parser/parser.yy
+SCANNER_CC ?= 		src/scanner.cc
+SCANNER_LL ?= 		src/lexer/scanner.ll
+PARSER_CC ?= 		src/parser.cc
+PARSER_HH ?= 		src/include/parser.h
+PARSER_YY ?= 		src/parser/parser.yy
+LOCATION_HH_SRC ?= 	src/location.hh
+LOCATION_HH ?= 		src/include/location.hh
 
 SRCS := $(shell find $(SRC_DIRS) -name '*.cc' -or -name '*.c' -or -name '*.s') $(PARSER_CC) $(SCANNER_CC)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
@@ -43,20 +45,23 @@ $(BUILD_DIR)/%.cc.o: %.cc
 .PHONY: clean
 clean:
 	$(RM) -r $(BUILD_DIR)
-	$(RM) $(SCANNER_CC) $(PARSER_CC) $(PARSER_HH)
-
-.PHONY: run
-run:
-	$(BUILD_DIR)/$(TARGET_EXEC)
+	$(RM) $(SCANNER_CC) $(PARSER_CC) $(PARSER_HH) $(LOCATION_HH)
 
 parser:
 	bison --defines=$(PARSER_HH) -Wcounterexamples -o $(PARSER_CC) $(PARSER_YY)
-# $(CC) -o src/lexer/lexer $(INC_FLAGS) src/lexer/lex.yy.c
+	mv $(LOCATION_HH_SRC) $(LOCATION_HH)
 
 lexer: 
 	flex -o $(SCANNER_CC) $(SCANNER_LL)
-# $(CC) -o src/lexer/lexer $(INC_FLAGS) src/lexer/lex.yy.c
 
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p
+
+.PHONY: run
+run:
+	$(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang
+
+.PHONY: test
+test:
+	gdb --args $(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang

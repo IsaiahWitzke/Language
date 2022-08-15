@@ -11,16 +11,64 @@ using Token = yy::parser::token;
 
 %option noyywrap nounput noinput batch debug
 
-/* %option outfile="src/lexer/scanner.cc" */
+%{
+	// A number symbol corresponding to the value in S.
+	yy::parser::symbol_type make_tok_inum(const std::string &s, const yy::parser::location_type& loc);
+%}
+
+%{
+	// Code run each time a pattern is matched.
+	# define YY_USER_ACTION  loc.columns (yyleng);
+%}
+
+id    [a-zA-Z][_a-zA-Z_0-9]*
+int   [0-9]+
+blank [ \t\r]
+
+%{
+	// Code run each time a pattern is matched.
+	# define YY_USER_ACTION  loc.columns (yyleng);
+%}
 
 %%
-i64							{ cout << "HI\n"; return Token::tok_i64; }
-[a-zA-Z][_a-zA-Z0-9]*		return yy::parser::make_tok_identifier(yytext);
-[1-9][0-9]*					return yy::parser::make_tok_inum(atoi(yytext));
-[ \t\r\n]					;
-.							{ECHO;}
+
+%{
+	// A handy shortcut to the location held by the driver.
+	yy::location& loc = drv.location;
+	// Code run each time yylex is called.
+	loc.step();
+%}
+
+{blank}+		loc.step ();
+\n+				loc.lines (yyleng); loc.step ();
+"i64"			return yy::parser::make_tok_i64(loc);
+"="				return yy::parser::make_tok_eq(loc);
+"-"				return yy::parser::make_tok_minus(loc);
+"+"				return yy::parser::make_tok_plus(loc);
+"("				return yy::parser::make_tok_lparen(loc);
+")"				return yy::parser::make_tok_rparen(loc);
+"{"				return yy::parser::make_tok_lcurly(loc);
+"}"				return yy::parser::make_tok_rcurly(loc);
+":"				return yy::parser::make_tok_colon(loc);
+";"				return yy::parser::make_tok_semi_colon(loc);
+","				return yy::parser::make_tok_coma(loc);
+"->"			return yy::parser::make_tok_arrow(loc);
+{id}			return yy::parser::make_tok_identifier(yytext, loc);
+[1-9][0-9]*		return make_tok_inum(yytext, loc);
+.				{ ECHO; }
+<<EOF>>			return yy::parser::make_YYEOF(loc);
 
 %%
+
+yy::parser::symbol_type make_tok_inum(const std::string &s, const yy::parser::location_type& loc) {
+	errno = 0;
+	long n = strtol (s.c_str(), NULL, 10);
+	if (! (INT_MIN <= n && n <= INT_MAX && errno != ERANGE))
+		std::cerr << loc << "int out of range + s " << ": " << strerror (errno) << '\n';
+		// throw yy::parser::syntax_error (loc, "integer is out of range: " + s);
+
+	return yy::parser::make_tok_inum((int) n, loc);
+}
 
 void driver::scan_begin () {
 	yy_flex_debug = trace_scanning;

@@ -18,12 +18,19 @@ class TypeAST;
 class FunctionTypeAST;
 class TermAST;
 
+
+class BaseAST {
+public:
+
+	virtual void codegen();
+
+};
+
 /// ModuleAST - The parent AST from which all actual code lives
 class ModuleAST {
-private:
+public:
 	string name;
 	vector<unique_ptr<StmtAST>> topLevelStmts;
-public:
 	ModuleAST(
 		string name,
 		vector<unique_ptr<StmtAST>> topLevelStmts
