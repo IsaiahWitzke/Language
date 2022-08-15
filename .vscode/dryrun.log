@@ -1,14 +1,17 @@
 make.exe --dry-run --keep-going --print-directory
-File not found - *.s
+File not found - *.c
 
 FIND: Parameter format not correct
 
 make.exe: Entering directory `c:/Users/witzk/OneDrive/Desktop/Projects/Language'
-bison --defines=src/include/y.tab.h -o src/parser/y.tab.cc src/parser/my_parser.yy
+bison --defines=src/include/parser.h -o src/parser.cc src/parser/parser.yy
  
-flex -o src/lexer/lex.yy.c src/lexer/my_lexer.lex 
+flex -o src/scanner.cc src/lexer/scanner.ll
  
-g++  -o build/a.out  -lpthread -lncurses
+mkdir -p build/src/
+g++ -I/usr/lib/llvm-15/lib -I/usr/include  -MMD -MP -g -O3  -c src/scanner.cc -o build/src/scanner.cc.o
+ 
+g++ ./build/src/parser.cc.o ./build/src/scanner.cc.o -o build/a.out  -lpthread -lncurses
  
 process_begin: CreateProcess(NULL, llvm-config --cxxflags, ...) failed.
 process_begin: CreateProcess(NULL, llvm-config --ldflags --system-libs --libs all, ...) failed.

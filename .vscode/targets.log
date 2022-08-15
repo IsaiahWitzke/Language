@@ -7,15 +7,17 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 
 # This program built for i386-pc-mingw32
  
-File not found - *.s
+File not found - *.c
 
 FIND: Parameter format not correct
 
 
-# Make data base, printed on Tue Aug 09 22:28:57 2022
+# Make data base, printed on Sun Aug 14 23:37:34 2022
 
 # Variables
 
+# makefile (from `makefile', line 10)
+PARSER_YY = src/parser/parser.yy
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -34,44 +36,51 @@ HOMEDRIVE = C:
 ^D = $(patsubst %/,%,$(dir $^))
 # makefile
 CURDIR := c:/Users/witzk/OneDrive/Desktop/Projects/Language
-# default
+# defaul 
+t
 SHELL := sh.exe
 # environment
 WINDIR = C:\WINDOWS
 # environment
-VSCOD 
-E_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
 VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
 # environment
 ONEDRIVE = C:\Users\witzk\OneDrive
-# makefile (from `makefile', line 10)
-INC_DIRS :=  /usr/lib/llvm-15/lib
+# makefile (from `makefile', line 16)
+INC_DIRS :=  /usr/lib/llvm-15/lib /usr/include
 # environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PL;.WPL;.PY;.PYW
-# makefile (from `makefile', line 1)
-MAKEFILE_LIST :=  makefile
+# makefile (from `build/src/scanner.cc.d', line 1)
+MAKEFILE_LIST :=  makefile build/src/parser.cc.d build/src/scanner.cc.d
+# makefile (from `makefile', line 9)
+PARSER_HH = src/include/parser.h
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 TMP = C:\Users\witzk\AppData\Local\Temp
 # environment
 PROGRAMW6432 = C:\Program Files
-# makefile (from `makefile', line 7)
-OBJS := 
+# makefile (from `makefile', line 13)
+OBJS := ./build/src/parser.cc.o ./build/src/scanner.cc.o
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
 VSCODE_CWD = C:\Users\witzk\AppData\Local\Programs\Microsoft VS Code
 # environment
 PATH = C:\Python310\Scripts\;C:\Python310\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Perl64\bin;C:\Users\witzk\AppData\Roaming\ActiveState\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Go\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-14.0.2\bin;C:\Program Files\Kotlin\kotlinc\bin;C:\Program Files\MiKTeX\miktex\bin\x64\;C:\Program Files\PuTTY\;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\CMake\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\GnuWin32\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Android\platform-tools;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\LLVM\bin;C:\Users\witzk\.cargo\bin;C:\Users\witzk\anaconda3;C:\Users\witzk\anaconda3\Library\mingw-w64\bin;C:\Users\witzk\anaconda3\Library\usr\bin;C:\Users\witzk\anaconda3\Library\bin;C:\Users\witzk\anaconda3\Scripts;C:\Users\witzk\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\witzk\AppData\Local\Programs\Python\Python39\;C:\Users\witzk\AppData\Local\Microsoft\WindowsApps;C:\Users\witzk\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\witzk\go\bin;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin;;C:\tools\dart-sdk\bin;C:\Users\witzk\AppData\Roaming\Pub\Cache\bin;C:\tools\flutter_windows_2.2.3-stable\flutter\bin;C:\Program Files\heroku\bin;C:\Users\witzk\.dotnet\tools;C:\Users\witzk\AppData\Roaming\npm
+# makefile (from `makefile', line 8)
+PARSER_CC = src/parser.cc
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # environment
 ZES_ENABLE_SYSMAN = 1
 # environment
-CHOCOLATEYLASTPATHUPDATE = 132743860888356165
+C 
+HOCOLATEYLASTPATHUPDATE = 132743860888356165
 # environment
 PROCESSOR_ARCHITECTURE = x86
-# makefile (from `makefile', line 15)
+# makefile (from `makefile', line 21)
 COMPILE_FLAGS = $(INC_FLAGS) -MMD -MP -g -O3
 # environment
 USERPROFILE = C:\Users\witzk
@@ -86,22 +95,22 @@ PATH_ORIGINAL = C:\Users\witzk\AppData\Roaming\ActiveState\bin;C:\Windows\system
 # environment
 NUMBER_OF_PROCESSORS = 8
 # environment
-E 
-LECTRON_RUN_AS_NODE = 1
-# makefile (from `makefile', line 16)
-LDFLAGS = $(shell llvm-config --ldflags --system-libs --libs all) -lpthread -lncurses
+ELECTRON_RUN_AS_NODE = 1
+# makefile (from `makefile', line 22)
+LDFLAGS = $(shell llvm-config --ldflags --system-libs --libs all) -lp 
+thread -lncurses
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_24048_GQBVMWXZCGSCPBBV
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_3360_ILVDVOXUADGOUSXV
 # makefile (from `makefile', line 4)
 SRC_DIRS = ./src
 # environment
 COMPUTERNAME = DESKTOP-AL30BHJ
-# makefile (from `makefile', line 11)
-INC_FLAGS := -I/usr/lib/llvm-15/lib 
+# makefile (from `makefile', line 17)
+INC_FLAGS := -I/usr/lib/llvm-15/lib -I/usr/include 
 # environment
 PROGRAMFILES = C:\Program Files (x86)
 # environment
@@ -121,7 +130,8 @@ VSCODE_CODE_CACHE_PATH = C:\Users\witzk\AppData\Roaming\Code\CachedData\da76f933
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
-COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+COMMONPROGRAMFILES = C:\Program Files (x86)\Com 
+mon Files
 # environment
 LOGONSERVER = \\DESKTOP-AL30BHJ
 # environment
@@ -134,13 +144,14 @@ USERDOMAIN = DESKTOP-AL30BHJ
 TARGET_EXEC = a.out
 # environment
 INTELLIJ IDEA COMMUNITY EDITION = C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin;
-# default 
-
+# makefile (from `makefile', line 7)
+SCANNER_LL = src/lexer/scanner.ll
+# default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
-# makefile (from `makefile', line 6)
-SRCS := 
+# makefile (from `makefile', line 12)
+SRCS :=  src/parser.cc src/scanner.cc
 # environment
 JAVA_HOME = C:\Program Files\Java\jdk-14.0.2
 # makefile (from `makefile', line 3)
@@ -149,7 +160,7 @@ BUILD_DIR = ./build
 MAKE_VERSION := 3.81
 # makefile
 .DEFAULT_GOAL := build/a.out
-# makefile (from `makefile', line 57)
+# makefile (from `makefile', line 62)
 MKDIR_P = mkdir -p
 # environment
 PROGRAMFILES(X86) = C:\Program Files (x86)
@@ -158,7 +169,8 @@ PROGRAMFILES(X86) = C:\Program Files (x86)
 # environment
 LOCALAPPDATA = C:\Users\witzk\AppData\Local
 # environment
-PSMODULEPATH = C:\Program Files (x86)\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\platform\PowerShell
+PSMODULEPAT 
+H = C:\Program Files (x86)\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\platform\PowerShell
 # default
 MAKE_COMMAND := make.exe
 # environment
@@ -172,8 +184,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\b43722fc1d67e1f5ce1 
-c2248e93fbbf2-1.70.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\b43722fc1d67e1f5ce1c2248e93fbbf2-1.70.0-main-sock
 # environment
 HOMEPATH = \Users\witzk
 # environment
@@ -196,16 +207,19 @@ APPDATA = C:\Users\witzk\AppData\Roaming
 TEMP = C:\Users\witzk\AppData\Local\Temp
 # environment
 COMSPEC = C:\WINDOWS\system32\cmd.exe
-# default
+# defaul 
+t
 MAKEFILES := 
+# makefile (from `makefile', line 6)
+SCANNER_CC = src/scanner.cc
 # automatic
 <F = $(notdir $<)
 # environment
 LC_ALL = C
 # automatic
 ^F = $(notdir $^)
-# makefile (from `makefile', line 8)
-DEPS := 
+# makefile (from `makefile', line 14)
+DEPS := ./build/src/parser.cc.d ./build/src/scanner.cc.d
 # default
 SUFFIXES := 
 # environment
@@ -221,12 +235,14 @@ LANG = C
 # environment
 PROCESSOR_LEVEL = 6
 # environment
-VSCODE_PID = 24048
+FPS_BROWSER_APP_PROFI 
+LE_STRING = Internet Explorer
+# environment
+VSCODE_PID = 3360
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-AL30BHJ
 # variable set hash-table stats:
-# Load=10 
-2/1024=10%, Rehash=0, Collisions=18/148=12%
+# Load=109/1024=11%, Rehash=0, Collisions=20/167=12%
 
 # Pattern-specific Variable Values
 
@@ -236,76 +252,90 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-AL30BHJ
 
 # : could not be stat'd.
 # C:\Program Files\heroku\bin (key C:/Program Files/heroku/bin, mtime 1630626122): 4 files, no impossibilities.
-# C:\tools\flutter_windows_2.2.3-stable\flutter\bin (key C:/tools/flutter_windows_2.2.3-stable/flutter/bin, mtime 1625178494): 9 files, no impossibilities.
+# C:\tools\flutter_windows_2.2.3-stable\flutter\bin (key C:/tools/flutter_win 
+dows_2.2.3-stable/flutter/bin, mtime 1625178494): 9 files, no impossibilities.
 # C:\Users\witzk\anaconda3\Scripts (key C:/Users/witzk/anaconda3/Scripts, mtime 1620521983): 323 files, no impossibilities.
 # C:\Program Files\Docker\Docker\resources\bin (key C:/Program Files/Docker/Docker/resources/bin, mtime 1620284562): 12 files, no impossibilities.
 # C:\Program Files\LLVM\bin (key C:/Program Files/LLVM/bin, mtime 1659748686): 120 files, no impossibilities.
-# C:\Users\witzk\anaconda3\Library\mingw-w64\bin (key C:/Users/witzk/anaconda3/Library/mingw-w64/bin, mtime 1610775305): 15 files, no impossibilities.
-# C:\Windows\System32\WindowsPowerShell\v1.0\ (key C:/Windows/S 
-ystem32/WindowsPowerShell/v1.0/, mtime 1620296970): 31 files, no impossibilities.
+# C:\Users\witzk\anaconda3\Library\mingw-w64\bin (ke 
+y C:/Users/witzk/anaconda3/Library/mingw-w64/bin, mtime 1610775305): 15 files, no impossibilities.
+# C:\Windows\System32\WindowsPowerShell\v1.0\ (key C:/Windows/System32/WindowsPowerShell/v1.0/, mtime 1620296970): 31 files, no impossibilities.
 # C:\Windows\System32\Wbem (key C:/Windows/System32/Wbem, mtime 1658148066): 154 files, no impossibilities.
-# . (key c:/Users/witzk/OneDrive/Desktop/Projects/Language, mtime 1660024620): 14 files, no impossibilities.
-# C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1644372375): 13 files, no impossibilities.
-# C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common (key C:/Program Files (x86)/NVIDIA Corporation/Ph 
-ysX/Common, mtime 1608961068): 10 files, no impossibilities.
+# . (key c:/Users/witzk/OneDrive/Desktop/Projects/Language, mtime 1660532247): 12 files, no impossibilities.
+# C:\Program Files\nodejs\ (key C:/Program Files/no 
+dejs/, mtime 1644372375): 13 files, no impossibilities.
+# C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common (key C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common, mtime 1608961068): 10 files, no impossibilities.
 # C:\Users\witzk\go\bin (key C:/Users/witzk/go/bin, mtime 1598507795): 20 files, no impossibilities.
 # C:\ProgramData\chocolatey\bin (key C:/ProgramData/chocolatey/bin, mtime 1629912439): 13 files, no impossibilities.
-# C:\Program Files\dotnet\ (key C:/Program Files/dotnet/, mtime 1643577643): 13 files, no impossibilities.
+# C:\Program Files\dotnet\ (key C:/Program Files/dotnet/, mtime 1643577 
+643): 13 files, no impossibilities.
 # C:\Python310\ (key C:/Python310/, mtime 1644372507): 18 files, no impossibilities.
 # C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin (key C:/Program Files (x86)/Google/Cloud SDK/google-cloud-sdk/bin, mtime 1610835393): 21 files, no impossibilities.
 # C:\Python310\Scripts\ (key C:/Python310/Scripts/, mtime 1644372507): 5 files, no impossibilities.
-# C:\Program Files\Kotlin\kotlinc\bin (key C:/Program Files/Kotlin/kotlinc/bin, mtime 1598586884): 14 files, no impossibilities.
-# C:\Users\witzk\AppData\Roaming\ActiveState\bin (key C:/Users/witzk/AppData/Roaming/ActiveState/bin, mtime 1605038988): 3 files, no impossibilit 
-ies.
+# C:\Program Files\Kotlin\kotlinc\bin (key C:/Program Files/Kotlin/kotlinc/bin, mtime 1598586884): 14 files, no  
+impossibilities.
+# C:\Users\witzk\AppData\Roaming\ActiveState\bin (key C:/Users/witzk/AppData/Roaming/ActiveState/bin, mtime 1605038988): 3 files, no impossibilities.
 # C:\Windows\System32\OpenSSH\: could not be stat'd.
 # C:\Program Files\PuTTY\ (key C:/Program Files/PuTTY/, mtime 1602631268): 12 files, no impossibilities.
 # C:\Program Files\Microsoft SQL Server\130\Tools\Binn\ (key C:/Program Files/Microsoft SQL Server/130/Tools/Binn/, mtime 1612413926): 4 files, no impossibilities.
-# C:\Windows (key C:/Windows, mtime 1658148065): 127 files, no impossibilities.
-# C:\Program Files\Android\platform-tools (key C:/Program Files/Android/platform-tools, mtime 1639717528) 
-: 18 files, no impossibilities.
+# C:\Windows (key C:/Windows, mtime 1660508331): 128 files, no impossibilities.
+# C:\Program Files\Android\platform-tools (key C:/Program Files/Android/platform-tools, mtime 1639717528): 18 files, no impossibilities.
 # C:\Users\witzk\AppData\Roaming\Pub\Cache\bin: could not be stat'd.
 # C:\Users\witzk\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/witzk/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1659678378): 4 files, no impossibilities.
-# C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin (key C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1602722211): 58 files, no impossibilities.
-# C:\Users\witzk\AppData\Roaming 
-\npm (key C:/Users/witzk/AppData/Roaming/npm, mtime 1644372191): 15 files, no impossibilities.
+# C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bi 
+n (key C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1602722211): 58 files, no impossibilities.
+# C:\Users\witzk\AppData\Roaming\npm (key C:/Users/witzk/AppData/Roaming/npm, mtime 1644372191): 15 files, no impossibilities.
 # C:\Users\witzk\.dotnet\tools: could not be stat'd.
 # C:\Users\witzk\anaconda3 (key C:/Users/witzk/anaconda3, mtime 1658519714): 88 files, no impossibilities.
 # C:\Program Files\MiKTeX\miktex\bin\x64\ (key C:/Program Files/MiKTeX/miktex/bin/x64/, mtime 1601148000): 664 files, no impossibilities.
 # C:\Program Files\Amazon\AWSCLIV2\ (key C:/Program Files/Amazon/AWSCLIV2/, mtime 1658177500): 39 files, no impossibilities.
 # C:\tools\dart-sdk\bin (key C:/tools/dart-sdk/bin, mtime 1624450650): 15 files, no impossibilities.
 # C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin (key C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2020.2.1/bin, mtime 1598588319): 30 files, no impossibilities.
-# C:\ProgramData\DockerDesktop\version-bin (key C:/ProgramData/DockerDesktop/version-bin, mtime 1620284672): 2 files, no impossibilities.
-# C:\Users\witzk\.cargo\bin (key C:/Users/witzk/.cargo/bin, mtime  
-1656650316): 14 files, no impossibilities.
+# C:\ProgramData\DockerDesktop\version-bin 
+ (key C:/ProgramData/DockerDesktop/version-bin, mtime 1620284672): 2 files, no impossibilities.
+# C:\Users\witzk\.cargo\bin (key C:/Users/witzk/.cargo/bin, mtime 1656650316): 14 files, no impossibilities.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1598503104): 8 files, no impossibilities.
-# C:\Windows\system32 (key C:/Windows/system32, mtime 1659697247): 3013 files, no impossibilities.
+# C:\Windows\system32 (key C:/Windows/system32, mtime 1660405165): 3013 files, no impossibilities.
 # C:\Go\bin (key C:/Go/bin, mtime 1598502725): 4 files, no impossibilities.
-# C:\Program Files\CMake\bin (key C:/Program Files/CMake/bin, mtime 1611902609): 7 files, no impossibilities.
-# C:\Users\witzk\AppData\Local\Programs\Python\Python39\ (key C:/Users/witzk/A 
-ppData/Local/Programs/Python/Python39/, mtime 1606196393): 18 files, no impossibilities.
+# C:\Program Files\CMake\b 
+in (key C:/Program Files/CMake/bin, mtime 1611902609): 7 files, no impossibilities.
+# C:\Users\witzk\AppData\Local\Programs\Python\Python39\ (key C:/Users/witzk/AppData/Local/Programs/Python/Python39/, mtime 1606196393): 18 files, no impossibilities.
 # C:\Perl64\bin (key C:/Perl64/bin, mtime 1605039043): 129 files, no impossibilities.
 # C:\Users\witzk\anaconda3\Library\usr\bin: could not be stat'd.
-# C:\Users\witzk\AppData\Local\Microsoft\WindowsApps (key C:/Users/witzk/AppData/Local/Microsoft/WindowsApps, mtime 1660071568): 23 files, no impossibilities.
-# C:\Users\witzk\AppData\Local\Programs\Python\Python39\Scripts\ (key C:/Users/witzk/AppData/Local/Programs/Pytho 
-n/Python39/Scripts/, mtime 1610776808): 9 files, no impossibilities.
+# C:\Users\witzk\AppData\Local\Microsoft\WindowsApps (key C:/Users/witzk/AppData/Local/Microsoft/WindowsApps,  
+mtime 1660071568): 23 files, no impossibilities.
+# C:\Users\witzk\AppData\Local\Programs\Python\Python39\Scripts\ (key C:/Users/witzk/AppData/Local/Programs/Python/Python39/Scripts/, mtime 1610776808): 9 files, no impossibilities.
 # C:\Users\witzk\anaconda3\Library\bin (key C:/Users/witzk/anaconda3/Library/bin, mtime 1610775770): 389 files, no impossibilities.
 # C:\Program Files (x86)\GnuWin32\bin (key C:/Program Files (x86)/GnuWin32/bin, mtime 1612411800): 5 files, no impossibilities.
-# C:\Program Files\Java\jdk-14.0.2\bin (key C:/Program Files/Java/jdk-14.0.2/bin, mtime 1598585850): 125 files, no impossibilities.
+# C:\Program Files\Ja 
+va\jdk-14.0.2\bin (key C:/Program Files/Java/jdk-14.0.2/bin, mtime 1598585850): 125 files, no impossibilities.
 
-# 5632 files, no impossibilities in 49 directories 
-.
+# 5631 files, no impossibilities in 49 directories.
 
 # Implicit Rules
 
+build/%.c.o: %.c
+#  commands to execute (from `makefile', line 34):
+	$(MKDIR_P) $(dir $@)
+	$(CXX) $(COMPILE_FLAGS) $(CXXFLAGS) $(CFLAGS) -c $< -o $@
+	
+
 build/%.cc.o: %.cc
-#  commands to execute (from `makefile', line 33):
+#  commands to execute (from `makefile', line 39):
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(COMPILE_FLAGS) $(CXXFLAGS) -c $< -o $@
 	
 
-# 1 implicit rules, 0 (0.0%) terminal.
+# 2 implicit rules, 0 (0.0%) term 
+inal.
 
 # Files
+
+# Not a target:
+src/parser.cc:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 all:
@@ -316,10 +346,15 @@ all:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-.PHONY: clean run parser lexer
+src/include/parser.h:
 #  Implicit rule search has not been done.
-#  Modif 
-ication time never checked.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: 
+ clean run
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
@@ -329,28 +364,70 @@ ication time never checked.
 #  File has not been updated.
 
 # Not a target:
+build/src/scanner.cc.d:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  Last modified 2022-08-14 23:36:27
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats: 
+
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+build/src/scanner.cc.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-09 22:28:45
+#  Last modified 2022-08-14 23:36:15
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# 
+ Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+build/src/parser.cc.d:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  Last modified 2022-08-14 23:36:24
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+build/./src/scanner.cc.o: src/scanner.cc src/include/parser_driver.h src/include/parser.h src/include/ast.h src/location.hh src/include/parser.h
+#  Implicit rule search 
+ has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/location.hh:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
-#  Modification  
-time never checked.
+#  Modification time never checked.
 #  File has not been updated.
 
 parser:
-#  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 47):
-	bison --defines=src/include/y.tab.h -o src/parser/y.tab.cc src/parser/my_parser.yy
+#  commands to execute (from `makefile', line 53):
+	bison --defines=$(PARSER_HH) -o $(PARSER_CC) $(PARSER_YY)
 	
 
 run:
@@ -358,53 +435,77 @@ run:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 43):
+#  commands to execute (from `makefile', line 50):
 	$(BUILD_DIR)/$(TARGET_EXEC)
 	
 
-clean:
-#  Phony target (prerequisite of .PHONY).
-#  Implicit rule search has not been done.
-#  File does not exist.
-#  File has not been updated.
-#  commands to execute (from `makefile', line 39):
-	$(RM) -r $(BUILD_DIR)
-	
-
-build/a.out: lexer
+src/include/parser_driver.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 19):
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has  
+not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 45):
+	$(RM) -r $(BUILD_DIR)
+	$(RM) $(SCANNER_CC) $(PARSER_CC) $(PARSER_HH)
+	
+
+build/./src/parser.cc.o: src/parser.cc src/include/parser.h src/include/ast.h src/location.hh src/include/parser_driver.h src/include/parser.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/src/parser.cc.o:
+#  Implicit rule search has 
+ not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+build/a.out: parser lexer build/src/parser.cc.o build/src/scanner.cc.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 25):
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 	
 
-lexer: parser
-#  Phony  
+# Not a target:
+src/scanner.cc:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+lexer:
+#  Implicit r 
 process_begin: CreateProcess(NULL, llvm-config --cxxflags, ...) failed.
 make.exe: *** No rule to make target `all'.  Stop.
 
-target (prerequisite of .PHONY).
-#  Implicit rule search has not been done.
-#  File does not exist.
+ule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 52):
-	flex -o src/lexer/lex.yy.c src/lexer/my_lexer.lex 
+#  commands to execute (from `makefile', line 57):
+	flex -o $(SCANNER_CC) $(SCANNER_LL)
 	
 
 # files hash-table stats:
-# Load=10/1024=1%, Rehash=0, Collisions=0/30=0%
+# Load=22/1024=2%, Rehash=0, Collisions=4/60=7%
 # VPATH Search Paths
 
 # No `vpath' search paths.
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 1
+# # of strings in strcache: 3
 # # of strcache buffers: 1
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
-# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+# strcache free: total = 4042 / max = 4042 / min = 4042 / avg = 4042
 
-# Finished Make data base on Tue Aug 09 22:28:57 2022
+# Finished Make data base on Sun Aug 14 23:37:34 2022
 
  

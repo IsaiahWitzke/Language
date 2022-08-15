@@ -10,6 +10,14 @@
 
 using namespace std;
 
+class StmtAST;
+class ExprAST;
+class VarDecAST;
+class VarDefAST;
+class TypeAST;
+class FunctionTypeAST;
+class TermAST;
+
 /// ModuleAST - The parent AST from which all actual code lives
 class ModuleAST {
 private:
@@ -42,7 +50,7 @@ public:
 	VarDecAST(
 		string name,
 		unique_ptr<TypeAST> type
-	) : name(name), type(type), init(move(init)) {}
+	) : name(name), type(move(type)) {}
 };
 
 class VarDefAST {
@@ -55,25 +63,25 @@ public:
 		unique_ptr<ExprAST> initExpr,
 		vector<unique_ptr<StmtAST>> initFuncStmts
 	) : varDec(move(varDec)), initExpr(move(initExpr)), initFuncStmts(move(initFuncStmts)) {}
-}
+};
 
 class TypeAST {
 	// can be just a "normal" type
-	Type::BasicType basicType;
+	int basicType;
 	// or we can store the type of a function
-	unique_ptr<FunctionTypeAst> functionType;
+	unique_ptr<FunctionTypeAST> functionType;
 public:
 	TypeAST(
-		Type::BasicType basicType,
-		unique_ptr<FunctionTypeAst> functionType
+		int basicType,
+		unique_ptr<FunctionTypeAST> functionType
 	) : basicType(basicType), functionType(move(functionType)) {}
-}
+};
 
-class FunctionTypeAst {
+class FunctionTypeAST {
 	vector<unique_ptr<VarDecAST>> params;
 	unique_ptr<TypeAST> returnType;
 public:
-	FunctionTypeAst(
+	FunctionTypeAST(
 		vector<unique_ptr<VarDecAST>> params,
 		unique_ptr<TypeAST> returnType
 	) : params(move(params)), returnType(move(returnType)) {}
@@ -100,10 +108,10 @@ class FunctionCallAST {
 	vector<unique_ptr<ExprAST>> args;
 
 public:
-	CallExprAST(
+	FunctionCallAST(
 		unique_ptr<ExprAST> callee,
 		vector<unique_ptr<ExprAST>> args
-	) : callee(move(Callee)), args(move(Args)) {}
+	) : callee(move(callee)), args(move(args)) {}
 };
 
 class TermAST {
@@ -113,47 +121,7 @@ class TermAST {
 public:
 	TermAST(
 		int num,
-		char *id,
+		string id,
 		unique_ptr<FunctionCallAST> funcCall
 	) : num(num), id(id), funcCall(move(funcCall)) {}
-};
-
-
-/// IfExprAST - Expression class for if/then/else.
-class IfExprAST : public ExprAST {
-	unique_ptr<ExprAST> Cond, Then, Else;
-
-public:
-	IfExprAST(unique_ptr<ExprAST> Cond, unique_ptr<ExprAST> Then,
-		unique_ptr<ExprAST> Else)
-		: Cond(move(Cond)), Then(move(Then)), Else(move(Else)) {}
-
-	Value* codegen() override;
-};
-
-/// ForExprAST - Expression class for for/in.
-class ForExprAST : public ExprAST {
-	string VarName;
-	unique_ptr<ExprAST> Start, End, Step, Body;
-
-public:
-	ForExprAST(const string& VarName, unique_ptr<ExprAST> Start,
-		unique_ptr<ExprAST> End, unique_ptr<ExprAST> Step,
-		unique_ptr<ExprAST> Body)
-		: VarName(VarName), Start(move(Start)), End(move(End)),
-		Step(move(Step)), Body(move(Body)) {}
-
-	Value* codegen() override;
-};
-
-/// VarExprAST - Expression class for variable references
-class VarExprAST {
-	string name;
-	Type::BasicType type;
-	unique_ptr<ExprAST> init;
-	unique_ptr<FunctionAST> func;	// variables can "hold functions"
-
-public:
-	VarExprAST(string name, Type::BasicType type, unique_ptr<ExprAST> init)
-		: name(name), type(type), init(move(init), func(move(func))) {}
 };

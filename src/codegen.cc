@@ -1,3 +1,4 @@
+#if FALSE
 #include "codegen.h"
 #include "parser.h"
 #include "llvm/IR/Verifier.h"
@@ -13,11 +14,13 @@
 // Code Generation... the ast nodes' codegen functions are here
 //===----------------------------------------------------------------------===//
 
+using namespace llvm;
+
 std::unique_ptr<LLVMContext> TheContext;
 std::unique_ptr<Module> TheModule;
 std::unique_ptr<IRBuilder<>> Builder;
 std::map<std::string, AllocaInst*> NamedValues;
-std::map<std::string, std::unique_ptr<PrototypeAST>> FunctionProtos;
+std::map<std::string, std::unique_ptr<VarDecAST>> FunctionProtos;
 ExitOnError ExitOnErr;
 
 void InitializeModuleAndPassManager(const string &moduleName) {
@@ -118,7 +121,6 @@ AllocaInst* CreateEntryBlockAlloca(Function* TheFunction,
 	return TmpB.CreateAlloca(Type::getDoubleTy(*TheContext), nullptr, VarName);
 }
 
-#if FALSE
 Value* NumberExprAST::codegen() {
 	return ConstantFP::get(*TheContext, APFloat(Val));
 }
