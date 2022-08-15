@@ -1,6 +1,6 @@
 # Language
 
-A compiler using LLVM, YACC, and flex
+A compiler using LLVM, Bison, and flex
 
 ## TODO
 - Rust-style borrow-checking
