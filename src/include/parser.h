@@ -529,7 +529,7 @@ namespace yy {
     tok_f64 = 21,                  // "f64"
     tok_f32 = 22,                  // "f32"
     tok_f16 = 23,                  // "f16"
-    tok_eof = 24                   // tok_eof
+    tok_return = 24                // "return"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -572,7 +572,7 @@ namespace yy {
         S_tok_f64 = 21,                          // "f64"
         S_tok_f32 = 22,                          // "f32"
         S_tok_f16 = 23,                          // "f16"
-        S_tok_eof = 24,                          // tok_eof
+        S_tok_return = 24,                       // "return"
         S_YYACCEPT = 25,                         // $accept
         S_module = 26,                           // module
         S_stmts = 27,                            // stmts
@@ -1077,7 +1077,7 @@ switch (yykind)
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::YYUNDEF)
-                   || (token::tok_eq <= tok && tok <= token::tok_eof));
+                   || (token::tok_eq <= tok && tok <= token::tok_return));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1515,16 +1515,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_tok_eof (location_type l)
+      make_tok_return (location_type l)
       {
-        return symbol_type (token::tok_eof, std::move (l));
+        return symbol_type (token::tok_return, std::move (l));
       }
 #else
       static
       symbol_type
-      make_tok_eof (const location_type& l)
+      make_tok_return (const location_type& l)
       {
-        return symbol_type (token::tok_eof, l);
+        return symbol_type (token::tok_return, l);
       }
 #endif
 
@@ -1871,7 +1871,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 48,     ///< Last index in yytable_.
+      yylast_ = 55,     ///< Last index in yytable_.
       yynnts_ = 14,  ///< Number of nonterminal symbols.
       yyfinal_ = 3 ///< Termination state number.
     };

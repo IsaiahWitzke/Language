@@ -434,8 +434,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 /* %% [3.0] code to copy yytext_ptr to yytext[] goes here, if %array \ */\
 	(yy_c_buf_p) = yy_cp;
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 18
-#define YY_END_OF_BUFFER 19
+#define YY_NUM_RULES 19
+#define YY_END_OF_BUFFER 20
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -443,11 +443,12 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[28] =
+static const flex_int16_t yy_accept[34] =
     {   0,
-        0,    0,   19,   17,    1,    2,    7,    8,    6,   13,
-        5,   16,   11,   12,    4,   15,   15,    9,   10,    1,
-        2,   14,   16,   15,   15,    3,    0
+        0,    0,   20,   18,    1,    2,    7,    8,    6,   13,
+        5,   17,   11,   12,    4,   16,   16,   16,    9,   10,
+        1,    2,   14,   17,   16,   16,   16,    3,   16,   16,
+       16,   15,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -463,9 +464,9 @@ static const YY_CHAR yy_ec[256] =
        17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
         1,    1,    1,    1,   18,    1,   17,   17,   17,   17,
 
-       17,   17,   17,   17,   19,   17,   17,   17,   17,   17,
-       17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
-       17,   17,   20,    1,   21,    1,    1,    1,    1,    1,
+       19,   17,   17,   17,   20,   17,   17,   17,   17,   21,
+       17,   17,   17,   22,   17,   23,   24,   17,   17,   17,
+       17,   17,   25,    1,   26,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -482,45 +483,49 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[22] =
+static const YY_CHAR yy_meta[27] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    2,
-        2,    2,    1,    1,    1,    1,    3,    3,    3,    1,
-        1
+        2,    2,    1,    1,    1,    1,    3,    3,    3,    3,
+        3,    3,    3,    3,    1,    1
     } ;
 
-static const flex_int16_t yy_base[30] =
+static const flex_int16_t yy_base[36] =
     {   0,
-        0,    0,   32,   33,   29,   27,   33,   33,   33,   33,
-       13,    0,   33,   33,   33,    0,   16,   33,   33,   25,
-       23,   33,    0,    0,   14,    0,   33,   22,   20
+        0,    0,   42,   43,   39,   37,   43,   43,   43,   43,
+       23,    0,   43,   43,   43,    0,   26,   18,   43,   43,
+       34,   32,   43,    0,    0,   23,   10,    0,    8,    9,
+        9,    0,   43,   27,   25
     } ;
 
-static const flex_int16_t yy_def[30] =
+static const flex_int16_t yy_def[36] =
     {   0,
-       27,    1,   27,   27,   27,   27,   27,   27,   27,   27,
-       27,   28,   27,   27,   27,   29,   29,   27,   27,   27,
-       27,   27,   28,   29,   29,   29,    0,   27,   27
+       33,    1,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   34,   33,   33,   33,   35,   35,   35,   33,   33,
+       33,   33,   33,   34,   35,   35,   35,   35,   35,   35,
+       35,   35,    0,   33,   33
     } ;
 
-static const flex_int16_t yy_nxt[55] =
+static const flex_int16_t yy_nxt[70] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,    4,   12,
-       12,   12,   13,   14,   15,    4,   16,    4,   17,   18,
-       19,   24,   24,   23,   26,   21,   20,   25,   22,   21,
-       20,   27,    3,   27,   27,   27,   27,   27,   27,   27,
-       27,   27,   27,   27,   27,   27,   27,   27,   27,   27,
-       27,   27,   27,   27
+       12,   12,   13,   14,   15,    4,   16,    4,   16,   17,
+       16,   18,   16,   16,   19,   20,   25,   25,   24,   32,
+       31,   30,   29,   28,   22,   21,   27,   26,   23,   22,
+       21,   33,    3,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33
     } ;
 
-static const flex_int16_t yy_chk[55] =
+static const flex_int16_t yy_chk[70] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,   29,   29,   28,   25,   21,   20,   17,   11,    6,
-        5,    3,   27,   27,   27,   27,   27,   27,   27,   27,
-       27,   27,   27,   27,   27,   27,   27,   27,   27,   27,
-       27,   27,   27,   27
+        1,    1,    1,    1,    1,    1,   35,   35,   34,   31,
+       30,   29,   27,   26,   22,   21,   18,   17,   11,    6,
+        5,    3,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,   33,   33
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -529,10 +534,10 @@ static char *yy_last_accepting_cpos;
 extern int yy_flex_debug;
 int yy_flex_debug = 1;
 
-static const flex_int16_t yy_rule_linenum[18] =
+static const flex_int16_t yy_rule_linenum[19] =
     {   0,
        43,   44,   45,   46,   47,   48,   49,   50,   51,   52,
-       53,   54,   55,   56,   57,   58,   59
+       53,   54,   55,   56,   57,   58,   59,   60
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -553,21 +558,21 @@ char *yytext;
 #include "parser_driver.h"
 #include "parser.h"
 using Token = yy::parser::token;
-#line 557 "src/scanner.cc"
+#line 562 "src/scanner.cc"
 #define YY_NO_INPUT 1
 #line 15 "src/lexer/scanner.ll"
 	// A number symbol corresponding to the value in S.
 	yy::parser::symbol_type make_tok_inum(const std::string &s, const yy::parser::location_type& loc);
-#line 562 "src/scanner.cc"
+#line 567 "src/scanner.cc"
 #line 20 "src/lexer/scanner.ll"
 	// Code run each time a pattern is matched.
 	# define YY_USER_ACTION  loc.columns (yyleng);
-#line 566 "src/scanner.cc"
+#line 571 "src/scanner.cc"
 #line 29 "src/lexer/scanner.ll"
 	// Code run each time a pattern is matched.
 	# define YY_USER_ACTION  loc.columns (yyleng);
-#line 570 "src/scanner.cc"
-#line 571 "src/scanner.cc"
+#line 575 "src/scanner.cc"
+#line 576 "src/scanner.cc"
 
 #define INITIAL 0
 
@@ -856,7 +861,7 @@ YY_DECL
 	loc.step();
 
 
-#line 860 "src/scanner.cc"
+#line 865 "src/scanner.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -885,13 +890,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 28 )
+				if ( yy_current_state >= 34 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_current_state != 27 );
+		while ( yy_current_state != 33 );
 		yy_cp = (yy_last_accepting_cpos);
 		yy_current_state = (yy_last_accepting_state);
 
@@ -910,13 +915,13 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				fprintf( stderr, "--scanner backing up\n" );
-			else if ( yy_act < 18 )
+			else if ( yy_act < 19 )
 				fprintf( stderr, "--accepting rule at line %ld (\"%s\")\n",
 				         (long)yy_rule_linenum[yy_act], yytext );
-			else if ( yy_act == 18 )
+			else if ( yy_act == 19 )
 				fprintf( stderr, "--accepting default rule (\"%s\")\n",
 				         yytext );
-			else if ( yy_act == 19 )
+			else if ( yy_act == 20 )
 				fprintf( stderr, "--(end of buffer or a NUL)\n" );
 			else
 				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
@@ -961,7 +966,7 @@ return yy::parser::make_tok_minus(loc);
 case 6:
 YY_RULE_SETUP
 #line 48 "src/lexer/scanner.ll"
-return yy::parser::make_tok_plus(loc);
+cout << "SCANNING +" << endl; return yy::parser::make_tok_plus(loc);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -1006,28 +1011,33 @@ return yy::parser::make_tok_arrow(loc);
 case 15:
 YY_RULE_SETUP
 #line 57 "src/lexer/scanner.ll"
-return yy::parser::make_tok_identifier(yytext, loc);
+return yy::parser::make_tok_return(loc);
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 58 "src/lexer/scanner.ll"
-return make_tok_inum(yytext, loc);
+return yy::parser::make_tok_identifier(yytext, loc);
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 59 "src/lexer/scanner.ll"
-{ ECHO; }
-	YY_BREAK
-case YY_STATE_EOF(INITIAL):
-#line 60 "src/lexer/scanner.ll"
-return yy::parser::make_YYEOF(loc);
+return make_tok_inum(yytext, loc);
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 62 "src/lexer/scanner.ll"
+#line 60 "src/lexer/scanner.ll"
+{ ECHO; }
+	YY_BREAK
+case YY_STATE_EOF(INITIAL):
+#line 61 "src/lexer/scanner.ll"
+return yy::parser::make_YYEOF(loc);
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 63 "src/lexer/scanner.ll"
 ECHO;
 	YY_BREAK
-#line 1031 "src/scanner.cc"
+#line 1041 "src/scanner.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1346,7 +1356,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 28 )
+			if ( yy_current_state >= 34 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1379,11 +1389,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 28 )
+		if ( yy_current_state >= 34 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 27);
+	yy_is_jam = (yy_current_state == 33);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2132,7 +2142,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 62 "src/lexer/scanner.ll"
+#line 63 "src/lexer/scanner.ll"
 
 
 yy::parser::symbol_type make_tok_inum(const std::string &s, const yy::parser::location_type& loc) {

@@ -44,7 +44,7 @@ blank [ \t\r]
 "i64"			return yy::parser::make_tok_i64(loc);
 "="				return yy::parser::make_tok_eq(loc);
 "-"				return yy::parser::make_tok_minus(loc);
-"+"				return yy::parser::make_tok_plus(loc);
+"+"				cout << "SCANNING +" << endl; return yy::parser::make_tok_plus(loc);
 "("				return yy::parser::make_tok_lparen(loc);
 ")"				return yy::parser::make_tok_rparen(loc);
 "{"				return yy::parser::make_tok_lcurly(loc);
@@ -53,6 +53,7 @@ blank [ \t\r]
 ";"				return yy::parser::make_tok_semi_colon(loc);
 ","				return yy::parser::make_tok_coma(loc);
 "->"			return yy::parser::make_tok_arrow(loc);
+"return"		return yy::parser::make_tok_return(loc);
 {id}			return yy::parser::make_tok_identifier(yytext, loc);
 [1-9][0-9]*		return make_tok_inum(yytext, loc);
 .				{ ECHO; }

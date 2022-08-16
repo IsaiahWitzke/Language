@@ -56,7 +56,7 @@ using namespace std;
   tok_f64			"f64"
   tok_f32			"f32"
   tok_f16			"f16"
-  tok_eof			YYEOF
+  tok_return 		"return"
 ;
 %nterm <unique_ptr<ModuleAST>>			module;
 %nterm <vector<unique_ptr<StmtAST>>> 	stmts;
@@ -74,7 +74,7 @@ using namespace std;
 
 /* precedences */
 
-%left "-" "+"
+/* %left "-" "+" */
 
 %%
 
@@ -95,9 +95,10 @@ stmts	: %empty {
 		}
 		;
 
-stmt	: expr ";" { $$ = make_unique<StmtAST>(move($1), nullptr, nullptr); }
-		| variable_dec { $$ = make_unique<StmtAST>(nullptr, move($1), nullptr); }
-		| variable_def { $$ = make_unique<StmtAST>(nullptr, nullptr, move($1)); }
+stmt	: expr ";" 			{ $$ = make_unique<ExprStmtAST>(move($1)); }
+		| variable_dec 		{ $$ = make_unique<VarDecStmtAST>(move($1)); }
+		| variable_def 		{ $$ = make_unique<VarDefStmtAST>(move($1)); }
+		| "return" expr ";"	{ $$ = make_unique<ReturnStmtAST>(move($2)); }
 		;
 
 variable_def	: variable_dec "=" expr ";" {

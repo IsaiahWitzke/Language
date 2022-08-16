@@ -11,6 +11,10 @@
 using namespace std;
 
 class StmtAST;
+class ExprStmtAST;
+class VarDecStmtAST;
+class VarDefStmtAST;
+class ReturnStmtAST;
 class ExprAST;
 class VarDecAST;
 class VarDefAST;
@@ -38,15 +42,52 @@ public:
 };
 
 class StmtAST {
-	unique_ptr<ExprAST> expr;
-	unique_ptr<VarDecAST> varDec;
-	unique_ptr<VarDefAST> varDef;
 public:
-	StmtAST(
-		unique_ptr<ExprAST> e,
-		unique_ptr<VarDecAST> varDec,
+	StmtAST() {}
+	
+	virtual void codegen() {};
+};
+
+class ExprStmtAST : public StmtAST {
+public:
+	unique_ptr<ExprAST> expr;
+	ExprStmtAST(
+		unique_ptr<ExprAST> expr
+	) : expr(move(expr)) {}
+
+	void codegen() override {};
+};
+
+
+class VarDecStmtAST : public StmtAST {
+public:
+	unique_ptr<VarDecAST> varDec;
+
+	VarDecStmtAST(
+		unique_ptr<VarDecAST> varDec
+	) : varDec(move(varDec)) {}
+
+	void codegen() override {};
+};
+
+class VarDefStmtAST : public StmtAST {
+public:
+	unique_ptr<VarDefAST> varDef;
+	VarDefStmtAST(
 		unique_ptr<VarDefAST> varDef
-	) : expr(move(e)), varDec(move(varDec)), varDef(move(varDef)) {}
+	) : varDef(move(varDef)) {}
+
+	void codegen() override {};
+};
+
+class ReturnStmtAST : public StmtAST {
+public:
+	unique_ptr<ExprAST> expr;
+	ReturnStmtAST(
+		unique_ptr<ExprAST> expr
+	) : expr(move(expr)) {}
+
+	void codegen() override {};
 };
 
 class VarDecAST {
@@ -71,6 +112,7 @@ public:
 		vector<unique_ptr<StmtAST>> initFuncStmts
 	) : varDec(move(varDec)), initExpr(move(initExpr)), initFuncStmts(move(initFuncStmts)) {}
 };
+
 
 class TypeAST {
 	// can be just a "normal" type
