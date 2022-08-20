@@ -56,7 +56,8 @@
 class driver;
 using namespace std;
 
-#line 60 "src/include/parser.h"
+
+#line 61 "src/include/parser.h"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -196,7 +197,7 @@ using namespace std;
 #endif
 
 namespace yy {
-#line 200 "src/include/parser.h"
+#line 201 "src/include/parser.h"
 
 
 
@@ -424,14 +425,14 @@ namespace yy {
       // expr
       char dummy3[sizeof (unique_ptr<ExprAST>)];
 
-      // function_call
-      char dummy4[sizeof (unique_ptr<FunctionCallAST>)];
-
       // function_type
-      char dummy5[sizeof (unique_ptr<FunctionTypeAST>)];
+      char dummy4[sizeof (unique_ptr<FunctionTypeAST>)];
 
       // module
-      char dummy6[sizeof (unique_ptr<ModuleAST>)];
+      char dummy5[sizeof (unique_ptr<ModuleAST>)];
+
+      // stmts
+      char dummy6[sizeof (unique_ptr<ScopeAST>)];
 
       // stmt
       char dummy7[sizeof (unique_ptr<StmtAST>)];
@@ -451,11 +452,8 @@ namespace yy {
       // arg_list
       char dummy12[sizeof (vector<unique_ptr<ExprAST>>)];
 
-      // stmts
-      char dummy13[sizeof (vector<unique_ptr<StmtAST>>)];
-
       // variable_decs
-      char dummy14[sizeof (vector<unique_ptr<VarDecAST>>)];
+      char dummy13[sizeof (vector<unique_ptr<VarDecAST>>)];
     };
 
     /// The size of the largest semantic type.
@@ -585,8 +583,7 @@ namespace yy {
         S_function_type = 34,                    // function_type
         S_expr = 35,                             // expr
         S_term = 36,                             // term
-        S_function_call = 37,                    // function_call
-        S_arg_list = 38                          // arg_list
+        S_arg_list = 37                          // arg_list
       };
     };
 
@@ -635,16 +632,16 @@ namespace yy {
         value.move< unique_ptr<ExprAST> > (std::move (that.value));
         break;
 
-      case symbol_kind::S_function_call: // function_call
-        value.move< unique_ptr<FunctionCallAST> > (std::move (that.value));
-        break;
-
       case symbol_kind::S_function_type: // function_type
         value.move< unique_ptr<FunctionTypeAST> > (std::move (that.value));
         break;
 
       case symbol_kind::S_module: // module
         value.move< unique_ptr<ModuleAST> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_stmts: // stmts
+        value.move< unique_ptr<ScopeAST> > (std::move (that.value));
         break;
 
       case symbol_kind::S_stmt: // stmt
@@ -669,10 +666,6 @@ namespace yy {
 
       case symbol_kind::S_arg_list: // arg_list
         value.move< vector<unique_ptr<ExprAST>> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_stmts: // stmts
-        value.move< vector<unique_ptr<StmtAST>> > (std::move (that.value));
         break;
 
       case symbol_kind::S_variable_decs: // variable_decs
@@ -745,20 +738,6 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, unique_ptr<FunctionCallAST>&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const unique_ptr<FunctionCallAST>& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, unique_ptr<FunctionTypeAST>&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -780,6 +759,20 @@ namespace yy {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const unique_ptr<ModuleAST>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, unique_ptr<ScopeAST>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const unique_ptr<ScopeAST>& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -871,20 +864,6 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, vector<unique_ptr<StmtAST>>&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const vector<unique_ptr<StmtAST>>& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, vector<unique_ptr<VarDecAST>>&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -934,16 +913,16 @@ switch (yykind)
         value.template destroy< unique_ptr<ExprAST> > ();
         break;
 
-      case symbol_kind::S_function_call: // function_call
-        value.template destroy< unique_ptr<FunctionCallAST> > ();
-        break;
-
       case symbol_kind::S_function_type: // function_type
         value.template destroy< unique_ptr<FunctionTypeAST> > ();
         break;
 
       case symbol_kind::S_module: // module
         value.template destroy< unique_ptr<ModuleAST> > ();
+        break;
+
+      case symbol_kind::S_stmts: // stmts
+        value.template destroy< unique_ptr<ScopeAST> > ();
         break;
 
       case symbol_kind::S_stmt: // stmt
@@ -968,10 +947,6 @@ switch (yykind)
 
       case symbol_kind::S_arg_list: // arg_list
         value.template destroy< vector<unique_ptr<ExprAST>> > ();
-        break;
-
-      case symbol_kind::S_stmts: // stmts
-        value.template destroy< vector<unique_ptr<StmtAST>> > ();
         break;
 
       case symbol_kind::S_variable_decs: // variable_decs
@@ -1872,7 +1847,7 @@ switch (yykind)
     enum
     {
       yylast_ = 55,     ///< Last index in yytable_.
-      yynnts_ = 14,  ///< Number of nonterminal symbols.
+      yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 3 ///< Termination state number.
     };
 
@@ -1910,16 +1885,16 @@ switch (yykind)
         value.copy< unique_ptr<ExprAST> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_function_call: // function_call
-        value.copy< unique_ptr<FunctionCallAST> > (YY_MOVE (that.value));
-        break;
-
       case symbol_kind::S_function_type: // function_type
         value.copy< unique_ptr<FunctionTypeAST> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_module: // module
         value.copy< unique_ptr<ModuleAST> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_stmts: // stmts
+        value.copy< unique_ptr<ScopeAST> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_stmt: // stmt
@@ -1944,10 +1919,6 @@ switch (yykind)
 
       case symbol_kind::S_arg_list: // arg_list
         value.copy< vector<unique_ptr<ExprAST>> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_stmts: // stmts
-        value.copy< vector<unique_ptr<StmtAST>> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_variable_decs: // variable_decs
@@ -1997,16 +1968,16 @@ switch (yykind)
         value.move< unique_ptr<ExprAST> > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_function_call: // function_call
-        value.move< unique_ptr<FunctionCallAST> > (YY_MOVE (s.value));
-        break;
-
       case symbol_kind::S_function_type: // function_type
         value.move< unique_ptr<FunctionTypeAST> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_module: // module
         value.move< unique_ptr<ModuleAST> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_stmts: // stmts
+        value.move< unique_ptr<ScopeAST> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_stmt: // stmt
@@ -2031,10 +2002,6 @@ switch (yykind)
 
       case symbol_kind::S_arg_list: // arg_list
         value.move< vector<unique_ptr<ExprAST>> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_stmts: // stmts
-        value.move< vector<unique_ptr<StmtAST>> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_variable_decs: // variable_decs
@@ -2107,7 +2074,7 @@ switch (yykind)
 
 
 } // yy
-#line 2111 "src/include/parser.h"
+#line 2078 "src/include/parser.h"
 
 
 

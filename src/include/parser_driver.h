@@ -19,9 +19,10 @@ using namespace std;
 // Conducting the whole scanning and parsing of Calc++.
 class driver {
 public:
-	driver ();
+	driver (bool traceParsing, bool traceScanning);
 
-	map<string, int> variables;
+	map<string, VarDecAST*> variables;
+	map<string, VarDecAST*> functions;
 
 	unique_ptr<ModuleAST> result;
 	 // Run the parser on file F.  Return 0 on success.

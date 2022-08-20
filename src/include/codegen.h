@@ -21,7 +21,7 @@ extern std::unique_ptr<LLVMContext> TheContext;
 extern std::unique_ptr<Module> TheModule;
 extern std::unique_ptr<IRBuilder<>> Builder;
 extern std::map<std::string, AllocaInst*> NamedValues;
-extern std::map<std::string, std::unique_ptr<PrototypeAST>> FunctionProtos;
+extern std::map<std::string, VarDecAST*> FunctionProtos;
 extern ExitOnError ExitOnErr;
 
 /// to set up the codegen globals

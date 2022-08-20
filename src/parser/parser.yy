@@ -16,6 +16,7 @@
 
 class driver;
 using namespace std;
+
 }
 
 // The parsing context.
@@ -29,6 +30,7 @@ using namespace std;
 
 %code {
 #include "parser_driver.h"
+const ScopeAST *ScopeAST::curScope;
 }
 
 /* %printer { yyo << $$; } <*>; */
@@ -59,7 +61,7 @@ using namespace std;
   tok_return 		"return"
 ;
 %nterm <unique_ptr<ModuleAST>>			module;
-%nterm <vector<unique_ptr<StmtAST>>> 	stmts;
+%nterm <unique_ptr<ScopeAST>> 			stmts;
 %nterm <vector<unique_ptr<VarDecAST>>>	variable_decs;
 %nterm <vector<unique_ptr<ExprAST>>>	arg_list;
 %nterm <unique_ptr<StmtAST>>			stmt;
@@ -69,7 +71,6 @@ using namespace std;
 %nterm <unique_ptr<ExprAST>>			expr;
 %nterm <unique_ptr<TypeAST>> 			type;
 %nterm <unique_ptr<FunctionTypeAST>> 	function_type;
-%nterm <unique_ptr<FunctionCallAST>> 	function_call;
 %nterm								 	basic_type;
 
 /* precedences */
@@ -87,10 +88,11 @@ module	: stmts	{
 		;
 
 stmts	: %empty {
-			$$ = vector<unique_ptr<StmtAST>>();
+			$$ = make_unique<ScopeAST>(ScopeAST::curScope);	// the parent scope for this sequence of stmts is the curScope
+			ScopeAST::curScope = $$.get();						// and now the curScope has changed
 		}
 		| stmts stmt {
-			$1.push_back(move($2));
+			$1->addStmt(move($2));
 			$$ = move($1);
 		}
 		;
@@ -102,11 +104,15 @@ stmt	: expr ";" 			{ $$ = make_unique<ExprStmtAST>(move($1)); }
 		;
 
 variable_def	: variable_dec "=" expr ";" {
-					$$ = make_unique<VarDefAST>(move($1), move($3), vector<unique_ptr<StmtAST>>());
+					$$ = make_unique<VarDefAST>(move($1), move($3), make_unique<ScopeAST>(ScopeAST::curScope->parentScope));
 				}
 				/* function definition */
 				| variable_dec "=" "{" stmts "}" {
 					$$ = make_unique<VarDefAST>(move($1), unique_ptr<ExprAST>(nullptr), move($4));
+					// the "stmts" part updated the curScope reference, it is time to change it back
+					cout << "hi" << endl;
+					ScopeAST::curScope = ScopeAST::curScope->parentScope;
+					cout << "there" << endl;
 				}
 
 
@@ -138,21 +144,16 @@ function_type 	: "(" variable_decs ")" "->" type {
 				}
 				;
 
-expr 	: term 			{ $$ = make_unique<ExprAST>(move($1), nullptr, 0, nullptr); }
-		| expr "+" term { $$ = make_unique<ExprAST>(nullptr, move($1), '+', move($3)); }
+expr 	: term 			{ $$ = make_unique<TermExprAST>(move($1)); }
+		| expr "+" term { $$ = make_unique<OpExprAST>(move($1), '+', move($3)); }
 		/* | expr "-" term { $$ = make_unique<ExprAST>(nullptr, move($1), '-', move($3)); } */
 		;
 
-term	: tok_inum			{ $$ = make_unique<TermAST>($1, "", unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
-		| "(" expr ")" 		{ $$ = make_unique<TermAST>(0, "", unique_ptr<FunctionCallAST>(nullptr), move($2)); }
-		| tok_identifier	{ $$ = make_unique<TermAST>(0, $1, unique_ptr<FunctionCallAST>(nullptr), unique_ptr<ExprAST>(nullptr)); }
-		| function_call		{ $$ = make_unique<TermAST>(0, nullptr, move($1), unique_ptr<ExprAST>(nullptr)); }
+term	: tok_inum				{ $$ = make_unique<NumLiteralTermAST>($1); }
+		| "(" expr ")" 			{ $$ = make_unique<ParenExprTermAST>(move($2)); }
+		| tok_identifier		{ $$ = make_unique<IdTermAST>($1); }
+		| term "(" arg_list ")"	{ $$ = make_unique<FuncCallTermAST>(move($1), move($3)); }
 		;
-
-/* will make sure later on in contextual analysis that typeof(expr) is a func */
-function_call	: term "(" arg_list ")" {
-					$$ = make_unique<FunctionCallAST>(move($1), move($3));
-				}
 
 arg_list 	: expr {
 				$$ = vector<unique_ptr<ExprAST>>();
@@ -168,3 +169,4 @@ arg_list 	: expr {
 void yy::parser::error (const location_type& l, const std::string& m) {
 	std::cerr << l << ": " << m << '\n';
 }
+
