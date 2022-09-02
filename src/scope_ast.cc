@@ -1,9 +1,9 @@
 #include "ast.h"
 
-void ScopeAST::addStmt(unique_ptr<StmtAST> stmt) {
+void ScopeAST::tryAddVarDecToNamedValues(StmtAST *stmt) {
 	const VarDecAST* varDec;	// will be populated with the varDec info (if it exists in the given stmt)
-	const VarDecStmtAST* varDecStmt = dynamic_cast<const VarDecStmtAST*>(stmt.get());
-	const VarDefStmtAST* varDefStmt = dynamic_cast<const VarDefStmtAST*>(stmt.get());
+	const VarDecStmtAST* varDecStmt = dynamic_cast<const VarDecStmtAST*>(stmt);
+	const VarDefStmtAST* varDefStmt = dynamic_cast<const VarDefStmtAST*>(stmt);
 	if (varDecStmt) {
 		// can we do the conversion to a varDec? if so, add it to the scoped namedValues map...
 		varDec = varDecStmt->varDec.get();
@@ -19,11 +19,18 @@ void ScopeAST::addStmt(unique_ptr<StmtAST> stmt) {
 		return;
 	}
 
-	namedValues[varDec->name] = varDec;
+	// namedValues[varDec->name] = varDec;
+}
+
+void ScopeAST::addStmt(unique_ptr<StmtAST> stmt) {
+	tryAddVarDecToNamedValues(stmt.get());
+
+	stmt->scope = this;
+	this->stmts.push_back(move(stmt));
 }
 
 const VarDecAST* ScopeAST::search(const string& name) const {
-	if (namedValues.count(name)) 		return (*namedValues.find(name)).second;
+	if (namedValues.count(name)) 		return nullptr; // (*namedValues.find(name)).second;
 	else if (parentScope == nullptr)	return nullptr;
 	else								return parentScope->search(name);
 }

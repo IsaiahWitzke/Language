@@ -67,7 +67,7 @@ const ScopeAST *ScopeAST::curScope;
 %nterm <unique_ptr<StmtAST>>			stmt;
 %nterm <unique_ptr<VarDecAST>> 			variable_dec;
 %nterm <unique_ptr<VarDefAST>>			variable_def;
-%nterm <unique_ptr<TermAST>>			term;
+%nterm <unique_ptr<ExprAST>>			term;
 %nterm <unique_ptr<ExprAST>>			expr;
 %nterm <unique_ptr<TypeAST>> 			type;
 %nterm <unique_ptr<FunctionTypeAST>> 	function_type;
@@ -88,7 +88,7 @@ module	: stmts	{
 		;
 
 stmts	: %empty {
-			$$ = make_unique<ScopeAST>(ScopeAST::curScope);	// the parent scope for this sequence of stmts is the curScope
+			$$ = make_unique<ScopeAST>(ScopeAST::curScope);		// the parent scope for this sequence of stmts is the curScope
 			ScopeAST::curScope = $$.get();						// and now the curScope has changed
 		}
 		| stmts stmt {
@@ -110,9 +110,7 @@ variable_def	: variable_dec "=" expr ";" {
 				| variable_dec "=" "{" stmts "}" {
 					$$ = make_unique<VarDefAST>(move($1), unique_ptr<ExprAST>(nullptr), move($4));
 					// the "stmts" part updated the curScope reference, it is time to change it back
-					cout << "hi" << endl;
 					ScopeAST::curScope = ScopeAST::curScope->parentScope;
-					cout << "there" << endl;
 				}
 
 
@@ -131,8 +129,8 @@ variable_decs	: %empty {
 				}
 				;
 
-type	: basic_type	{ $$ = make_unique<TypeAST>(yy::parser::token::tok_i64, unique_ptr<FunctionTypeAST>(nullptr)); }
-		| function_type	{ $$ = make_unique<TypeAST>(0, move($1)); }
+type	: basic_type	{ $$ = make_unique<BasicTypeAST>(yy::parser::token::tok_i64); }
+		| function_type	{ $$ = move($1); }
 		/* | tok_identifier {;} */
 		;
 
@@ -144,15 +142,15 @@ function_type 	: "(" variable_decs ")" "->" type {
 				}
 				;
 
-expr 	: term 			{ $$ = make_unique<TermExprAST>(move($1)); }
+expr 	: term 			{ $$ = move($1); }
 		| expr "+" term { $$ = make_unique<OpExprAST>(move($1), '+', move($3)); }
 		/* | expr "-" term { $$ = make_unique<ExprAST>(nullptr, move($1), '-', move($3)); } */
 		;
 
-term	: tok_inum				{ $$ = make_unique<NumLiteralTermAST>($1); }
-		| "(" expr ")" 			{ $$ = make_unique<ParenExprTermAST>(move($2)); }
-		| tok_identifier		{ $$ = make_unique<IdTermAST>($1); }
-		| term "(" arg_list ")"	{ $$ = make_unique<FuncCallTermAST>(move($1), move($3)); }
+term	: tok_inum				{ $$ = make_unique<NumLiteralAST>($1); }
+		| "(" expr ")" 			{ $$ = move($2); }
+		| tok_identifier		{ $$ = make_unique<IdExprAST>($1); }
+		| term "(" arg_list ")"	{ $$ = make_unique<FuncCallAST>(move($1), move($3)); }
 		;
 
 arg_list 	: expr {

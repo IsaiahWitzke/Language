@@ -423,6 +423,7 @@ namespace yy {
       char dummy2[sizeof (std::string)];
 
       // expr
+      // term
       char dummy3[sizeof (unique_ptr<ExprAST>)];
 
       // function_type
@@ -437,23 +438,20 @@ namespace yy {
       // stmt
       char dummy7[sizeof (unique_ptr<StmtAST>)];
 
-      // term
-      char dummy8[sizeof (unique_ptr<TermAST>)];
-
       // type
-      char dummy9[sizeof (unique_ptr<TypeAST>)];
+      char dummy8[sizeof (unique_ptr<TypeAST>)];
 
       // variable_dec
-      char dummy10[sizeof (unique_ptr<VarDecAST>)];
+      char dummy9[sizeof (unique_ptr<VarDecAST>)];
 
       // variable_def
-      char dummy11[sizeof (unique_ptr<VarDefAST>)];
+      char dummy10[sizeof (unique_ptr<VarDefAST>)];
 
       // arg_list
-      char dummy12[sizeof (vector<unique_ptr<ExprAST>>)];
+      char dummy11[sizeof (vector<unique_ptr<ExprAST>>)];
 
       // variable_decs
-      char dummy13[sizeof (vector<unique_ptr<VarDecAST>>)];
+      char dummy12[sizeof (vector<unique_ptr<VarDecAST>>)];
     };
 
     /// The size of the largest semantic type.
@@ -629,6 +627,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.move< unique_ptr<ExprAST> > (std::move (that.value));
         break;
 
@@ -646,10 +645,6 @@ namespace yy {
 
       case symbol_kind::S_stmt: // stmt
         value.move< unique_ptr<StmtAST> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_term: // term
-        value.move< unique_ptr<TermAST> > (std::move (that.value));
         break;
 
       case symbol_kind::S_type: // type
@@ -794,20 +789,6 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, unique_ptr<TermAST>&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const unique_ptr<TermAST>& v, const location_type& l)
-        : Base (t)
-        , value (v)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, unique_ptr<TypeAST>&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -910,6 +891,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.template destroy< unique_ptr<ExprAST> > ();
         break;
 
@@ -927,10 +909,6 @@ switch (yykind)
 
       case symbol_kind::S_stmt: // stmt
         value.template destroy< unique_ptr<StmtAST> > ();
-        break;
-
-      case symbol_kind::S_term: // term
-        value.template destroy< unique_ptr<TermAST> > ();
         break;
 
       case symbol_kind::S_type: // type
@@ -1882,6 +1860,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.copy< unique_ptr<ExprAST> > (YY_MOVE (that.value));
         break;
 
@@ -1899,10 +1878,6 @@ switch (yykind)
 
       case symbol_kind::S_stmt: // stmt
         value.copy< unique_ptr<StmtAST> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_term: // term
-        value.copy< unique_ptr<TermAST> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_type: // type
@@ -1965,6 +1940,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.move< unique_ptr<ExprAST> > (YY_MOVE (s.value));
         break;
 
@@ -1982,10 +1958,6 @@ switch (yykind)
 
       case symbol_kind::S_stmt: // stmt
         value.move< unique_ptr<StmtAST> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_term: // term
-        value.move< unique_ptr<TermAST> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_type: // type
@@ -2074,7 +2046,7 @@ switch (yykind)
 
 
 } // yy
-#line 2078 "src/include/parser.h"
+#line 2050 "src/include/parser.h"
 
 
 

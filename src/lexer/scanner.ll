@@ -24,6 +24,7 @@ using Token = yy::parser::token;
 id    [a-zA-Z][_a-zA-Z_0-9]*
 int   [0-9]+
 blank [ \t\r]
+comment \/\/.*
 
 %{
 	// Code run each time a pattern is matched.
@@ -40,11 +41,12 @@ blank [ \t\r]
 %}
 
 {blank}+		loc.step ();
+{comment}		loc.step ();
 \n+				loc.lines (yyleng); loc.step ();
 "i64"			return yy::parser::make_tok_i64(loc);
 "="				return yy::parser::make_tok_eq(loc);
 "-"				return yy::parser::make_tok_minus(loc);
-"+"				cout << "SCANNING +" << endl; return yy::parser::make_tok_plus(loc);
+"+"				return yy::parser::make_tok_plus(loc);
 "("				return yy::parser::make_tok_lparen(loc);
 ")"				return yy::parser::make_tok_rparen(loc);
 "{"				return yy::parser::make_tok_lcurly(loc);

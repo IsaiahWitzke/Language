@@ -20,14 +20,14 @@ int main (int argc, char *argv[]) {
 			} else {
 				outfile = argv[++i];
 			}
-		} else if (!drv.parse (argv[i])) {
+		} else if (!drv.parse (argv[i])) {	// actually try to parse the given filename
 			cout << drv.result->name << '\n';
 		} else {
 			res = 1;
 		}
 	}
-
-	
-
+	drv.result->codegen();	// try to codegen the IR
+	outputObjCode(outfile);	// try to output
+	TheModule->print(errs(), nullptr);	// try to print the IR
 	return res;
 }

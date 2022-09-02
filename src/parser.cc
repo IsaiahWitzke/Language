@@ -217,6 +217,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.YY_MOVE_OR_COPY< unique_ptr<ExprAST> > (YY_MOVE (that.value));
         break;
 
@@ -234,10 +235,6 @@ namespace yy {
 
       case symbol_kind::S_stmt: // stmt
         value.YY_MOVE_OR_COPY< unique_ptr<StmtAST> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_term: // term
-        value.YY_MOVE_OR_COPY< unique_ptr<TermAST> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_type: // type
@@ -284,6 +281,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.move< unique_ptr<ExprAST> > (YY_MOVE (that.value));
         break;
 
@@ -301,10 +299,6 @@ namespace yy {
 
       case symbol_kind::S_stmt: // stmt
         value.move< unique_ptr<StmtAST> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_term: // term
-        value.move< unique_ptr<TermAST> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_type: // type
@@ -351,6 +345,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.copy< unique_ptr<ExprAST> > (that.value);
         break;
 
@@ -368,10 +363,6 @@ namespace yy {
 
       case symbol_kind::S_stmt: // stmt
         value.copy< unique_ptr<StmtAST> > (that.value);
-        break;
-
-      case symbol_kind::S_term: // term
-        value.copy< unique_ptr<TermAST> > (that.value);
         break;
 
       case symbol_kind::S_type: // type
@@ -417,6 +408,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         value.move< unique_ptr<ExprAST> > (that.value);
         break;
 
@@ -434,10 +426,6 @@ namespace yy {
 
       case symbol_kind::S_stmt: // stmt
         value.move< unique_ptr<StmtAST> > (that.value);
-        break;
-
-      case symbol_kind::S_term: // term
-        value.move< unique_ptr<TermAST> > (that.value);
         break;
 
       case symbol_kind::S_type: // type
@@ -738,6 +726,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_expr: // expr
+      case symbol_kind::S_term: // term
         yylhs.value.emplace< unique_ptr<ExprAST> > ();
         break;
 
@@ -755,10 +744,6 @@ namespace yy {
 
       case symbol_kind::S_stmt: // stmt
         yylhs.value.emplace< unique_ptr<StmtAST> > ();
-        break;
-
-      case symbol_kind::S_term: // term
-        yylhs.value.emplace< unique_ptr<TermAST> > ();
         break;
 
       case symbol_kind::S_type: // type
@@ -807,16 +792,16 @@ namespace yy {
 			yylhs.value.as < unique_ptr<ModuleAST> > () = make_unique<ModuleAST>("test", move(yystack_[0].value.as < unique_ptr<ScopeAST> > ()));
 			drv.result = move(yylhs.value.as < unique_ptr<ModuleAST> > ());
 		}
-#line 811 "src/parser.cc"
+#line 796 "src/parser.cc"
     break;
 
   case 3: // stmts: %empty
 #line 90 "src/parser/parser.yy"
                  {
-			yylhs.value.as < unique_ptr<ScopeAST> > () = make_unique<ScopeAST>(ScopeAST::curScope);	// the parent scope for this sequence of stmts is the curScope
+			yylhs.value.as < unique_ptr<ScopeAST> > () = make_unique<ScopeAST>(ScopeAST::curScope);		// the parent scope for this sequence of stmts is the curScope
 			ScopeAST::curScope = yylhs.value.as < unique_ptr<ScopeAST> > ().get();						// and now the curScope has changed
 		}
-#line 820 "src/parser.cc"
+#line 805 "src/parser.cc"
     break;
 
   case 4: // stmts: stmts stmt
@@ -825,31 +810,31 @@ namespace yy {
 			yystack_[1].value.as < unique_ptr<ScopeAST> > ()->addStmt(move(yystack_[0].value.as < unique_ptr<StmtAST> > ()));
 			yylhs.value.as < unique_ptr<ScopeAST> > () = move(yystack_[1].value.as < unique_ptr<ScopeAST> > ());
 		}
-#line 829 "src/parser.cc"
+#line 814 "src/parser.cc"
     break;
 
   case 5: // stmt: expr ";"
 #line 100 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<ExprStmtAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 835 "src/parser.cc"
+#line 820 "src/parser.cc"
     break;
 
   case 6: // stmt: variable_dec
 #line 101 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<VarDecStmtAST>(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ())); }
-#line 841 "src/parser.cc"
+#line 826 "src/parser.cc"
     break;
 
   case 7: // stmt: variable_def
 #line 102 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<VarDefStmtAST>(move(yystack_[0].value.as < unique_ptr<VarDefAST> > ())); }
-#line 847 "src/parser.cc"
+#line 832 "src/parser.cc"
     break;
 
   case 8: // stmt: "return" expr ";"
 #line 103 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<ReturnStmtAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 853 "src/parser.cc"
+#line 838 "src/parser.cc"
     break;
 
   case 9: // variable_def: variable_dec "=" expr ";"
@@ -857,7 +842,7 @@ namespace yy {
                                             {
 					yylhs.value.as < unique_ptr<VarDefAST> > () = make_unique<VarDefAST>(move(yystack_[3].value.as < unique_ptr<VarDecAST> > ()), move(yystack_[1].value.as < unique_ptr<ExprAST> > ()), make_unique<ScopeAST>(ScopeAST::curScope->parentScope));
 				}
-#line 861 "src/parser.cc"
+#line 846 "src/parser.cc"
     break;
 
   case 10: // variable_def: variable_dec "=" "{" stmts "}"
@@ -865,120 +850,118 @@ namespace yy {
                                                                  {
 					yylhs.value.as < unique_ptr<VarDefAST> > () = make_unique<VarDefAST>(move(yystack_[4].value.as < unique_ptr<VarDecAST> > ()), unique_ptr<ExprAST>(nullptr), move(yystack_[1].value.as < unique_ptr<ScopeAST> > ()));
 					// the "stmts" part updated the curScope reference, it is time to change it back
-					cout << "hi" << endl;
 					ScopeAST::curScope = ScopeAST::curScope->parentScope;
-					cout << "there" << endl;
 				}
-#line 873 "src/parser.cc"
+#line 856 "src/parser.cc"
     break;
 
   case 11: // variable_dec: tok_identifier ":" type
-#line 119 "src/parser/parser.yy"
+#line 117 "src/parser/parser.yy"
                                                 {yylhs.value.as < unique_ptr<VarDecAST> > () = make_unique<VarDecAST>(yystack_[2].value.as < std::string > (), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));}
-#line 879 "src/parser.cc"
+#line 862 "src/parser.cc"
     break;
 
   case 12: // variable_decs: %empty
-#line 122 "src/parser/parser.yy"
+#line 120 "src/parser/parser.yy"
                          {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 				}
-#line 887 "src/parser.cc"
+#line 870 "src/parser.cc"
     break;
 
   case 13: // variable_decs: variable_dec
-#line 125 "src/parser/parser.yy"
+#line 123 "src/parser/parser.yy"
                                                {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 896 "src/parser.cc"
+#line 879 "src/parser.cc"
     break;
 
   case 14: // variable_decs: variable_decs "," variable_dec
-#line 129 "src/parser/parser.yy"
+#line 127 "src/parser/parser.yy"
                                                                        {
 					yystack_[2].value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 904 "src/parser.cc"
+#line 887 "src/parser.cc"
     break;
 
   case 15: // type: basic_type
-#line 134 "src/parser/parser.yy"
-                        { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<TypeAST>(yy::parser::token::tok_i64, unique_ptr<FunctionTypeAST>(nullptr)); }
-#line 910 "src/parser.cc"
+#line 132 "src/parser/parser.yy"
+                        { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<BasicTypeAST>(yy::parser::token::tok_i64); }
+#line 893 "src/parser.cc"
     break;
 
   case 16: // type: function_type
-#line 135 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<TypeAST>(0, move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ())); }
-#line 916 "src/parser.cc"
+#line 133 "src/parser/parser.yy"
+                                { yylhs.value.as < unique_ptr<TypeAST> > () = move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ()); }
+#line 899 "src/parser.cc"
     break;
 
   case 25: // function_type: "(" variable_decs ")" "->" type
-#line 142 "src/parser/parser.yy"
+#line 140 "src/parser/parser.yy"
                                                   {
 					yylhs.value.as < unique_ptr<FunctionTypeAST> > () = make_unique<FunctionTypeAST>(move(yystack_[3].value.as < vector<unique_ptr<VarDecAST>> > ()), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));
 				}
-#line 924 "src/parser.cc"
+#line 907 "src/parser.cc"
     break;
 
   case 26: // expr: term
-#line 147 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<TermExprAST>(move(yystack_[0].value.as < unique_ptr<TermAST> > ())); }
-#line 930 "src/parser.cc"
+#line 145 "src/parser/parser.yy"
+                                { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[0].value.as < unique_ptr<ExprAST> > ()); }
+#line 913 "src/parser.cc"
     break;
 
   case 27: // expr: expr "+" term
-#line 148 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<OpExprAST>(move(yystack_[2].value.as < unique_ptr<ExprAST> > ()), '+', move(yystack_[0].value.as < unique_ptr<TermAST> > ())); }
-#line 936 "src/parser.cc"
+#line 146 "src/parser/parser.yy"
+                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<OpExprAST>(move(yystack_[2].value.as < unique_ptr<ExprAST> > ()), '+', move(yystack_[0].value.as < unique_ptr<ExprAST> > ())); }
+#line 919 "src/parser.cc"
     break;
 
   case 28: // term: tok_inum
-#line 152 "src/parser/parser.yy"
-                                                { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<NumLiteralTermAST>(yystack_[0].value.as < int > ()); }
-#line 942 "src/parser.cc"
+#line 150 "src/parser/parser.yy"
+                                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<NumLiteralAST>(yystack_[0].value.as < int > ()); }
+#line 925 "src/parser.cc"
     break;
 
   case 29: // term: "(" expr ")"
-#line 153 "src/parser/parser.yy"
-                                                { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<ParenExprTermAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 948 "src/parser.cc"
+#line 151 "src/parser/parser.yy"
+                                                { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[1].value.as < unique_ptr<ExprAST> > ()); }
+#line 931 "src/parser.cc"
     break;
 
   case 30: // term: tok_identifier
-#line 154 "src/parser/parser.yy"
-                                                { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<IdTermAST>(yystack_[0].value.as < std::string > ()); }
-#line 954 "src/parser.cc"
+#line 152 "src/parser/parser.yy"
+                                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<IdExprAST>(yystack_[0].value.as < std::string > ()); }
+#line 937 "src/parser.cc"
     break;
 
   case 31: // term: term "(" arg_list ")"
-#line 155 "src/parser/parser.yy"
-                                        { yylhs.value.as < unique_ptr<TermAST> > () = make_unique<FuncCallTermAST>(move(yystack_[3].value.as < unique_ptr<TermAST> > ()), move(yystack_[1].value.as < vector<unique_ptr<ExprAST>> > ())); }
-#line 960 "src/parser.cc"
+#line 153 "src/parser/parser.yy"
+                                        { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<FuncCallAST>(move(yystack_[3].value.as < unique_ptr<ExprAST> > ()), move(yystack_[1].value.as < vector<unique_ptr<ExprAST>> > ())); }
+#line 943 "src/parser.cc"
     break;
 
   case 32: // arg_list: expr
-#line 158 "src/parser/parser.yy"
+#line 156 "src/parser/parser.yy"
                        {
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 			}
-#line 969 "src/parser.cc"
+#line 952 "src/parser.cc"
     break;
 
   case 33: // arg_list: arg_list "," expr
-#line 162 "src/parser/parser.yy"
+#line 160 "src/parser/parser.yy"
                                             {
 				yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = move(yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ());
 			}
-#line 978 "src/parser.cc"
+#line 961 "src/parser.cc"
     break;
 
 
-#line 982 "src/parser.cc"
+#line 965 "src/parser.cc"
 
             default:
               break;
@@ -1534,9 +1517,9 @@ namespace yy {
   parser::yyrline_[] =
   {
        0,    84,    84,    90,    94,   100,   101,   102,   103,   106,
-     110,   119,   122,   125,   129,   134,   135,   139,   139,   139,
-     139,   139,   139,   139,   139,   142,   147,   148,   152,   153,
-     154,   155,   158,   162
+     110,   117,   120,   123,   127,   132,   133,   137,   137,   137,
+     137,   137,   137,   137,   137,   140,   145,   146,   150,   151,
+     152,   153,   156,   160
   };
 
   void
@@ -1568,9 +1551,9 @@ namespace yy {
 
 
 } // yy
-#line 1572 "src/parser.cc"
+#line 1555 "src/parser.cc"
 
-#line 167 "src/parser/parser.yy"
+#line 165 "src/parser/parser.yy"
 
 
 void yy::parser::error (const location_type& l, const std::string& m) {

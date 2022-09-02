@@ -12,19 +12,27 @@
 
 using namespace llvm;
 using namespace llvm::sys;
+using namespace std;
 
 //===----------------------------------------------------------------------===//
 // Code Generation
 //===----------------------------------------------------------------------===//
 
-extern std::unique_ptr<LLVMContext> TheContext;
-extern std::unique_ptr<Module> TheModule;
-extern std::unique_ptr<IRBuilder<>> Builder;
-extern std::map<std::string, AllocaInst*> NamedValues;
-extern std::map<std::string, VarDecAST*> FunctionProtos;
+extern unique_ptr<LLVMContext> TheContext;
+extern unique_ptr<Module> TheModule;
+extern unique_ptr<IRBuilder<>> Builder;
+extern map<string, AllocaInst*> NamedValues;
+// extern map<string, VarDecAST*> FunctionProtos;
 extern ExitOnError ExitOnErr;
 
 /// to set up the codegen globals
 void InitializeModuleAndPassManager();
 
-bool outputObjCode(const std::string &fName);
+bool outputObjCode(const string& fName);
+
+/// CreateEntryBlockAlloca - Create an alloca instruction in the entry block of
+/// the function.  This is used for mutable variables etc.
+AllocaInst* CreateEntryBlockAlloca(
+	Function* TheFunction,
+	string& VarName
+);

@@ -1,16 +1,20 @@
 #pragma once
 
 #include <memory>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
+#include "codegen.h"
 #include "llvm/IR/Value.h"
+#include "llvm/IR/Module.h"
 
 //===----------------------------------------------------------------------===//
 // Abstract Syntax Tree (aka Parse Tree)
 //===----------------------------------------------------------------------===//
 
 using namespace std;
+using namespace llvm;
 
 class ScopeAST;
 class StmtAST;
@@ -23,9 +27,7 @@ class VarDecAST;
 class VarDefAST;
 class TypeAST;
 class FunctionTypeAST;
-class TermAST;
-
-
+class BasicTypeAST;
 
 /// ModuleAST - The parent AST from which all actual code lives
 class ModuleAST {
@@ -36,13 +38,17 @@ public:
 		string name,
 		unique_ptr<ScopeAST> scope
 	) : name(name), scope(move(scope)) {}
+
+	void codegen();
 };
 
 class StmtAST {
 public:
 	StmtAST() {}
-	
-	virtual llvm::Value *codegen() { return nullptr; };
+
+	ScopeAST* scope;
+
+	virtual llvm::Value* codegen() { return nullptr; };
 };
 
 class ExprStmtAST : public StmtAST {
@@ -52,7 +58,7 @@ public:
 		unique_ptr<ExprAST> expr
 	) : expr(move(expr)) {}
 
-	llvm::Value *codegen() override { return nullptr; };
+	llvm::Value* codegen() override { return nullptr; };
 };
 
 
@@ -64,7 +70,7 @@ public:
 		unique_ptr<VarDecAST> varDec
 	) : varDec(move(varDec)) {}
 
-	llvm::Value *codegen() override { return nullptr; }
+	Value* codegen() override;
 };
 
 class VarDefStmtAST : public StmtAST {
@@ -74,7 +80,7 @@ public:
 		unique_ptr<VarDefAST> varDef
 	) : varDef(move(varDef)) {}
 
-	llvm::Value *codegen() override { return nullptr; }
+	Value* codegen() override;
 };
 
 class ReturnStmtAST : public StmtAST {
@@ -84,7 +90,7 @@ public:
 		unique_ptr<ExprAST> expr
 	) : expr(move(expr)) {}
 
-	llvm::Value *codegen() override { return nullptr; }
+	llvm::Value* codegen() override;
 };
 
 class VarDecAST {
@@ -96,6 +102,10 @@ public:
 		string name,
 		unique_ptr<TypeAST> type
 	) : name(name), type(move(type)) {}
+	bool isFuncType();
+	FunctionTypeAST* getFunctionType();
+	BasicTypeAST* getBasicType();
+	Value* codegen();
 };
 
 class VarDefAST {
@@ -108,24 +118,26 @@ public:
 		unique_ptr<ExprAST> initExpr,
 		unique_ptr<ScopeAST> functionScope
 	) : varDec(move(varDec)), initExpr(move(initExpr)), functionScope(move(functionScope)) {}
+
+	Value* codegen();
 };
 
 class TypeAST {
-	// can be just a "normal" type
-	int basicType;
-	// or we can store the type of a function
-	unique_ptr<FunctionTypeAST> functionType;
 public:
-	TypeAST(
-		int basicType,
-		unique_ptr<FunctionTypeAST> functionType
-	) : basicType(basicType), functionType(move(functionType)) {}
+	TypeAST() {}
+	virtual ~TypeAST() = default;
 };
 
-class FunctionTypeAST {
+class BasicTypeAST : public TypeAST {
+public:
+	int basicType;
+	BasicTypeAST(int basicType) : basicType(basicType) {}
+};
+
+class FunctionTypeAST : public TypeAST {
+public:
 	vector<unique_ptr<VarDecAST>> params;
 	unique_ptr<TypeAST> returnType;
-public:
 	FunctionTypeAST(
 		vector<unique_ptr<VarDecAST>> params,
 		unique_ptr<TypeAST> returnType
@@ -135,74 +147,58 @@ public:
 class ExprAST {
 public:
 	ExprAST() {}
-	virtual llvm::Value *codegen() = 0;
+	virtual llvm::Value* codegen() = 0;
 };
 
 class OpExprAST : public ExprAST {
 public:
 	unique_ptr<ExprAST> lhsExpr;
 	char opcode;
-	unique_ptr<TermAST> rhsTerm;
+	unique_ptr<ExprAST> rhsExpr;
 	OpExprAST(
 		unique_ptr<ExprAST> lhsExpr,
 		char opcode,
-		unique_ptr<TermAST> rhsTerm
-	) : lhsExpr(move(lhsExpr)), opcode(opcode), rhsTerm(move(rhsTerm)) {}
+		unique_ptr<ExprAST> rhsExpr
+	) : lhsExpr(move(lhsExpr)), opcode(opcode), rhsExpr(move(rhsExpr)) {
+		cout << "OP EXPR: " << opcode << endl;
+	}
 
-	llvm::Value *codegen() override;
+	Value* codegen() override;
 };
 
-class TermExprAST : public ExprAST {
-public:
-	unique_ptr<TermAST> term;
-	TermExprAST(
-		unique_ptr<TermAST> term
-	) : term(move(term)) {}
-
-	llvm::Value *codegen() override;
-};
-
-class TermAST {
-public:
-	TermAST() {}
-	virtual llvm::Value *codegen() { return nullptr; };
-};
-
-class NumLiteralTermAST : public TermAST {
+class NumLiteralAST : public ExprAST {
 public:
 	int num;
-	NumLiteralTermAST(
+	NumLiteralAST(
 		int num
 	) : num(num) {}
-	llvm::Value *codegen() override;
+
+	Value* codegen() override;
 };
 
-class ParenExprTermAST : public TermAST {
-public:
-	unique_ptr<ExprAST> expr;
-	ParenExprTermAST(
-		unique_ptr<ExprAST> expr
-	) : expr(move(expr)) {}
-	llvm::Value *codegen() override;
-};
 
-class IdTermAST : public TermAST {
+class IdExprAST : public ExprAST {
 public:
 	string id;
-	IdTermAST(
+	IdExprAST(
 		string id
 	) : id(id) {}
-	llvm::Value *codegen() override;
+
+	Value* codegen() override;
 };
 
-class FuncCallTermAST : public TermAST {
+class FuncCallAST : public ExprAST {
 public:
-	unique_ptr<TermAST> callee;
+	unique_ptr<ExprAST> callee;
 	vector<unique_ptr<ExprAST>> args;
-	FuncCallTermAST(
-		unique_ptr<TermAST> callee,
+	FuncCallAST(
+		unique_ptr<ExprAST> callee,
 		vector<unique_ptr<ExprAST>> args
 	) : callee(move(callee)), args(move(args)) {}
+
+	llvm::Value* codegen() override {
+		return nullptr;
+	}
 };
 
 
@@ -210,20 +206,31 @@ public:
 /// The scope holds the variable/function names, and holds pointers to parent
 /// scopes so that when codegen'ing we can reference "in-scope" variables/functions
 class ScopeAST {
+private:
+	void tryAddVarDecToNamedValues(StmtAST* stmt);
+
 public:
-	/// Used while constructing the AST
-	static const ScopeAST *curScope;
+	/// Used while constructing the AST during the parsing stage
+	static const ScopeAST* curScope;
 
 	vector<unique_ptr<StmtAST>> stmts;
-	std::map<std::string, const VarDecAST*> namedValues;	// populated as stmts are added to the scope
-	const ScopeAST *parentScope;
+	std::map<std::string, const AllocaInst*> namedValues;	// populated as stmts are added to the scope while parsing
+
+	const ScopeAST* parentScope;
+	const bool isGlobal;
+
+
 	ScopeAST(
-		const ScopeAST *parentScope
-	) : parentScope(parentScope) {}
+		const ScopeAST* parentScope
+	) : parentScope(parentScope), isGlobal(parentScope != nullptr) {}
 
 	void addStmt(unique_ptr<StmtAST> stmt);
 
-	const VarDecAST *search(const string &name) const;
+	const VarDecAST* search(const string& name) const;
 
-	llvm::Value *codegen() { return nullptr; };
+	void codegen() {
+		for (auto& s : stmts) {
+			s->codegen();
+		}
+	}
 };
