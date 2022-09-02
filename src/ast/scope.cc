@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "scope.h"
 
 void ScopeAST::tryAddVarDecToNamedValues(StmtAST *stmt) {
 	const VarDecAST* varDec;	// will be populated with the varDec info (if it exists in the given stmt)
@@ -25,7 +25,7 @@ void ScopeAST::tryAddVarDecToNamedValues(StmtAST *stmt) {
 void ScopeAST::addStmt(unique_ptr<StmtAST> stmt) {
 	tryAddVarDecToNamedValues(stmt.get());
 
-	stmt->scope = this;
+	// stmt->scope = this;
 	this->stmts.push_back(move(stmt));
 }
 

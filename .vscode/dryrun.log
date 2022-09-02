@@ -9,10 +9,15 @@ mv src/location.hh src/include/location.hh
  
 flex -o src/scanner.cc src/lexer/scanner.ll
  
+mkdir -p build/src/
+g++ -I/usr/lib/llvm-15/lib -I/usr/include  -MMD -MP -g -O3  -c src/parser.cc -o build/src/parser.cc.o
+ 
+mkdir -p build/src/
+g++ -I/usr/lib/llvm-15/lib -I/usr/include  -MMD -MP -g -O3  -c src/scanner.cc -o build/src/scanner.cc.o
+ 
 g++ ./build/src/parser.cc.o ./build/src/scanner.cc.o -o build/a.out  -lpthread -lncurses
+make.exe: Leaving directory `c:/Users/witzk/OneDrive/Desktop/Projects/Language'
  
 process_begin: CreateProcess(NULL, llvm-config --cxxflags, ...) failed.
 process_begin: CreateProcess(NULL, llvm-config --ldflags --system-libs --libs all, ...) failed.
 
-make.exe: Leaving directory `c:/Users/witzk/OneDrive/Desktop/Projects/Language'
- 

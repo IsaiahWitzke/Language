@@ -1,5 +1,7 @@
 test_main: () -> i64 = {
-	return 12 + 2;
+	var1: i64 = 1;
+	var2: i64 = 2;
+	return 1 + 2;
 }
 
 

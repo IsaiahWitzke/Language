@@ -15,7 +15,7 @@ SRCS := $(shell find $(SRC_DIRS) -name '*.cc' -or -name '*.c' -or -name '*.s') $
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-INC_DIRS := $(shell find $(SRC_DIRS) -type d) /usr/lib/llvm-15/lib /usr/include
+INC_DIRS := $(shell find $(SRC_DIRS)/include -type d) /usr/lib/llvm-15/lib /usr/include
 INC_FLAGS := $(addprefix -I,$(INC_DIRS)) $(shell llvm-config --cxxflags)
 
 # CXX := clang++

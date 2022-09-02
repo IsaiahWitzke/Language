@@ -25,14 +25,12 @@ extern map<string, AllocaInst*> NamedValues;
 // extern map<string, VarDecAST*> FunctionProtos;
 extern ExitOnError ExitOnErr;
 
-/// to set up the codegen globals
-void InitializeModuleAndPassManager();
+void InitializeModuleAndPassManager(const string& moduleName);
 
 bool outputObjCode(const string& fName);
 
 /// CreateEntryBlockAlloca - Create an alloca instruction in the entry block of
 /// the function.  This is used for mutable variables etc.
-AllocaInst* CreateEntryBlockAlloca(
-	Function* TheFunction,
-	string& VarName
-);
+AllocaInst* CreateEntryBlockAlloca(Function* TheFunction, string& VarName);
+
+Value* LogErrorV(const string& s);
