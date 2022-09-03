@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "codegen.h"
+#include "assignment_stmt.h"
 #include "expr_stmt.h"
 #include "expr.h"
 #include "func_call.h"

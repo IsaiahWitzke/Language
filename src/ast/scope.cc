@@ -35,9 +35,9 @@ void ScopeAST::addStmt(unique_ptr<StmtAST> stmt) {
 // 	else								return parentScope->search(name);
 // }
 
-Value* ScopeAST::searchVal(const string& name) {
-	if (namedValues.count(name)) {
-		return (*namedValues.find(name)).second;
+AllocaInst* ScopeAST::searchVal(const string& name) {
+	if (namedValues.count(name) > 0) {
+		return namedValues.find(name)->second;
 	} else if (parentScope == nullptr) {
 		return nullptr;
 	} else {
