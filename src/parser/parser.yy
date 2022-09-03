@@ -30,7 +30,7 @@ using namespace std;
 
 %code {
 #include "parser_driver.h"
-const ScopeAST *ScopeAST::curScope;
+ScopeAST *ScopeAST::curScope;
 }
 
 /* %printer { yyo << $$; } <*>; */

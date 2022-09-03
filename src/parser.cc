@@ -45,7 +45,7 @@
 #line 31 "src/parser/parser.yy"
 
 #include "parser_driver.h"
-const ScopeAST *ScopeAST::curScope;
+ScopeAST *ScopeAST::curScope;
 
 #line 51 "src/parser.cc"
 

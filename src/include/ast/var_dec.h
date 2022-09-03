@@ -3,7 +3,7 @@
 
 class VarDecAST {
 public:
-	string name;
+	const string name;
 	unique_ptr<TypeAST> type;
 	// unique_ptr<FunctionDecAST> funcDec;	// variables can "hold functions"
 	VarDecAST(
@@ -14,5 +14,5 @@ public:
 	FunctionTypeAST* getFunctionType();
 	BasicTypeAST* getBasicType();
 
-	Value* codegen();
+	AllocaInst* codegen();
 };

@@ -1,6 +1,6 @@
 #include "var_dec.h"
 
-Value* VarDecAST::codegen() {
+AllocaInst* VarDecAST::codegen() {
 	if (isFuncType()) {
 		auto& args = getFunctionType()->params;
 		auto& returnType = getFunctionType()->returnType;
@@ -26,15 +26,24 @@ Value* VarDecAST::codegen() {
 
 
 		// return llvmFunc;
+		// TODO: return pointer to where function is stored in memory
 		return nullptr;
 	}
 	else {
 		Function* TheFunction = Builder->GetInsertBlock()->getParent();
 
-		llvm::AllocaInst* allocaInst = CreateEntryBlockAlloca(TheFunction, name);
+		// AllocaInst* allocaInst = CreateEntryBlockAlloca(TheFunction, name);
+
+		AllocaInst* allocaInst = Builder->CreateAlloca(Type::getInt64Ty(*TheContext), nullptr, name);
+
+		if(ScopeAST::curScope->namedValues.count(name)) {
+			LogErrorV("Already defined in this scope: " + name);
+		} else {
+			ScopeAST::curScope->namedValues[name] = allocaInst;
+		}
 
 		// TODO: change bitsize/type to match type
-		Value* initVal = llvm::ConstantInt::get(*TheContext, llvm::APInt(64, 0, true));
+		Value* initVal = ConstantInt::get(*TheContext, llvm::APInt(64, 0, true));
 
 		Builder->CreateStore(initVal, allocaInst);
 
