@@ -1,21 +1,11 @@
-
-
 globalVar: i64 = 2;
 
-test_func: () -> i64 = {
-	globalVar = 5;
-	return 5;
-}
-
 test_main: () -> i64 = {
-	//var1: i64;
-	//var1 = globalVar;
-	//globalVar = 4;
 	if(globalVar) {
 		return 1;
+	} else {
+		return 2;
 	}
-	test_func();
-	return globalVar;
 }
 
 

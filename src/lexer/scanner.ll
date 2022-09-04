@@ -63,7 +63,7 @@ comment \/\/.*
 "true"			return yy::parser::make_tok_true(loc);
 "false"			return yy::parser::make_tok_false(loc);
 {id}			return yy::parser::make_tok_identifier(yytext, loc);
-[1-9][0-9]*		return make_tok_inum(yytext, loc);
+([1-9][0-9]*|0)	return make_tok_inum(yytext, loc);
 .				{ ECHO; }
 <<EOF>>			return yy::parser::make_YYEOF(loc);
 
