@@ -11,6 +11,7 @@
 #include "expr.h"
 #include "func_call.h"
 #include "id_expr.h"
+#include "if_else_stmt.h"
 #include "module.h"
 #include "num_literal.h"
 #include "op_expr.h"

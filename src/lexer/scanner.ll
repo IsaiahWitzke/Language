@@ -56,6 +56,12 @@ comment \/\/.*
 ","				return yy::parser::make_tok_coma(loc);
 "->"			return yy::parser::make_tok_arrow(loc);
 "return"		return yy::parser::make_tok_return(loc);
+"if"			return yy::parser::make_tok_if(loc);
+"else"			return yy::parser::make_tok_else(loc);
+"while"			return yy::parser::make_tok_while(loc);
+"for"			return yy::parser::make_tok_for(loc);
+"true"			return yy::parser::make_tok_true(loc);
+"false"			return yy::parser::make_tok_false(loc);
 {id}			return yy::parser::make_tok_identifier(yytext, loc);
 [1-9][0-9]*		return make_tok_inum(yytext, loc);
 .				{ ECHO; }

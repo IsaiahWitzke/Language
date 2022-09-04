@@ -59,6 +59,12 @@ ScopeAST *ScopeAST::curScope;
   tok_f32			"f32"
   tok_f16			"f16"
   tok_return 		"return"
+  tok_if			"if"
+  tok_else			"else"
+  tok_while			"while"
+  tok_for			"for"
+  tok_true			"true"
+  tok_false			"false"
 ;
 %nterm <unique_ptr<ModuleAST>>			module;
 %nterm <unique_ptr<ScopeAST>> 			stmts;
@@ -97,11 +103,14 @@ stmts	: %empty {
 		}
 		;
 
-stmt	: expr ";" 						{ $$ = make_unique<ExprStmtAST>(move($1)); }
-		| variable_dec ";" 				{ $$ = make_unique<VarDecStmtAST>(move($1)); }
-		| variable_def 					{ $$ = make_unique<VarDefStmtAST>(move($1)); }
-		| tok_identifier "=" expr ";"	{ $$ = make_unique<AssignmentStmtAST>($1, move($3)); }
-		| "return" expr ";"				{ $$ = make_unique<ReturnStmtAST>(move($2)); }
+stmt	: expr ";" 								{ $$ = make_unique<ExprStmtAST>(move($1)); }
+		| variable_dec ";" 						{ $$ = make_unique<VarDecStmtAST>(move($1)); }
+		| variable_def 							{ $$ = make_unique<VarDefStmtAST>(move($1)); }
+		| tok_identifier "=" expr ";"			{ $$ = make_unique<AssignmentStmtAST>($1, move($3)); }
+		| "return" expr ";"						{ $$ = make_unique<ReturnStmtAST>(move($2)); }
+		| "if" "(" expr ")" "{" stmts "}"		{ $$ = make_unique<IfElseStmtAST>(move($3), move($6), nullptr); }
+		| "if" "(" expr ")" "{" stmts "}"
+			"else" "{" stmts "}"				{ $$ = make_unique<IfElseStmtAST>(move($3), move($6), move($10)); }
 		;
 
 variable_def	: variable_dec "=" expr ";" {

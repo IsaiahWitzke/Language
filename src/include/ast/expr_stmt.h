@@ -11,5 +11,5 @@ public:
 		unique_ptr<ExprAST> expr
 	) : expr(move(expr)) {}
 
-	llvm::Value* codegen() override { return nullptr; };
+	Value* codegen() override;
 };

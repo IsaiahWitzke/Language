@@ -525,7 +525,13 @@ namespace yy {
     tok_f64 = 21,                  // "f64"
     tok_f32 = 22,                  // "f32"
     tok_f16 = 23,                  // "f16"
-    tok_return = 24                // "return"
+    tok_return = 24,               // "return"
+    tok_if = 25,                   // "if"
+    tok_else = 26,                 // "else"
+    tok_while = 27,                // "while"
+    tok_for = 28,                  // "for"
+    tok_true = 29,                 // "true"
+    tok_false = 30                 // "false"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -542,7 +548,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 25, ///< Number of tokens.
+        YYNTOKENS = 31, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -569,19 +575,25 @@ namespace yy {
         S_tok_f32 = 22,                          // "f32"
         S_tok_f16 = 23,                          // "f16"
         S_tok_return = 24,                       // "return"
-        S_YYACCEPT = 25,                         // $accept
-        S_module = 26,                           // module
-        S_stmts = 27,                            // stmts
-        S_stmt = 28,                             // stmt
-        S_variable_def = 29,                     // variable_def
-        S_variable_dec = 30,                     // variable_dec
-        S_variable_decs = 31,                    // variable_decs
-        S_type = 32,                             // type
-        S_basic_type = 33,                       // basic_type
-        S_function_type = 34,                    // function_type
-        S_expr = 35,                             // expr
-        S_term = 36,                             // term
-        S_arg_list = 37                          // arg_list
+        S_tok_if = 25,                           // "if"
+        S_tok_else = 26,                         // "else"
+        S_tok_while = 27,                        // "while"
+        S_tok_for = 28,                          // "for"
+        S_tok_true = 29,                         // "true"
+        S_tok_false = 30,                        // "false"
+        S_YYACCEPT = 31,                         // $accept
+        S_module = 32,                           // module
+        S_stmts = 33,                            // stmts
+        S_stmt = 34,                             // stmt
+        S_variable_def = 35,                     // variable_def
+        S_variable_dec = 36,                     // variable_dec
+        S_variable_decs = 37,                    // variable_decs
+        S_type = 38,                             // type
+        S_basic_type = 39,                       // basic_type
+        S_function_type = 40,                    // function_type
+        S_expr = 41,                             // expr
+        S_term = 42,                             // term
+        S_arg_list = 43                          // arg_list
       };
     };
 
@@ -1030,7 +1042,7 @@ switch (yykind)
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::YYUNDEF)
-                   || (token::tok_eq <= tok && tok <= token::tok_return));
+                   || (token::tok_eq <= tok && tok <= token::tok_false));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1480,6 +1492,96 @@ switch (yykind)
         return symbol_type (token::tok_return, l);
       }
 #endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_if (location_type l)
+      {
+        return symbol_type (token::tok_if, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_if (const location_type& l)
+      {
+        return symbol_type (token::tok_if, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_else (location_type l)
+      {
+        return symbol_type (token::tok_else, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_else (const location_type& l)
+      {
+        return symbol_type (token::tok_else, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_while (location_type l)
+      {
+        return symbol_type (token::tok_while, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_while (const location_type& l)
+      {
+        return symbol_type (token::tok_while, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_for (location_type l)
+      {
+        return symbol_type (token::tok_for, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_for (const location_type& l)
+      {
+        return symbol_type (token::tok_for, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_true (location_type l)
+      {
+        return symbol_type (token::tok_true, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_true (const location_type& l)
+      {
+        return symbol_type (token::tok_true, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_false (location_type l)
+      {
+        return symbol_type (token::tok_false, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_false (const location_type& l)
+      {
+        return symbol_type (token::tok_false, l);
+      }
+#endif
 
 
     class context
@@ -1824,7 +1926,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 63,     ///< Last index in yytable_.
+      yylast_ = 82,     ///< Last index in yytable_.
       yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 3 ///< Termination state number.
     };
@@ -2046,7 +2148,7 @@ switch (yykind)
 
 
 } // yy
-#line 2050 "src/include/parser.h"
+#line 2152 "src/include/parser.h"
 
 
 

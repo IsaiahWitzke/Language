@@ -1,4 +1,5 @@
 
+
 globalVar: i64 = 2;
 
 test_func: () -> i64 = {
@@ -10,8 +11,11 @@ test_main: () -> i64 = {
 	//var1: i64;
 	//var1 = globalVar;
 	//globalVar = 4;
-	myVar: i64 = test_func();
-	return globalVar + myVar;
+	if(globalVar) {
+		return 1;
+	}
+	test_func();
+	return globalVar;
 }
 
 
