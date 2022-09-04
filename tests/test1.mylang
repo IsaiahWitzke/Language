@@ -1,14 +1,9 @@
+globalVar: i64 = 2;
 test_main: () -> i64 = {
-	var1: i64 = 1;
-	var2: i64 = 2;
-	var1 = 3;
-	return var1 + var2 + 5;
+	//var1: i64;
+	//var1 = globalVar;
+	//globalVar = 4;
+	return globalVar;
 }
 
 
-// testVar: i64 = 4;
-// test_main: () -> i64 = {
-	// var1: i64 = 1;
-	// var2: i64 = 4;
-	// return var1 + var2;
-// }

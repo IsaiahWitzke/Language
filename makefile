@@ -20,7 +20,8 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS)) $(shell llvm-config --cxxflags)
 
 # CXX := clang++
 
-COMPILE_FLAGS ?= $(INC_FLAGS) -MMD -MP -g -O3
+# COMPILE_FLAGS ?= $(INC_FLAGS) -MMD -MP -g -O3
+COMPILE_FLAGS ?= $(INC_FLAGS) -MMD -MP -g
 LDFLAGS ?= $(shell llvm-config --ldflags --system-libs --libs all) -lpthread -lncurses
 
 $(BUILD_DIR)/$(TARGET_EXEC): parser lexer $(OBJS)
@@ -62,6 +63,12 @@ MKDIR_P ?= mkdir -p
 run:
 	$(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang
 
-.PHONY: test
-test:
+.PHONY: run_test
+run_test:
+	$(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang -o tests/test1.out
+	$(CXX) tests/test.cc tests/test1.out -o tests/test.out
+	tests/test.out
+
+.PHONY: debug
+debug:
 	gdb --args $(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang

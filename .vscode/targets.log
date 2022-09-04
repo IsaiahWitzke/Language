@@ -7,12 +7,12 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 
 # This program built for i386-pc-mingw32
  
-File not found - *.c
+File not found - *.cc
 
 FIND: Parameter format not correct
 
 
-# Make data base, printed on Fri Sep 02 19:24:13 2022
+# Make data base, printed on Sat Sep 03 15:34:00 2022
 
 # Variables
 
@@ -51,8 +51,8 @@ ONEDRIVE = C:\Users\witzk\OneDrive
 INC_DIRS :=  /usr/lib/llvm-15/lib /usr/include
 # environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PL;.WPL;.PY;.PYW
-# makefile (from `makefile', line 1)
-MAKEFILE_LIST :=  makefile
+# makefile (from `build/src/scanner.cc.d', line 1)
+MAKEFILE_LIST :=  makefile build/src/parser.cc.d build/src/scanner.cc.d
 # makefile (from `makefile', line 9)
 PARSER_HH = src/include/parser.h
 # environment
@@ -75,15 +75,15 @@ PARSER_CC = src/parser.cc
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # environment
 ZES_ENABLE_SYSMAN = 1
-# makefile (from `makefile', line 11)
+# makefile (fro 
+m `makefile', line 11)
 LOCATION_HH_SRC = src/location.hh
-#  
-environment
+# environment
 CHOCOLATEYLASTPATHUPDATE = 132743860888356165
 # environment
 PROCESSOR_ARCHITECTURE = x86
-# makefile (from `makefile', line 23)
-COMPILE_FLAGS = $(INC_FLAGS) -MMD -MP -g -O3
+# makefile (from `makefile', line 24)
+COMPILE_FLAGS = $(INC_FLAGS) -MMD -MP -g
 # environment
 USERPROFILE = C:\Users\witzk
 # environment
@@ -98,8 +98,9 @@ PATH_ORIGINAL = C:\Users\witzk\AppData\Roaming\ActiveState\bin;C:\Windows\system
 NUMBER_OF_PROCESSORS = 8
 # environment
 ELECTRON_RUN_AS_NODE = 1
-# makefile (from `makefile', line 24)
-LDFLAGS = $(shell llvm-config --ldflags --system-libs --libs all) -lpthread -lncurses
+# makefile (from `makefile', line 25)
+L 
+DFLAGS = $(shell llvm-config --ldflags --system-libs --libs all) -lpthread -lncurses
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives
 # automatic
@@ -115,8 +116,7 @@ INC_FLAGS := -I/usr/lib/llvm-15/lib -I/usr/include
 # environment
 PROGRAMFILES = C:\Program Files (x86)
 # environment
-DRIVERDATA = C:\Windows\System3 
-2\Drivers\DriverData
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
@@ -130,10 +130,10 @@ CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
 VSCODE_CODE_CACHE_PATH = C:\Users\witzk\AppData\Roaming\Code\CachedData\da76f93349a72022ca4670c1b84860304616aaa2
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANN 
+EL = 1
 # environment
-COMMONPROGRAMFILES = C:\Program Fi 
-les (x86)\Common Files
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
 LOGONSERVER = \\DESKTOP-AL30BHJ
 # environment
@@ -150,8 +150,7 @@ INTELLIJ IDEA COMMUNITY EDITION = C:\Program Files\JetBrains\IntelliJ IDEA Commu
 SCANNER_LL = src/lexer/scanner.ll
 # default
 MAKE = $(MAKE_COMMAND)
-# default 
-
+# default
 MAKECMDGOALS := all
 # makefile (from `makefile', line 14)
 SRCS :=  src/parser.cc src/scanner.cc
@@ -165,10 +164,11 @@ BUILD_DIR = ./build
 MAKE_VERSION := 3.81
 # makefile
 .DEFAULT_GOAL := build/a.out
-# makefile (from `makefile', line 59)
+# makefile (from `makefile', line 60)
 MKDIR_P = mkdir -p
 # environment
-PROGRAMFILES(X86) = C:\Program Files (x86)
+PROGRAMFILES(X86) = C:\Pro 
+gram Files (x86)
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -186,8 +186,7 @@ PROCESSOR_ARCHITEW6432 = AMD64
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
 # environment
-OS  
-= Windows_NT
+OS = Windows_NT
 # environment
 VSCODE_IPC_HOOK = \\.\pipe\b43722fc1d67e1f5ce1c2248e93fbbf2-1.70.0-main-sock
 # environment
@@ -207,10 +206,10 @@ SYSTEMROOT = C:\WINDOWS
 # automatic
 +F = $(notdir $+)
 # environment
-APPDATA = C:\Users\witzk\AppData\Roaming
+APPDATA = C: 
+\Users\witzk\AppData\Roaming
 # environment
-TEMP = C:\Us 
-ers\witzk\AppData\Local\Temp
+TEMP = C:\Users\witzk\AppData\Local\Temp
 # environment
 COMSPEC = C:\WINDOWS\system32\cmd.exe
 # default
@@ -232,11 +231,11 @@ SYSTEMDRIVE = C:
 # environment
 SESSIONNAME = Console
 # environment
-PROCESSOR_REVISION = 8e0c
+PRO 
+CESSOR_REVISION = 8e0c
 # environment
 MAKELEVEL := 0
-# e 
-nvironment
+# environment
 LANG = C
 # environment
 PROCESSOR_LEVEL = 6
@@ -247,7 +246,7 @@ VSCODE_PID = 3360
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-AL30BHJ
 # variable set hash-table stats:
-# Load=111/1024=11%, Rehash=0, Collisions=20/167=12%
+# Load=111/1024=11%, Rehash=0, Collisions=20/171=12%
 
 # Pattern-specific Variable Values
 
@@ -256,79 +255,80 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-AL30BHJ
 # Directories
 
 # : could not be stat'd.
-# C:\Program Files\heroku\bin (key C:/Program Files/heroku/bin, mtime 1630626122): 4 files, no impos 
-sibilities.
+# C:\Program Files\heroku\bin (key C:/Program 
+ Files/heroku/bin, mtime 1630626122): 4 files, no impossibilities.
 # C:\tools\flutter_windows_2.2.3-stable\flutter\bin (key C:/tools/flutter_windows_2.2.3-stable/flutter/bin, mtime 1625178494): 9 files, no impossibilities.
 # C:\Users\witzk\anaconda3\Scripts (key C:/Users/witzk/anaconda3/Scripts, mtime 1620521983): 323 files, no impossibilities.
 # C:\Program Files\Docker\Docker\resources\bin (key C:/Program Files/Docker/Docker/resources/bin, mtime 1620284562): 12 files, no impossibilities.
-# C:\Program Files\LLVM\bin (key C:/Program Files/LLVM/bin, mtime 1659748 
-686): 120 files, no impossibilities.
+# C:\Program Files 
+\LLVM\bin (key C:/Program Files/LLVM/bin, mtime 1659748686): 120 files, no impossibilities.
 # C:\Users\witzk\anaconda3\Library\mingw-w64\bin (key C:/Users/witzk/anaconda3/Library/mingw-w64/bin, mtime 1610775305): 15 files, no impossibilities.
 # C:\Windows\System32\WindowsPowerShell\v1.0\ (key C:/Windows/System32/WindowsPowerShell/v1.0/, mtime 1620296970): 31 files, no impossibilities.
 # C:\Windows\System32\Wbem (key C:/Windows/System32/Wbem, mtime 1658148066): 154 files, no impossibilities.
-# . (key c:/Users/witzk/OneDrive/Desktop/Projects/Language, mtime 16621 
-54184): 13 files, no impossibilities.
+# . (key c:/User 
+s/witzk/OneDrive/Desktop/Projects/Language, mtime 1662233458): 10 files, no impossibilities.
 # C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1644372375): 13 files, no impossibilities.
 # C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common (key C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common, mtime 1608961068): 10 files, no impossibilities.
 # C:\Users\witzk\go\bin (key C:/Users/witzk/go/bin, mtime 1598507795): 20 files, no impossibilities.
-# C:\ProgramData\chocolatey\bin (key C:/ProgramData/chocolatey/bin, mtime 1629912439): 13 files, no 
- impossibilities.
+# C:\ProgramData\chocolatey\bin (key C:/Prog 
+ramData/chocolatey/bin, mtime 1629912439): 13 files, no impossibilities.
 # C:\Program Files\dotnet\ (key C:/Program Files/dotnet/, mtime 1643577643): 13 files, no impossibilities.
 # C:\Python310\ (key C:/Python310/, mtime 1644372507): 18 files, no impossibilities.
 # C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin (key C:/Program Files (x86)/Google/Cloud SDK/google-cloud-sdk/bin, mtime 1610835393): 21 files, no impossibilities.
-# C:\Python310\Scripts\ (key C:/Python310/Scripts/, mtime 1644372507): 5 files, no impossibilities.
-# C:\Program Files\Kotl 
-in\kotlinc\bin (key C:/Program Files/Kotlin/kotlinc/bin, mtime 1598586884): 14 files, no impossibilities.
+# C:\Python310\Scripts\ (key C:/Python310/Scripts/, mtime 1644372507 
+): 5 files, no impossibilities.
+# C:\Program Files\Kotlin\kotlinc\bin (key C:/Program Files/Kotlin/kotlinc/bin, mtime 1598586884): 14 files, no impossibilities.
 # C:\Users\witzk\AppData\Roaming\ActiveState\bin (key C:/Users/witzk/AppData/Roaming/ActiveState/bin, mtime 1605038988): 3 files, no impossibilities.
 # C:\Windows\System32\OpenSSH\: could not be stat'd.
 # C:\Program Files\PuTTY\ (key C:/Program Files/PuTTY/, mtime 1602631268): 12 files, no impossibilities.
-# C:\Program Files\Microsoft SQL Server\130\Tools\Binn\ (key C:/Program Files/Microsoft SQL Server 
-/130/Tools/Binn/, mtime 1612413926): 4 files, no impossibilities.
+# C:\Program Files\Microsoft SQL Server\130 
+\Tools\Binn\ (key C:/Program Files/Microsoft SQL Server/130/Tools/Binn/, mtime 1612413926): 4 files, no impossibilities.
 # C:\Windows (key C:/Windows, mtime 1661132123): 127 files, no impossibilities.
 # C:\Program Files\Android\platform-tools (key C:/Program Files/Android/platform-tools, mtime 1639717528): 18 files, no impossibilities.
 # C:\Users\witzk\AppData\Roaming\Pub\Cache\bin: could not be stat'd.
-# C:\Users\witzk\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/witzk/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1659678378): 4 files, no i 
-mpossibilities.
+# C:\Users\witzk\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/witzk/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1659678378): 4 files, no impossibilities.
 # C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin (key C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1602722211): 58 files, no impossibilities.
 # C:\Users\witzk\AppData\Roaming\npm (key C:/Users/witzk/AppData/Roaming/npm, mtime 1644372191): 15 files, no impossibilities.
 # C:\Users\witzk\.dotnet\tools: could not be stat'd.
-# C:\Users\witzk\anaconda3 (key C:/Users/witzk/anaconda3, mtime 1658519714): 88 files, no impossibilities.
+# C:\Users\witzk\anaconda3 (key C:/Users/witzk/anaconda3,  
+mtime 1658519714): 88 files, no impossibilities.
 # C:\Program Files\MiKTeX\miktex\bin\x64\ (key C:/Program Files/MiKTeX/miktex/bin/x64/, mtime 1601148000): 664 files, no impossibilities.
 # C:\Program Files\Amazon\AWSCLIV2\ (key C:/Program Files/Amazon/AWSCLIV2/, mtime 1658177500): 39 files, no impossibilities.
 # C:\tools\dart-sdk\bin (key C:/tools/dart-sdk/bin, mtime 1624450650): 15 files, no impossibilities.
-# C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin (key C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2020.2.1/bin, mt 
-ime 1598588319): 30 files, no impossibilities.
+# C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.1\bin (key C:/Program Files/Jet 
+Brains/IntelliJ IDEA Community Edition 2020.2.1/bin, mtime 1598588319): 30 files, no impossibilities.
 # C:\ProgramData\DockerDesktop\version-bin (key C:/ProgramData/DockerDesktop/version-bin, mtime 1620284672): 2 files, no impossibilities.
 # C:\Users\witzk\.cargo\bin (key C:/Users/witzk/.cargo/bin, mtime 1656650316): 14 files, no impossibilities.
 # C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1598503104): 8 files, no impossibilities.
-# C:\Windows\system32 (key C:/Windows/system32, mtime 1662003849): 3013 files, no impossibilities.
-# C:\Go\bin ( 
-key C:/Go/bin, mtime 1598502725): 4 files, no impossibilities.
+# C:\Windows\system32 (key C:/Windows/system32, mtime 166 
+2003849): 3013 files, no impossibilities.
+# C:\Go\bin (key C:/Go/bin, mtime 1598502725): 4 files, no impossibilities.
 # C:\Program Files\CMake\bin (key C:/Program Files/CMake/bin, mtime 1611902609): 7 files, no impossibilities.
 # C:\Users\witzk\AppData\Local\Programs\Python\Python39\ (key C:/Users/witzk/AppData/Local/Programs/Python/Python39/, mtime 1606196393): 18 files, no impossibilities.
 # C:\Perl64\bin (key C:/Perl64/bin, mtime 1605039043): 129 files, no impossibilities.
-# C:\Users\witzk\anaconda3\Library\usr\bin: could not be stat'd.
-# C:\Users\witzk\AppData\Local\Microsoft\WindowsApps (key C:/Users/witzk/AppData/Local/Microsoft/WindowsApps, mtime 1661088925): 21 files, no impossibilities.
+# C:\Users\witzk\anaconda3\Libr 
+ary\usr\bin: could not be stat'd.
+# C:\Users\witzk\AppData\Local\Microsoft\WindowsApps (key C:/Users/witzk/AppData/Local/Microsoft/WindowsApps, mtime 1662163734): 21 files, no impossibilities.
 # C:\Users\witzk\AppData\Local\Programs\Python\Python39\Scripts\ (key C:/Users/witzk/AppData/Local/Programs/Python/Python39/Scripts/, mtime 1610776808): 9 files, no impossibilities.
 # C:\Users\witzk\anaconda3\Library\bin (key C:/Users/witzk/anaconda3/Library/bin, mtime 1610775770): 389 files, no impossibilities.
-# C:\Program Files (x86)\GnuWin32\bin (key C:/Program Files  
-(x86)/GnuWin32/bin, mtime 1612411800): 5 files, no impossibilities.
+# C:\ 
+Program Files (x86)\GnuWin32\bin (key C:/Program Files (x86)/GnuWin32/bin, mtime 1612411800): 5 files, no impossibilities.
 # C:\Program Files\Java\jdk-14.0.2\bin (key C:/Program Files/Java/jdk-14.0.2/bin, mtime 1598585850): 125 files, no impossibilities.
 
-# 5629 files, no impossibilities in 49 directories.
+# 5626 files, no impossibilities in 49 directories.
 
 # Implicit Rules
 
 build/%.c.o: %.c
-#  commands to execute (from `makefile', line 36):
+#  commands to execute (from `makefile', line 37):
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(COMPILE_FLAGS) $(CXXFLAGS) $(CFLAGS) -c $< -o $@
 	
 
 build/%.cc.o: %.cc
-#  commands to execute (from `makefile', line 41):
-	$(MKDIR_P) $(dir  
-$@)
+#  commands to 
+ execute (from `makefile', line 42):
+	$(MKDIR_P) $(dir $@)
 	$(CXX) $(COMPILE_FLAGS) $(CXXFLAGS) -c $< -o $@
 	
 
@@ -336,24 +336,180 @@ $@)
 
 # Files
 
+src/include/ast/assignment_stmt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/IRBuilderFolder.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/Hashing.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Instructions.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Config/abi-breaking.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/PointerIntPair.h:
+#  Implicit rule search has  
+not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/GlobalValue.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/STLArrayExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Function.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/DenseSet.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/APSInt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 all:
 #  Command-line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
-# variable set hash-table stats:
+# variable set hash 
+-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-.PHONY: clean run test
+/usr/lib/llvm-15/include/llvm/Config/llvm-config.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/CodeGen.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/Bitfields.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/AllocatorBase.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/GlobalObject.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm-c/Types.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llv 
+m-15/include/llvm/IR/Attributes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/IntrinsicEnums.inc:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/parser.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/iterator.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/op_expr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/scanner.cc:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: clean run run_test debug
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/l 
+ib/llvm-15/include/llvm/ADT/StringSwitch.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/StringMapEntry.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/PointerLikeTypeTraits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/includ 
+e/llvm/IR/Intrinsics.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
 .DEFAULT:
-#  Implicit rule search has not  
-been done.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/id_expr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Instruction.h:
+#  Implicit rule search has not been done.
+#  Modificatio 
+n time never checked.
+#  File has not been updated.
+
+src/include/ast/func_call.h:
+#  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -361,44 +517,296 @@ been done.
 build/src/scanner.cc.d:
 #  A default, MAKEFILES, or -include/sinclude makefile.
 #  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Failed to be updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-test:
-#  Phony target (prerequisite of .PHONY).
-#  Implicit rule search has not been done.
-#  File does not exist.
-#  File has not been updated.
-# 
-  commands to execute (from `makefile', line 67):
-	gdb --args $(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang
-	
-
-# Not a target:
-makefile:
-#  Implicit rule search has been done.
-#  Last modified 2022-09-02 19:24:02
+#  Last modified 2022-09-03 15:24:01
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-build/src/parser.cc.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
+/usr/lib/llvm-15/include/llvm/Support/AlignOf.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/location.hh:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/var_dec.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Metadata.h:
+#  Implicit rule search has not been done.
+#  Modificat 
+ion time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/ErrorOr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/GlobalAlias.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/DataLayout.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/SmallString.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/None.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/BasicBlock.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/ll 
+vm/ADT/ilist_iterator.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/simple_ilist.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Compiler.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/ValueHandle.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+debug:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
 #  File does not exist.
-#  File has 
- been updated.
-#  Failed to be updated.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 74):
+	gdb --args $(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang
+	
+
+/usr/lib/llvm-15/include/llvm/IR/FMF.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/u 
+sr/lib/llvm-15/include/llvm/ADT/DenseMapInfo.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/ProfileSummary.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Comdat.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-09-03 15:30:45
+#  File has been updated.
+#  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+/usr/lib/llvm-15/include/llvm/IR/InstrTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/DebugLoc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/ 
+llvm-15/include/llvm/ADT/ArrayRef.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+run_test:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 68):
+	$(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang -o tests/test1.out
+	$(CXX) tests/test.cc tests/test1.out -o tests/test.out
+	tests/test.out
+	
+
+/usr/lib/llvm-15/include/llvm/IR/GlobalVariable.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Alignment.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/FixedMetadataKinds.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/BitmaskEnum. 
+h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Value.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/FloatingPointMode.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
-build/src/scanner.cc.o:
+build/src/parser.cc.d:
+#  A default, MAKEFILES, or -include/sinc 
+lude makefile.
+#  Implicit rule search has been done.
+#  Last modified 2022-09-03 15:23:58
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+/usr/lib/llvm-15/include/llvm/ADT/STLForwardCompat.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Constants.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/DenseMap.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Endian.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/identity.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm- 
+15/include/llvm/Support/raw_ostream.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/AtomicOrdering.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/var_dec_stmt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/StringRef.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/ConstantFold.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm-c/ExternC.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/STLFunctionalExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+build/src/scanner.cc.o: src/scanner.cc src/include/parser_driver.h src/include/ast/ast.h src/include/codegen.h /usr/lib/llvm-15/include/llvm/IR/LLVMContext.h /usr/lib/llvm-15/include/llvm-c/Types.h /usr/lib/llvm-15/include/llvm-c/DataTypes.h /usr/lib/llvm-15/include/llvm-c/ExternC.h /usr/lib/llvm-15/include/llvm/ADT/Optional.h /usr/lib/llvm-15/include/llvm/ADT/Hashing.h /usr/lib/llvm-15/include/llvm/Support/DataTypes.h /usr/lib/llvm-15/include/llvm/Support/ErrorHandling.h /usr/lib/llvm-15/include/llvm/Support/Compiler.h /usr/lib/llvm-15/include/llvm/Config/llvm-config.h /usr/lib/llvm-15/include/llvm/Support/SwapByteOrder.h /usr/lib/llvm-15/include/llvm/Support/type_traits.h /usr/lib/llvm-15/include/llvm/ADT/None.h /usr/lib/llvm-15/include/llvm/ADT/STLForwardCompat.h /usr/lib/llvm-15/include/llvm/IR/DiagnosticHandler.h /usr/lib/llvm-15/include/llvm/ADT/StringRef.h /usr/lib/llvm-15/include/llvm/ADT/DenseMapInfo.h /usr/lib/llvm-15/include/llvm/ADT/STLFunctionalExtras.h /usr/lib/llvm-15/include/llvm/ADT/iterator_range.h /usr/lib/llvm-15/include/llvm/Support/CBindingWrapping.h /usr/lib/llvm-15/include/llvm/Support/Casting.h /usr/lib/llvm-15/include/llvm/IR/FixedMetadataKinds.def /usr/lib/llvm-15/include/llvm/IR/Module.h /usr/lib/llvm-15/include/llvm/ADT/STLExtras.h /usr/lib/llvm-15/include/llvm/ADT/STLArrayExtras.h /usr/lib/llvm-15/include/llvm/ADT/identity.h /usr/lib/llvm-15/include/llvm/ADT/iterator.h /usr/lib/llvm-15/include/llvm/Config/abi-breaking.h /usr/lib/llvm-15/include/llvm/ADT/StringMap.h /usr/lib/llvm-15/include/llvm/ADT/StringMapEntry.h /usr/lib/llvm-15/include/llvm/Support/AllocatorBase.h /usr/lib/llvm-15/include/llvm/Support/MemAlloc.h /usr/lib/llvm-15/include/llvm/Support/PointerLikeTypeTraits.h /usr/lib/llvm-15/include/llvm/IR/Attributes.h /usr/lib/llvm-15/include/llvm/ADT/ArrayRef.h /usr/lib/llvm-15/include/llvm/ADT/SmallVector.h /usr/lib/llvm-15/include/llvm/ADT/BitmaskEnum.h /usr/lib/llvm-15/include/llvm/Support/MathExtras.h /usr/lib/llvm-15/include/llvm/ADT/SmallString.h /usr/lib/llvm-15/include/llvm/Support/Alignment.h /usr/lib/llvm-15/include/llvm/Support/CodeGen.h /usr/lib/llvm-15/include/llvm/IR/Attributes.inc /usr/lib/llvm-15/include/llvm/IR/Comdat.h /usr/lib/llvm-15/include/llvm/ADT/SmallPtrSet.h /usr/lib/llvm-15/include/llvm/ADT/EpochTracker.h /usr/lib/llvm-15/include/llvm/Support/ReverseIteration.h /usr/lib/llvm-15/include/llvm/IR/DataLayout.h /usr/lib/llvm-15/include/llvm/ADT/APInt.h /usr/lib/llvm-15/include/llvm/IR/DerivedTypes.h /usr/lib/llvm-15/include/llvm/IR/Type.h /usr/lib/llvm-15/include/llvm/Support/TypeSize.h /usr/lib/llvm-15/include/llvm/Support/raw_ostream.h /usr/lib/llvm-15/include/llvm/Support/TrailingObjects.h /usr/lib/llvm-15/include/llvm/Support/AlignOf.h /usr/lib/llvm-15/include/llvm/IR/Function.h /usr/lib/llvm-15/include/llvm/ADT/DenseSet.h /usr/lib/llvm-15/include/llvm/ADT/DenseMap.h /usr/lib/llvm-15/include/llvm/ADT/Twine.h /usr/lib/llvm-15/include/llvm/ADT/ilist_node.h /usr/lib/llvm-15/include/llvm/ADT/ilist_node_base.h /usr/lib/llvm-15/include/llvm/ADT/PointerIntPair.h /usr/lib/llvm-15/include/llvm/ADT/ilist_node_options.h /usr/lib/llvm-15/include/llvm/IR/Argument.h /usr/lib/llvm-15/include/llvm/IR/Value.h /usr/lib/llvm-15/include/llvm/IR/Use.h /usr/lib/llvm-15/include/llvm/IR/Value.def /usr/lib/llvm-15/include/llvm/IR/BasicBlock.h /usr/lib/llvm-15/include/llvm/ADT/ilist.h /usr/lib/llvm-15/include/llvm/ADT/simple_ilist.h /usr/lib/llvm-15/include/llvm/ADT/ilist_base.h /usr/lib/llvm-15/include/llvm/ADT/ilis 
+t_iterator.h /usr/lib/llvm-15/include/llvm/IR/Instruction.h /usr/lib/llvm-15/include/llvm/ADT/Bitfields.h /usr/lib/llvm-15/include/llvm/IR/DebugLoc.h /usr/lib/llvm-15/include/llvm/IR/TrackingMDRef.h /usr/lib/llvm-15/include/llvm/IR/Metadata.h /usr/lib/llvm-15/include/llvm/ADT/PointerUnion.h /usr/lib/llvm-15/include/llvm/IR/Constant.h /usr/lib/llvm-15/include/llvm/IR/User.h /usr/lib/llvm-15/include/llvm/IR/Metadata.def /usr/lib/llvm-15/include/llvm/IR/SymbolTableListTraits.h /usr/lib/llvm-15/include/llvm/Support/AtomicOrdering.h /usr/lib/llvm-15/include/llvm/IR/Instruction.def /usr/lib/llvm-15/include/llvm/IR/CallingConv.h /usr/lib/llvm-15/include/llvm/IR/GlobalObject.h /usr/lib/llvm-15/include/llvm/IR/GlobalValue.h /usr/lib/llvm-15/include/llvm/Support/MD5.h /usr/lib/llvm-15/include/llvm/Support/Endian.h /usr/lib/llvm-15/include/llvm/IR/OperandTraits.h /usr/lib/llvm-15/include/llvm/IR/GlobalAlias.h /usr/lib/llvm-15/include/llvm/IR/GlobalIFunc.h /usr/lib/llvm-15/include/llvm/IR/GlobalVariable.h /usr/lib/llvm-15/include/llvm/IR/ProfileSummary.h /usr/lib/llvm-15/include/llvm/IR/IRBuilder.h /usr/lib/llvm-15/include/llvm/IR/ConstantFolder.h /usr/lib/llvm-15/include/llvm/IR/Constants.h /usr/lib/llvm-15/include/llvm/ADT/APFloat.h /usr/lib/llvm-15/include/llvm/ADT/FloatingPointMode.h /usr/lib/llvm-15/include/llvm/ADT/StringSwitch.h /usr/lib/llvm-15/include/llvm/IR/ConstantFold.h /usr/lib/llvm-15/include/llvm/IR/InstrTypes.h /usr/lib/llvm-15/include/llvm/ADT/Sequence.h /usr/lib/llvm-15/include/llvm/IR/IRBuilderFolder.h /usr/lib/llvm-15/include/llvm/IR/Operator.h /usr/lib/llvm-15/include/llvm/ADT/MapVector.h /usr/lib/llvm-15/include/llvm/IR/FMF.h /usr/lib/llvm-15/include/llvm/IR/FPEnv.h /usr/lib/llvm-15/include/llvm/IR/Instructions.h /usr/lib/llvm-15/include/llvm/IR/CFG.h /usr/lib/llvm-15/include/llvm/ADT/GraphTraits.h /usr/lib/llvm-15/include/llvm/IR/Intrinsics.h /usr/lib/llvm-15/include/llvm/IR/IntrinsicEnums.inc /usr/lib/llvm-15/include/llvm/IR/ValueHandle.h /usr/lib/llvm-15/include/llvm/Support/Error.h /usr/lib/llvm-15/include/llvm-c/Error.h /usr/lib/llvm-15/include/llvm/ADT/StringExtras.h /usr/lib/llvm-15/include/llvm/ADT/APSInt.h /usr/lib/llvm-15/include/llvm/Support/Debug.h /usr/lib/llvm-15/include/llvm/Support/ErrorOr.h /usr/lib/llvm-15/include/llvm/Support/Format.h src/include/ast/assignment_stmt.h src/include/ast/stmt.h src/include/ast/expr_stmt.h src/include/ast/expr.h src/include/ast/func_call.h src/include/ast/id_expr.h src/include/ast/module.h src/include/ast/num_literal.h src/include/ast/op_expr.h src/include/ast/return_stmt.h src/include/ast/scope.h src/include/ast/type.h src/include/ast/var_dec_stmt.h src/include/ast/var_dec.h src/include/ast/var_def_stmt.h src/include/ast/var_def.h src/include/parser.h src/include/location.hh src/include/parser.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/StringMap.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Attributes.inc:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/TypeSize.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/module.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/ilist_node_options.h:
+# 
+  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Constant.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/MemAlloc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Use.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -409,63 +817,401 @@ build/src/scanner.cc.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+src/include/ast/expr.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/DiagnosticHandler.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Format.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/Sequence.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/ReverseIteration.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/MapVector.h 
+:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/MathExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 parser:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
-#  File has not been 
- updated.
-#  commands to execute (from `makefile', line 51):
+#  File has not been updated.
+#  commands to execute (from `makefile', line 52):
 	bison --defines=$(PARSER_HH) -Wcounterexamples -o $(PARSER_CC) $(PARSER_YY)
 	mv $(LOCATION_HH_SRC) $(LOCATION_HH)
 	
+
+src/include/ast/var_def_stmt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/num_literal.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm-c/DataTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/SmallVector.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/type_traits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/DerivedTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Argument.h:
+#  Implicit  
+rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/type.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/LLVMContext.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/DataTypes.h:
+#  Implicit rule search has not been done.
+#  Modification time never c 
+hecked.
+#  File has not been updated.
 
 run:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 63):
+#  commands to execute (from `makefile', line 64):
 	$(BUILD_DIR)/$(TARGET_EXEC) tests/test1.mylang
 	
+
+/usr/lib/llvm-15/include/llvm/ADT/PointerUnion.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/GlobalIFunc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/parser_driver.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/SymbolTableListTraits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  File does not exist 
+.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 47):
+#  commands to execute (from `makefile', line 48):
 	$(RM) -r $(BUILD_DIR)
 	$(RM) $(SCANNER_CC) $(PARSER_CC) $(PARSER_HH) $(LOCATION_HH)
 	
 
 # Not a target:
-build/src/parser.cc.o:
+src/parser.cc:
 #  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/IRBuilder.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/TrailingObjects.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/codegen.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/ilist_node_base.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/iterator_range.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+build/src/parser.cc.o: src/parser.cc src/include/parser.h src/include/ast/ast.h src/include/codegen.h /usr/lib/llvm-15/include/llvm/IR/LLVMContext.h /usr/lib/llvm-15/include/llvm-c/Types.h /usr/lib/llvm-15/include/llvm-c/DataTypes.h /usr/lib/llvm-15/include/llvm-c/ExternC.h /usr/lib/llvm-15/include/llvm/ADT/Optional.h /usr/lib/llvm-15/include/llvm/ADT/Hashing.h /usr/lib/llvm-15/include/llvm/Support/DataTypes.h /usr/lib/llvm-15/include/llvm/Support/ErrorHandling.h /usr/lib/llvm-15/include/llvm/Support/Compiler.h /usr/lib/llvm-15/include/llvm/Config/llvm-config.h /usr/lib/llvm-15/include/llvm/Support/SwapByteOrder.h /usr/lib/llvm-15/include/llvm/Support/type_traits.h /usr/lib/llvm-15/include/llvm/ADT/None.h /usr/lib/llvm-15/include/llvm/ADT/STLForwardCompat.h /usr/lib/llvm-15/include/llvm/IR/DiagnosticHandler.h /usr/lib/llvm-15/include/llvm/ADT/StringRef.h /usr/lib/llvm-15/include/llvm/ADT/DenseMapInfo.h /usr/lib/llvm-15/include/llvm/ADT/STLFunctionalExtras.h /usr/lib/llvm-15/include/llvm/ADT/iterator_range.h /usr/lib/llvm-15/include/llvm/Support/CBindingWrapping.h /usr/lib/llvm-15/include/llvm/Support/Casting.h /usr/lib/llvm-15/include/llvm/IR/FixedMetadataKinds.def /usr/lib/llvm-15/include/llvm/IR/Module.h /usr/lib/llvm-15/include/llvm/ADT/STLExtras.h /usr/lib/llvm-15/include/llvm/ADT/STLArrayExtras.h /usr/lib/llvm-15/include/llvm/ADT/identity.h /usr/lib/llvm-15/include/llvm/ADT/iterator.h /usr/lib/llvm-15/include/llvm/Config/abi-breaking.h /usr/lib/llvm-15/include/llvm/ADT/StringMap.h /usr/lib/llvm-15/include/llvm/ADT/StringMapEntry.h /usr/lib/llvm-15/include/llvm/Support/AllocatorBase.h /usr/lib/llvm-15/include/llvm/Support/MemAlloc.h /usr/lib/llvm-15/include/llvm/Support/PointerLikeTypeTraits.h /usr/lib/llvm-15/include/llvm/IR/Attributes.h /usr/lib/llvm-15/include/llvm/ADT/ArrayRef.h /usr/lib/llvm-15/include/llvm/ADT/SmallVector.h /usr/lib/llvm-15/include/llvm/ADT/BitmaskEnum.h /usr/lib/llvm-15/include/llvm/Support/MathExtras.h /usr/lib/llvm-15/include/llvm/ADT/SmallString.h /usr/lib/llvm-15/include/llvm/Support/Alignment.h /usr/lib/llvm-15/include/llvm/Support/CodeGen.h /usr/lib/llvm-15/include/llvm/IR/Attributes.inc /usr/lib/llvm-15/include/llvm/IR/Comdat.h /usr/lib/llvm-15/include/llvm/ADT/SmallPtrSet.h /usr/lib/llvm-15/include/llvm/ADT/EpochTracker.h /usr/lib/llvm-15/include/llvm/Support/ReverseIteration.h /usr/lib/llvm-15/include/llvm/IR/DataLayout.h /usr/lib/llvm-15/include/llvm/ADT/APInt.h /usr/lib/llvm-15/include/llvm/IR/DerivedTypes.h /usr/lib/llvm-15/include/llvm/IR/Type.h /usr/lib/llvm-15/include/llvm/Support/TypeSize.h /usr/lib/llvm-15/include/llvm/Support/raw_ostream.h /usr/lib/llvm-15/include/llvm/Support/TrailingObjects.h /usr/lib/llvm-15/include/llvm/Support/AlignOf.h /usr/lib/llvm-15/include/llvm/IR/Function.h /usr/lib/llvm-15/include/llvm/ADT/DenseSet.h /usr/lib/llvm-15/include/llvm/ADT/DenseMap.h /usr/lib/llvm-15/include/llvm/ADT/Twine.h /usr/lib/llvm-15/include/llvm/ADT/ilist_node.h /usr/lib/llvm-15/include/llvm/ADT/ilist_node_base.h /usr/lib/llvm-15/include/llvm/ADT/PointerIntPair.h /usr/lib/llvm-15/include/llvm/ADT/ilist_node_options.h /usr/lib/llvm-15/include/llvm/IR/Argument.h /usr/lib/llvm-15/include/llvm/IR/Value.h /usr/lib/llvm-15/include/llvm/IR/Use.h /usr/lib/llvm-15/include/llvm/IR/Value.def /usr/lib/llvm-15/include/llvm/IR/BasicBlock.h /usr/lib/llvm-15/include/llvm/ADT/ilist.h /usr/lib/llvm-15/include/llvm/ADT/simple_ilist.h /usr/lib/llvm-15/include/llvm/ADT/ilist_base.h /usr/lib/llvm-15/include/llvm/ADT/ilist_iterator.h /usr/lib/llvm-15/include/llvm/IR/Instruction.h /usr/lib/llvm-15/include/llvm/ADT/Bitfields.h /usr/lib/llvm-15/include/llvm/IR/DebugLoc.h /usr/lib/llvm-15/include/llvm/IR/TrackingMDRef.h /usr/lib/llvm-15/include/llvm/IR/Metadata.h /usr/lib/llvm-15/include/llvm/ADT/PointerUnion.h /usr/lib/llvm-15/include/llvm/IR/Constant.h /usr/lib/llvm-15/include/llvm/IR/User.h /usr/lib/llvm-15/include/llvm/IR/Metadata.def /usr/lib/llvm-15/include/llvm/IR/SymbolTableListTraits.h /usr/lib/llvm-15/include/llvm/Support/AtomicOrdering.h /usr/lib/llvm-15/include/llvm/IR/Instruction.def /usr/lib/llvm-15/include/llvm/IR/CallingConv.h /usr/lib/llvm-15/include/llvm/IR/GlobalObject.h /usr/lib/llvm-15/include/llvm/IR/GlobalValue.h /usr/lib/llvm-15/include/llvm/Support/MD5.h /usr/lib/llvm-15/include/llvm/Support/Endian.h /usr/lib/llvm-15/include/llvm/IR/OperandTraits.h /usr/lib/llvm-15/include/llvm/IR/GlobalAlias.h /usr/lib/llvm-15/include/llvm/IR/GlobalIFunc.h /usr/lib/llvm-15/include/llvm/IR/GlobalVariable.h /usr/lib/llvm-15/include/llvm/IR/ProfileSummary.h /usr/lib/llvm-15/include/llvm/IR/IRBuilder.h /usr/lib/llvm-15/include/llvm/IR/ConstantFolder.h /usr/lib/llvm-15/include/llvm/IR/Constants.h /usr/lib/llvm-15/include/llvm/ADT/APFloat.h /usr/lib/llvm-15/include/llvm/ADT/FloatingPointMode.h /usr/lib/llvm-15/include/llvm/ADT/StringSwitch.h /usr/lib/llvm-15/include/llvm/IR/ConstantFold.h /usr/lib/llvm-15/include/llvm/IR/InstrTypes.h /usr/lib/llvm-15/include/llvm/ADT/Sequence.h /usr/lib/llvm-15/include/llvm/IR/IRBuilderFolder.h /usr/lib/llvm-15/include/llvm/IR/Operator.h /usr/lib/llvm-15/include/llvm/ADT/MapVector.h /usr/lib/llvm-15/include/llvm/IR/FMF.h /usr/lib/llvm-15/include/llvm/IR/FPEnv.h /usr/lib/llvm-15/include/llvm/IR/Instructions.h /usr/lib/llvm-15/include/llvm/IR/CFG.h /usr/lib/llvm-15/include/llvm/ADT/GraphTraits.h /usr/lib/llvm-15/include/llvm/IR/Intrinsics.h /usr/lib/llvm-15/include/llvm/IR/IntrinsicEnums.inc /usr/lib/llvm-15/include/llvm/IR/ValueHandle.h /usr/lib/llvm-15/include/llvm/Support/Error.h /usr/lib/llvm-15/include/llvm-c/Error.h /usr/lib/llvm-15/include/llvm/ADT/StringExtras.h /usr/lib/llvm-15/include/llvm/ADT/APSInt.h /usr/lib/llvm-15/include/llvm/Support/Debug.h /usr/lib/llvm-15/include/llvm/Support/ErrorOr.h /usr/lib/llvm-15/include/llvm/Support/Format.h src/include/ast/assignment_stmt.h src/include/ast/stmt.h src/include/ast/expr_stmt.h src/include/ast/expr.h src/include/ast/func_call.h src/include/ast/id_expr.h src/include/ast/module.h src/include/ast/num_literal.h src/include/ast/op_expr.h src/include/ast/retur 
+n_stmt.h src/include/ast/scope.h src/include/ast/type.h src/include/ast/var_dec_stmt.h src/include/ast/var_dec.h src/include/ast/var_def_stmt.h src/include/ast/var_def.h src/include/location.hh src/include/parser_driver.h src/include/parser.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/APInt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/scope.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Operator.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/APFloat.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm-c/Error.h:
+#  Implicit rule search has not  
+been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 build/a.out: parser lexer build/src/parser.cc.o build/src/scanner.cc.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
-#  File has not 
-process_begin: CreateProcess(NULL, llvm-config --cxxflags, ...) failed.
-make.exe: *** No rule to make target `all'.  Stop.
-
- been updated.
-#  commands to execute (from `makefile', line 27):
+#  File has not been updated.
+#  commands to execute (from `makefile', line 28):
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 	
+
+/usr/lib/llvm-15/include/llvm/IR/Value.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-1 
+5/include/llvm/ADT/GraphTraits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/SmallPtrSet.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/CBindingWrapping.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/OperandTraits.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/expr_stmt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Error.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Module.h:
+#  Implicit rule search has not been done.
+#  Modifica 
+tion time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/ilist_node.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/CallingConv.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/EpochTracker.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/SwapByteOrder.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Instruction.def:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/ilist_base.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/inclu 
+de/ast/var_def.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/CFG.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/MD5.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Metadata.def:
+#  Implicit rule search has not  
+been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 lexer:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 55):
+#  commands to execute (from `makefile', line 56):
 	flex -o $(SCANNER_CC) $(SCANNER_LL)
 	
 
+/usr/lib/llvm-15/include/llvm/ADT/Optional.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/stmt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/Type.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Casting.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/STLExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has n 
+ot been updated.
+
+src/include/ast/ast.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+src/include/ast/return_stmt.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/User.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/ilist.h:
+#  Implicit rule search ha 
+s not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/TrackingMDRef.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/ErrorHandling.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/StringExtras.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/FPEnv.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/IR/ConstantFolder.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+/usr/lib/llvm-15/include/llvm/Support/Debug.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not  
+been updated.
+
+/usr/lib/llvm-15/include/llvm/ADT/Twine.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/37=0%
+# Load=159/1024=16%, Rehash=0, Collisions=48/612=8%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -477,6 +1223,9 @@ lexer:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4042 / max = 4042 / min = 4042 / avg = 4042
 
-# Finished Make data base on Fri Sep 02 19:24:13 2022
+# Finished Make data base on Sat Sep 03 15:34:00 2022
 
  
+process_begin: CreateProcess(NULL, llvm-config --cxxflags, ...) failed.
+make.exe: *** No rule to make target `all'.  Stop.
+

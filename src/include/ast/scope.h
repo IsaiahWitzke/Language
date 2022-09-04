@@ -15,7 +15,7 @@ public:
 	static ScopeAST* curScope;
 
 	vector<unique_ptr<StmtAST>> stmts;
-	map<string, AllocaInst*> namedValues;	// populated as stmts are added to the scope while parsing
+	map<string, Value*> namedValues;	// populated as stmts are added to the scope while parsing
 
 	ScopeAST* parentScope;
 	const bool isGlobal;
@@ -23,12 +23,12 @@ public:
 
 	ScopeAST(
 		ScopeAST* parentScope
-	) : parentScope(parentScope), isGlobal(parentScope != nullptr) {}
+	) : parentScope(parentScope), isGlobal(parentScope == nullptr) {}
 
 	void addStmt(unique_ptr<StmtAST> stmt);
 
 	// const VarDecAST* search(const string& name) const;
-	AllocaInst* searchVal(const string& name);
+	Value* searchVal(const string& name);
 
 	void codegen() {
 		ScopeAST* oldScope = curScope;

@@ -7,5 +7,6 @@ Value* IdExprAST::codegen() {
 		return nullptr;
 	}
 	
-	return Builder->CreateLoad(Type::getInt64Ty(*TheContext), v, id.c_str());
+	// return Builder->CreateLoad(Type::getInt64Ty(*TheContext), v, id.c_str());
+	return Builder->CreateAlignedLoad(Type::getInt64Ty(*TheContext), v, Align(8), id.c_str());
 }

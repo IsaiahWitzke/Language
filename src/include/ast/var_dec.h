@@ -14,5 +14,5 @@ public:
 	FunctionTypeAST* getFunctionType();
 	BasicTypeAST* getBasicType();
 
-	AllocaInst* codegen();
+	Value* codegen();
 };

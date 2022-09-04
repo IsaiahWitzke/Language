@@ -1,6 +1,6 @@
 #include "var_dec.h"
 
-AllocaInst* VarDecAST::codegen() {
+Value* VarDecAST::codegen() {
 	if (isFuncType()) {
 		auto& args = getFunctionType()->params;
 		auto& returnType = getFunctionType()->returnType;
@@ -24,30 +24,36 @@ AllocaInst* VarDecAST::codegen() {
 		for (auto& arg : llvmFunc->args())
 			arg.setName(args[idx++]->name);
 
+		// AllocaInst* allocaInst = Builder->CreateAlloca(funcType, nullptr, name);
+		// Builder->CreateStore(llvmFunc, allocaInst, false);
 
-		// return llvmFunc;
-		// TODO: return pointer to where function is stored in memory
+		// return allocaInst;
 		return nullptr;
 	}
 	else {
-		Function* TheFunction = Builder->GetInsertBlock()->getParent();
-
-		// AllocaInst* allocaInst = CreateEntryBlockAlloca(TheFunction, name);
-
-		AllocaInst* allocaInst = Builder->CreateAlloca(Type::getInt64Ty(*TheContext), nullptr, name);
-
-		if(ScopeAST::curScope->namedValues.count(name)) {
-			LogErrorV("Already defined in this scope: " + name);
+		if (ScopeAST::curScope->isGlobal) {
+			// global vars
+			TheModule->getOrInsertGlobal(name, Type::getInt64Ty(*TheContext));
+			GlobalVariable* gVar = TheModule->getNamedGlobal(name);
+			// gVar->setLinkage(GlobalVariable::CommonLinkage);
+			ScopeAST::curScope->namedValues[name] = gVar;
+			gVar->setAlignment(Align(8));
+			return gVar;
 		} else {
-			ScopeAST::curScope->namedValues[name] = allocaInst;
+			// scoped variables allocated on the stack
+			Function* TheFunction = Builder->GetInsertBlock()->getParent();
+			AllocaInst* allocaInst = Builder->CreateAlloca(Type::getInt64Ty(*TheContext), nullptr, name);
+
+			if (ScopeAST::curScope->namedValues.count(name))
+				LogErrorV("Already defined in this scope: " + name);
+			else
+				ScopeAST::curScope->namedValues[name] = allocaInst;
+
+			// TODO: change bitsize/type to match type
+			Value* initVal = ConstantInt::get(*TheContext, llvm::APInt(64, 0, true));
+			Builder->CreateStore(initVal, allocaInst);
+			return allocaInst;
 		}
-
-		// TODO: change bitsize/type to match type
-		Value* initVal = ConstantInt::get(*TheContext, llvm::APInt(64, 0, true));
-
-		Builder->CreateStore(initVal, allocaInst);
-
-		return allocaInst;
 	}
 }
 
