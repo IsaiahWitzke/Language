@@ -886,7 +886,7 @@ namespace yy {
 
   case 15: // variable_decs: variable_decs "," variable_dec
 #line 128 "src/parser/parser.yy"
-                                                                       {
+                                                                  {
 					yystack_[2].value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
 #line 893 "src/parser.cc"
@@ -948,26 +948,34 @@ namespace yy {
 #line 949 "src/parser.cc"
     break;
 
-  case 33: // arg_list: expr
+  case 33: // arg_list: %empty
 #line 157 "src/parser/parser.yy"
-                       {
+                         {
+				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
+			}
+#line 957 "src/parser.cc"
+    break;
+
+  case 34: // arg_list: expr
+#line 160 "src/parser/parser.yy"
+                               {
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 			}
-#line 958 "src/parser.cc"
+#line 966 "src/parser.cc"
     break;
 
-  case 34: // arg_list: arg_list "," expr
-#line 161 "src/parser/parser.yy"
+  case 35: // arg_list: arg_list "," expr
+#line 164 "src/parser/parser.yy"
                                             {
 				yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = move(yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ());
 			}
-#line 967 "src/parser.cc"
+#line 975 "src/parser.cc"
     break;
 
 
-#line 971 "src/parser.cc"
+#line 979 "src/parser.cc"
 
             default:
               break;
@@ -1444,10 +1452,10 @@ namespace yy {
   {
        3,     0,     2,     1,    31,    29,     0,     0,     4,     7,
        0,     0,    27,     0,     0,    31,     0,     0,     0,     6,
-       0,     5,     0,     0,    13,    21,    20,    19,    18,    25,
+       0,     5,    33,     0,    13,    21,    20,    19,    18,    25,
       24,    23,    22,    12,    16,    17,    30,     9,     3,     0,
-      28,    33,     0,     8,     0,    14,     0,     0,    10,    32,
-       0,     0,     0,    11,    34,     0,    15,    26
+      28,    34,     0,     8,     0,    14,     0,     0,    10,    32,
+       0,     0,     0,    11,    35,     0,    15,    26
   };
 
   const signed char
@@ -1505,7 +1513,7 @@ namespace yy {
        0,    25,    26,    27,    27,    28,    28,    28,    28,    28,
       29,    29,    30,    31,    31,    31,    32,    32,    33,    33,
       33,    33,    33,    33,    33,    33,    34,    35,    35,    36,
-      36,    36,    36,    37,    37
+      36,    36,    36,    37,    37,    37
   };
 
   const signed char
@@ -1514,7 +1522,7 @@ namespace yy {
        0,     2,     1,     0,     2,     2,     2,     1,     4,     3,
        4,     5,     3,     0,     1,     3,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     5,     1,     3,     1,
-       3,     1,     4,     1,     3
+       3,     1,     4,     0,     1,     3
   };
 
 
@@ -1527,7 +1535,7 @@ namespace yy {
        0,    84,    84,    90,    94,   100,   101,   102,   103,   104,
      107,   111,   118,   121,   124,   128,   133,   134,   138,   138,
      138,   138,   138,   138,   138,   138,   141,   146,   147,   151,
-     152,   153,   154,   157,   161
+     152,   153,   154,   157,   160,   164
   };
 
   void
@@ -1559,9 +1567,9 @@ namespace yy {
 
 
 } // yy
-#line 1563 "src/parser.cc"
+#line 1571 "src/parser.cc"
 
-#line 166 "src/parser/parser.yy"
+#line 169 "src/parser/parser.yy"
 
 
 void yy::parser::error (const location_type& l, const std::string& m) {

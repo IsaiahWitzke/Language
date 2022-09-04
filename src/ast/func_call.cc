@@ -1,5 +1,5 @@
 #include "func_call.h"
 
 llvm::Value* FuncCallAST::codegen() {
-	return nullptr;
+	Function *calleeFunc = static_cast<Function *>(callee->codegen());
 }

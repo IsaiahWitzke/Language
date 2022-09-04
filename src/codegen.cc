@@ -22,7 +22,6 @@ using namespace std;
 unique_ptr<LLVMContext> TheContext;
 unique_ptr<IRBuilder<>> Builder;
 unique_ptr<Module> TheModule;
-map<string, AllocaInst*> NamedValues;
 // map<string, VarDecAST*> FunctionProtos;
 ExitOnError ExitOnErr;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "ast.h"
+#include "variable.h"
 
 class VarDecAST;
 
@@ -7,15 +8,12 @@ class VarDecAST;
 /// The scope holds the variable/function names, and holds pointers to parent
 /// scopes so that when codegen'ing we can reference "in-scope" variables/functions
 class ScopeAST {
-private:
-	void tryAddVarDecToNamedValues(StmtAST* stmt);
-
 public:
 	/// Used while constructing the AST during the parsing stage
 	static ScopeAST* curScope;
 
 	vector<unique_ptr<StmtAST>> stmts;
-	map<string, Value*> namedValues;	// populated as stmts are added to the scope while parsing
+	map<string, unique_ptr<Variable>> namedValues;	// populated as stmts are added to the scope while parsing
 
 	ScopeAST* parentScope;
 	const bool isGlobal;
@@ -28,7 +26,13 @@ public:
 	void addStmt(unique_ptr<StmtAST> stmt);
 
 	// const VarDecAST* search(const string& name) const;
-	Value* searchVal(const string& name);
+	Variable* searchVar(const string& name);
+	void addVar(unique_ptr<Variable> v) {
+		if (curScope->namedValues.count(v->name))
+			LogErrorV("Already defined in this scope: " + v->name);
+		else
+			curScope->namedValues[v->name] = move(v);
+	}
 
 	void codegen() {
 		ScopeAST* oldScope = curScope;

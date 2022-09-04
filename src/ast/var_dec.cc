@@ -1,4 +1,5 @@
 #include "var_dec.h"
+#include "variable.h"
 
 Value* VarDecAST::codegen() {
 	if (isFuncType()) {
@@ -23,6 +24,11 @@ Value* VarDecAST::codegen() {
 		unsigned idx = 0;
 		for (auto& arg : llvmFunc->args())
 			arg.setName(args[idx++]->name);
+		
+		// add this function to the named values
+		ScopeAST::curScope->addVar(
+			make_unique<Variable>(name, llvmFunc, type.get())
+		);
 
 		// AllocaInst* allocaInst = Builder->CreateAlloca(funcType, nullptr, name);
 		// Builder->CreateStore(llvmFunc, allocaInst, false);
@@ -35,19 +41,19 @@ Value* VarDecAST::codegen() {
 			// global vars
 			TheModule->getOrInsertGlobal(name, Type::getInt64Ty(*TheContext));
 			GlobalVariable* gVar = TheModule->getNamedGlobal(name);
-			// gVar->setLinkage(GlobalVariable::CommonLinkage);
-			ScopeAST::curScope->namedValues[name] = gVar;
+
+			ScopeAST::curScope->addVar(
+				make_unique<Variable>(name, gVar, type.get())
+			);
+
 			gVar->setAlignment(Align(8));
 			return gVar;
 		} else {
 			// scoped variables allocated on the stack
-			Function* TheFunction = Builder->GetInsertBlock()->getParent();
 			AllocaInst* allocaInst = Builder->CreateAlloca(Type::getInt64Ty(*TheContext), nullptr, name);
-
-			if (ScopeAST::curScope->namedValues.count(name))
-				LogErrorV("Already defined in this scope: " + name);
-			else
-				ScopeAST::curScope->namedValues[name] = allocaInst;
+			ScopeAST::curScope->addVar(
+				make_unique<Variable>(name, allocaInst, type.get())
+			);
 
 			// TODO: change bitsize/type to match type
 			Value* initVal = ConstantInt::get(*TheContext, llvm::APInt(64, 0, true));
@@ -58,7 +64,8 @@ Value* VarDecAST::codegen() {
 }
 
 bool VarDecAST::isFuncType() {
-	return (bool) dynamic_cast<FunctionTypeAST*>(type.get());
+	return type->isFunc;
+	// return (bool) dynamic_cast<FunctionTypeAST*>(type.get());
 }
 
 FunctionTypeAST* VarDecAST::getFunctionType() {

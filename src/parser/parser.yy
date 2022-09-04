@@ -125,7 +125,7 @@ variable_decs	: %empty {
 					$$ = vector<unique_ptr<VarDecAST>>();
 					$$.push_back(move($1));
 				}
-				| variable_decs tok_coma variable_dec  {
+				| variable_decs "," variable_dec  {
 					$1.push_back(move($3));
 				}
 				;
@@ -154,7 +154,10 @@ term	: tok_inum				{ $$ = make_unique<NumLiteralAST>($1); }
 		| term "(" arg_list ")"	{ $$ = make_unique<FuncCallAST>(move($1), move($3)); }
 		;
 
-arg_list 	: expr {
+arg_list 	: %empty {
+				$$ = vector<unique_ptr<ExprAST>>();
+			}
+			| expr {
 				$$ = vector<unique_ptr<ExprAST>>();
 				$$.push_back(move($1));
 			}
