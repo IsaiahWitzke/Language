@@ -36,6 +36,17 @@ enum Token {
 	tok_f64 = -20,
 	tok_f32 = -21,
 	tok_f16 = -22,
+	// tok_u16 = -23,
+	// tok_u32 = -23,
+	// tok_u128 = -23,
 
 	tok_unknown = -100
 };
+
+unsigned basicTypeToSize(Token t);
+
+bool isBasicTypeInt(Token t);
+
+bool isBasicTypeFloat(Token t);
+
+bool isBasicTypeSigned(Token t);

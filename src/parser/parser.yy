@@ -37,7 +37,8 @@ ScopeAST *ScopeAST::curScope;
 
 /* %token tok_eof tok_func tok_extern tok_if tok_then tok_else tok_for tok_in */
 %token <std::string> tok_identifier;
-%token <int> tok_inum;
+%token <int>	tok_inum;
+%token <float>	tok_fnum;
 %token
   tok_eq			"="
   tok_minus			"-"
@@ -58,6 +59,7 @@ ScopeAST *ScopeAST::curScope;
   tok_f64			"f64"
   tok_f32			"f32"
   tok_f16			"f16"
+  tok_bool			"bool"
   tok_return 		"return"
   tok_if			"if"
   tok_else			"else"
@@ -77,7 +79,7 @@ ScopeAST *ScopeAST::curScope;
 %nterm <unique_ptr<ExprAST>>			expr;
 %nterm <unique_ptr<TypeAST>> 			type;
 %nterm <unique_ptr<FunctionTypeAST>> 	function_type;
-%nterm								 	basic_type;
+%nterm <Token>			 				basic_type;
 
 /* precedences */
 
@@ -139,12 +141,20 @@ variable_decs	: %empty {
 				}
 				;
 
-type	: basic_type	{ $$ = make_unique<BasicTypeAST>(yy::parser::token::tok_i64); }
+type	: basic_type	{ $$ = make_unique<BasicTypeAST>($1); }
 		| function_type	{ $$ = move($1); }
 		/* | tok_identifier {;} */
 		;
 
-basic_type : tok_i16 | tok_i32 | tok_i64 | tok_i128 | tok_f16 | tok_f32 | tok_f64 | tok_f128 ;
+basic_type	: tok_i16	{ $$ = tok_i16; }
+			| tok_i32	{ $$ = tok_i32; }
+			| tok_i64 	{ $$ = tok_i64; }
+			| tok_i128	{ $$ = tok_i128; }
+			| tok_f16	{ $$ = tok_f16; }
+			| tok_f32	{ $$ = tok_f32; }
+			| tok_f64	{ $$ = tok_f64; }
+			| tok_f128	{ $$ = tok_f128; }
+			;
 
 /* (varName1: type1, varName2: type2, ...) -> returnType */
 function_type 	: "(" variable_decs ")" "->" type {
@@ -158,6 +168,7 @@ expr 	: term 			{ $$ = move($1); }
 		;
 
 term	: tok_inum				{ $$ = make_unique<NumLiteralAST>($1); }
+		| tok_fnum				{ $$ = make_unique<NumLiteralAST>($1); }
 		| "(" expr ")" 			{ $$ = move($2); }
 		| tok_identifier		{ $$ = make_unique<IdExprAST>($1); }
 		| term "(" arg_list ")"	{ $$ = make_unique<FuncCallAST>(move($1), move($3)); }

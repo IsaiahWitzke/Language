@@ -4,6 +4,5 @@
 Value* ReturnStmtAST::codegen() {
 	Value* retVal = expr->codegen();
 	Builder->CreateRet(retVal);
-	verifyFunction(*Builder->GetInsertBlock()->getParent());
 	return retVal;	// ??
 }

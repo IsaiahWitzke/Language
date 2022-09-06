@@ -1,6 +1,9 @@
 #pragma once
 #include "ast.h"
 
+class BasicTypeAST;
+class FunctionTypeAST;
+
 class VarDecAST {
 public:
 	const string name;
@@ -10,6 +13,7 @@ public:
 		string name,
 		unique_ptr<TypeAST> type
 	) : name(name), type(move(type)) {}
+
 	bool isFuncType();
 	FunctionTypeAST* getFunctionType();
 	BasicTypeAST* getBasicType();

@@ -1,11 +1,4 @@
-globalVar: i64 = 2;
-
 test_main: () -> i64 = {
-	if(globalVar) {
-		return 1;
-	} else {
-		return 2;
-	}
+	test_float: f64 = 0.0;
+	return 0;
 }
-
-

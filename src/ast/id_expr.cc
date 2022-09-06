@@ -26,3 +26,12 @@ Value* IdExprAST::codegen() {
 		return Builder->CreateAlignedLoad(Type::getInt64Ty(*TheContext), var->value, Align(8), id.c_str());
 	}
 }
+
+TypeAST* IdExprAST::computeType() {
+	Variable* var = ScopeAST::curScope->searchVar(id);
+	if (!var) {
+		LogErrorV("No variable defined: " + id);
+		return nullptr;
+	}
+	return var->type;
+}

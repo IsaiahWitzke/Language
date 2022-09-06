@@ -1,4 +1,5 @@
 #include "var_def.h"
+#include "llvm/IR/Verifier.h"
 
 Value* VarDefAST::codegen() {
 	// codegen the declaration first
@@ -9,7 +10,24 @@ Value* VarDefAST::codegen() {
 		BasicBlock* entryBB = BasicBlock::Create(*TheContext, "entry", llvmFunc);
 		Builder->SetInsertPoint(entryBB);
 		functionScope->codegen();
+		verifyFunction(*llvmFunc, &outs());
+		// TODO: figure out pointers to functions
 	} else {
+		// type inference...
+		if (varDec->type == nullptr) {
+			// dont need this check since we already know varDec->isFuncType is false
+			// if(!initExpr) {
+			// 	LogErrorV("Cannot infer type of function.");
+			// 	return nullptr;
+			// }
+			varDec->type = make_unique<BasicTypeAST>(initExpr->computedType->toBasicType()->basicType);
+		} else {
+			// otherwise, we check to make sure that the expression type is the same as the variable
+			if(!(*varDec->type == *initExpr->computedType)) {
+				LogErrorV("Non-matching types!");
+				return nullptr;
+			}
+		}
 		Value *initVal = initExpr->codegen();
 		if(ScopeAST::curScope->isGlobal) {
 			// global vars... this seems sketchy

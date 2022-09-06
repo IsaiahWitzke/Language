@@ -19,3 +19,18 @@ Value* OpExprAST::codegen() {
 		return LogErrorV("invalid binary operator");
 	}
 }
+
+TypeAST *OpExprAST::computeType() {
+	if(!lhsExpr->computedType->toBasicType() || !rhsExpr->computedType->toBasicType()) {
+		LogErrorV("operand(s) not basic type(s)!");
+		return nullptr;
+	}
+
+	if(*(lhsExpr->computedType->toBasicType()) == *(rhsExpr->computedType->toBasicType())) {
+		computedType = lhsExpr->computedType->toBasicType();
+		return computedType;
+	} else {
+		LogErrorV("Difference in operand types!");
+		return nullptr;
+	}
+}

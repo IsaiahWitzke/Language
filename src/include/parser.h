@@ -416,42 +416,48 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // basic_type
+      char dummy1[sizeof (Token)];
+
+      // tok_fnum
+      char dummy2[sizeof (float)];
+
       // tok_inum
-      char dummy1[sizeof (int)];
+      char dummy3[sizeof (int)];
 
       // tok_identifier
-      char dummy2[sizeof (std::string)];
+      char dummy4[sizeof (std::string)];
 
       // expr
       // term
-      char dummy3[sizeof (unique_ptr<ExprAST>)];
+      char dummy5[sizeof (unique_ptr<ExprAST>)];
 
       // function_type
-      char dummy4[sizeof (unique_ptr<FunctionTypeAST>)];
+      char dummy6[sizeof (unique_ptr<FunctionTypeAST>)];
 
       // module
-      char dummy5[sizeof (unique_ptr<ModuleAST>)];
+      char dummy7[sizeof (unique_ptr<ModuleAST>)];
 
       // stmts
-      char dummy6[sizeof (unique_ptr<ScopeAST>)];
+      char dummy8[sizeof (unique_ptr<ScopeAST>)];
 
       // stmt
-      char dummy7[sizeof (unique_ptr<StmtAST>)];
+      char dummy9[sizeof (unique_ptr<StmtAST>)];
 
       // type
-      char dummy8[sizeof (unique_ptr<TypeAST>)];
+      char dummy10[sizeof (unique_ptr<TypeAST>)];
 
       // variable_dec
-      char dummy9[sizeof (unique_ptr<VarDecAST>)];
+      char dummy11[sizeof (unique_ptr<VarDecAST>)];
 
       // variable_def
-      char dummy10[sizeof (unique_ptr<VarDefAST>)];
+      char dummy12[sizeof (unique_ptr<VarDefAST>)];
 
       // arg_list
-      char dummy11[sizeof (vector<unique_ptr<ExprAST>>)];
+      char dummy13[sizeof (vector<unique_ptr<ExprAST>>)];
 
       // variable_decs
-      char dummy12[sizeof (vector<unique_ptr<VarDecAST>>)];
+      char dummy14[sizeof (vector<unique_ptr<VarDecAST>>)];
     };
 
     /// The size of the largest semantic type.
@@ -506,32 +512,34 @@ namespace yy {
     YYUNDEF = 2,                   // "invalid token"
     tok_identifier = 3,            // tok_identifier
     tok_inum = 4,                  // tok_inum
-    tok_eq = 5,                    // "="
-    tok_minus = 6,                 // "-"
-    tok_plus = 7,                  // "+"
-    tok_lparen = 8,                // "("
-    tok_rparen = 9,                // ")"
-    tok_lcurly = 10,               // "{"
-    tok_rcurly = 11,               // "}"
-    tok_colon = 12,                // ":"
-    tok_semi_colon = 13,           // ";"
-    tok_coma = 14,                 // ","
-    tok_arrow = 15,                // "->"
-    tok_i128 = 16,                 // "i128"
-    tok_i64 = 17,                  // "i64"
-    tok_i32 = 18,                  // "i32"
-    tok_i16 = 19,                  // "i16"
-    tok_f128 = 20,                 // "f128"
-    tok_f64 = 21,                  // "f64"
-    tok_f32 = 22,                  // "f32"
-    tok_f16 = 23,                  // "f16"
-    tok_return = 24,               // "return"
-    tok_if = 25,                   // "if"
-    tok_else = 26,                 // "else"
-    tok_while = 27,                // "while"
-    tok_for = 28,                  // "for"
-    tok_true = 29,                 // "true"
-    tok_false = 30                 // "false"
+    tok_fnum = 5,                  // tok_fnum
+    tok_eq = 6,                    // "="
+    tok_minus = 7,                 // "-"
+    tok_plus = 8,                  // "+"
+    tok_lparen = 9,                // "("
+    tok_rparen = 10,               // ")"
+    tok_lcurly = 11,               // "{"
+    tok_rcurly = 12,               // "}"
+    tok_colon = 13,                // ":"
+    tok_semi_colon = 14,           // ";"
+    tok_coma = 15,                 // ","
+    tok_arrow = 16,                // "->"
+    tok_i128 = 17,                 // "i128"
+    tok_i64 = 18,                  // "i64"
+    tok_i32 = 19,                  // "i32"
+    tok_i16 = 20,                  // "i16"
+    tok_f128 = 21,                 // "f128"
+    tok_f64 = 22,                  // "f64"
+    tok_f32 = 23,                  // "f32"
+    tok_f16 = 24,                  // "f16"
+    tok_bool = 25,                 // "bool"
+    tok_return = 26,               // "return"
+    tok_if = 27,                   // "if"
+    tok_else = 28,                 // "else"
+    tok_while = 29,                // "while"
+    tok_for = 30,                  // "for"
+    tok_true = 31,                 // "true"
+    tok_false = 32                 // "false"
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -548,52 +556,54 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 31, ///< Number of tokens.
+        YYNTOKENS = 33, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
         S_YYUNDEF = 2,                           // "invalid token"
         S_tok_identifier = 3,                    // tok_identifier
         S_tok_inum = 4,                          // tok_inum
-        S_tok_eq = 5,                            // "="
-        S_tok_minus = 6,                         // "-"
-        S_tok_plus = 7,                          // "+"
-        S_tok_lparen = 8,                        // "("
-        S_tok_rparen = 9,                        // ")"
-        S_tok_lcurly = 10,                       // "{"
-        S_tok_rcurly = 11,                       // "}"
-        S_tok_colon = 12,                        // ":"
-        S_tok_semi_colon = 13,                   // ";"
-        S_tok_coma = 14,                         // ","
-        S_tok_arrow = 15,                        // "->"
-        S_tok_i128 = 16,                         // "i128"
-        S_tok_i64 = 17,                          // "i64"
-        S_tok_i32 = 18,                          // "i32"
-        S_tok_i16 = 19,                          // "i16"
-        S_tok_f128 = 20,                         // "f128"
-        S_tok_f64 = 21,                          // "f64"
-        S_tok_f32 = 22,                          // "f32"
-        S_tok_f16 = 23,                          // "f16"
-        S_tok_return = 24,                       // "return"
-        S_tok_if = 25,                           // "if"
-        S_tok_else = 26,                         // "else"
-        S_tok_while = 27,                        // "while"
-        S_tok_for = 28,                          // "for"
-        S_tok_true = 29,                         // "true"
-        S_tok_false = 30,                        // "false"
-        S_YYACCEPT = 31,                         // $accept
-        S_module = 32,                           // module
-        S_stmts = 33,                            // stmts
-        S_stmt = 34,                             // stmt
-        S_variable_def = 35,                     // variable_def
-        S_variable_dec = 36,                     // variable_dec
-        S_variable_decs = 37,                    // variable_decs
-        S_type = 38,                             // type
-        S_basic_type = 39,                       // basic_type
-        S_function_type = 40,                    // function_type
-        S_expr = 41,                             // expr
-        S_term = 42,                             // term
-        S_arg_list = 43                          // arg_list
+        S_tok_fnum = 5,                          // tok_fnum
+        S_tok_eq = 6,                            // "="
+        S_tok_minus = 7,                         // "-"
+        S_tok_plus = 8,                          // "+"
+        S_tok_lparen = 9,                        // "("
+        S_tok_rparen = 10,                       // ")"
+        S_tok_lcurly = 11,                       // "{"
+        S_tok_rcurly = 12,                       // "}"
+        S_tok_colon = 13,                        // ":"
+        S_tok_semi_colon = 14,                   // ";"
+        S_tok_coma = 15,                         // ","
+        S_tok_arrow = 16,                        // "->"
+        S_tok_i128 = 17,                         // "i128"
+        S_tok_i64 = 18,                          // "i64"
+        S_tok_i32 = 19,                          // "i32"
+        S_tok_i16 = 20,                          // "i16"
+        S_tok_f128 = 21,                         // "f128"
+        S_tok_f64 = 22,                          // "f64"
+        S_tok_f32 = 23,                          // "f32"
+        S_tok_f16 = 24,                          // "f16"
+        S_tok_bool = 25,                         // "bool"
+        S_tok_return = 26,                       // "return"
+        S_tok_if = 27,                           // "if"
+        S_tok_else = 28,                         // "else"
+        S_tok_while = 29,                        // "while"
+        S_tok_for = 30,                          // "for"
+        S_tok_true = 31,                         // "true"
+        S_tok_false = 32,                        // "false"
+        S_YYACCEPT = 33,                         // $accept
+        S_module = 34,                           // module
+        S_stmts = 35,                            // stmts
+        S_stmt = 36,                             // stmt
+        S_variable_def = 37,                     // variable_def
+        S_variable_dec = 38,                     // variable_dec
+        S_variable_decs = 39,                    // variable_decs
+        S_type = 40,                             // type
+        S_basic_type = 41,                       // basic_type
+        S_function_type = 42,                    // function_type
+        S_expr = 43,                             // expr
+        S_term = 44,                             // term
+        S_arg_list = 45                          // arg_list
       };
     };
 
@@ -630,6 +640,14 @@ namespace yy {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.move< Token > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.move< float > (std::move (that.value));
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.move< int > (std::move (that.value));
         break;
@@ -698,6 +716,34 @@ namespace yy {
 #else
       basic_symbol (typename Base::kind_type t, const location_type& l)
         : Base (t)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Token&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Token& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, float&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const float& v, const location_type& l)
+        : Base (t)
+        , value (v)
         , location (l)
       {}
 #endif
@@ -894,6 +940,14 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.template destroy< Token > ();
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.template destroy< float > ();
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.template destroy< int > ();
         break;
@@ -1046,6 +1100,18 @@ switch (yykind)
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, float v, location_type l)
+        : super_type (token_kind_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const float& v, const location_type& l)
+        : super_type (token_kind_type (tok), v, l)
+#endif
+      {
+#if !defined _MSC_VER || defined __clang__
+        YY_ASSERT (tok == token::tok_fnum);
+#endif
+      }
+#if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, int v, location_type l)
         : super_type (token_kind_type (tok), std::move (v), std::move (l))
 #else
@@ -1190,6 +1256,21 @@ switch (yykind)
       make_tok_inum (const int& v, const location_type& l)
       {
         return symbol_type (token::tok_inum, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_fnum (float v, location_type l)
+      {
+        return symbol_type (token::tok_fnum, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_fnum (const float& v, const location_type& l)
+      {
+        return symbol_type (token::tok_fnum, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1475,6 +1556,21 @@ switch (yykind)
       make_tok_f16 (const location_type& l)
       {
         return symbol_type (token::tok_f16, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_tok_bool (location_type l)
+      {
+        return symbol_type (token::tok_bool, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_tok_bool (const location_type& l)
+      {
+        return symbol_type (token::tok_bool, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1926,7 +2022,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 82,     ///< Last index in yytable_.
+      yylast_ = 88,     ///< Last index in yytable_.
       yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 3 ///< Termination state number.
     };
@@ -1953,6 +2049,14 @@ switch (yykind)
   {
     switch (this->kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.copy< Token > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.copy< float > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.copy< int > (YY_MOVE (that.value));
         break;
@@ -2033,6 +2137,14 @@ switch (yykind)
     super_type::move (s);
     switch (this->kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.move< Token > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.move< float > (YY_MOVE (s.value));
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.move< int > (YY_MOVE (s.value));
         break;
@@ -2148,7 +2260,7 @@ switch (yykind)
 
 
 } // yy
-#line 2152 "src/include/parser.h"
+#line 2264 "src/include/parser.h"
 
 
 

@@ -27,7 +27,7 @@ int main (int argc, char *argv[]) {
 		}
 	}
 	drv.result->codegen();	// try to codegen the IR
-	outputObjCode(outfile);	// try to output
 	TheModule->print(errs(), nullptr);	// try to print the IR
+	outputObjCode(outfile);	// try to output
 	return res;
 }

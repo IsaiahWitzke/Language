@@ -6,7 +6,7 @@
 #include <string>
 #include "parser_driver.h"
 #include "parser.h"
-using Token = yy::parser::token;
+//using Token = yy::parser::token;
 %}
 
 %option noyywrap nounput noinput batch debug
@@ -14,6 +14,7 @@ using Token = yy::parser::token;
 %{
 	// A number symbol corresponding to the value in S.
 	yy::parser::symbol_type make_tok_inum(const std::string &s, const yy::parser::location_type& loc);
+	yy::parser::symbol_type make_tok_fnum(const std::string &s, const yy::parser::location_type& loc);
 %}
 
 %{
@@ -21,8 +22,9 @@ using Token = yy::parser::token;
 	# define YY_USER_ACTION  loc.columns (yyleng);
 %}
 
-id    [a-zA-Z][_a-zA-Z_0-9]*
-int   [0-9]+
+id		[a-zA-Z][_a-zA-Z_0-9]*
+int		([1-9][0-9]*|0)
+float	{int}\.{int}
 blank [ \t\r]
 comment \/\/.*
 
@@ -43,7 +45,14 @@ comment \/\/.*
 {blank}+		loc.step ();
 {comment}		loc.step ();
 \n+				loc.lines (yyleng); loc.step ();
+"i16"			return yy::parser::make_tok_i16(loc);
+"i32"			return yy::parser::make_tok_i32(loc);
 "i64"			return yy::parser::make_tok_i64(loc);
+"i128"			return yy::parser::make_tok_i128(loc);
+"f16"			return yy::parser::make_tok_f16(loc);
+"f32"			return yy::parser::make_tok_f32(loc);
+"f64"			return yy::parser::make_tok_f64(loc);
+"f128"			return yy::parser::make_tok_f128(loc);
 "="				return yy::parser::make_tok_eq(loc);
 "-"				return yy::parser::make_tok_minus(loc);
 "+"				return yy::parser::make_tok_plus(loc);
@@ -63,7 +72,8 @@ comment \/\/.*
 "true"			return yy::parser::make_tok_true(loc);
 "false"			return yy::parser::make_tok_false(loc);
 {id}			return yy::parser::make_tok_identifier(yytext, loc);
-([1-9][0-9]*|0)	return make_tok_inum(yytext, loc);
+{int}			return make_tok_inum(yytext, loc);
+{float}			return make_tok_fnum(yytext, loc);
 .				{ ECHO; }
 <<EOF>>			return yy::parser::make_YYEOF(loc);
 
@@ -77,6 +87,16 @@ yy::parser::symbol_type make_tok_inum(const std::string &s, const yy::parser::lo
 		// throw yy::parser::syntax_error (loc, "integer is out of range: " + s);
 
 	return yy::parser::make_tok_inum((int) n, loc);
+}
+yy::parser::symbol_type make_tok_fnum(const std::string &s, const yy::parser::location_type& loc) {
+	errno = 0;
+	float n = strtof(s.c_str(), NULL);
+	// TODO: out of range errors
+	// if (! (INT_MIN <= n && n <= INT_MAX && errno != ERANGE))
+		// std::cerr << loc << "int out of range + s " << ": " << strerror (errno) << '\n';
+		// throw yy::parser::syntax_error (loc, "integer is out of range: " + s);
+
+	return yy::parser::make_tok_fnum(n, loc);
 }
 
 void driver::scan_begin () {

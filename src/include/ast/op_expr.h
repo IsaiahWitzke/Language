@@ -14,5 +14,8 @@ public:
 		cout << "OP EXPR: " << opcode << endl;
 	}
 
+	TypeAST *computeType() override;
+
 	Value* codegen() override;
 };
+

@@ -208,6 +208,14 @@ namespace yy {
   {
     switch (that.kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.YY_MOVE_OR_COPY< Token > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.YY_MOVE_OR_COPY< float > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.YY_MOVE_OR_COPY< int > (YY_MOVE (that.value));
         break;
@@ -272,6 +280,14 @@ namespace yy {
   {
     switch (that.kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.move< Token > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.move< float > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.move< int > (YY_MOVE (that.value));
         break;
@@ -336,6 +352,14 @@ namespace yy {
     state = that.state;
     switch (that.kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.copy< Token > (that.value);
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.copy< float > (that.value);
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.copy< int > (that.value);
         break;
@@ -399,6 +423,14 @@ namespace yy {
     state = that.state;
     switch (that.kind ())
     {
+      case symbol_kind::S_basic_type: // basic_type
+        value.move< Token > (that.value);
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        value.move< float > (that.value);
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         value.move< int > (that.value);
         break;
@@ -717,6 +749,14 @@ namespace yy {
          when using variants.  */
       switch (yyr1_[yyn])
     {
+      case symbol_kind::S_basic_type: // basic_type
+        yylhs.value.emplace< Token > ();
+        break;
+
+      case symbol_kind::S_tok_fnum: // tok_fnum
+        yylhs.value.emplace< float > ();
+        break;
+
       case symbol_kind::S_tok_inum: // tok_inum
         yylhs.value.emplace< int > ();
         break;
@@ -787,207 +827,261 @@ namespace yy {
           switch (yyn)
             {
   case 2: // module: stmts
-#line 90 "src/parser/parser.yy"
+#line 92 "src/parser/parser.yy"
                 {
 			yylhs.value.as < unique_ptr<ModuleAST> > () = make_unique<ModuleAST>("test", move(yystack_[0].value.as < unique_ptr<ScopeAST> > ()));
 			drv.result = move(yylhs.value.as < unique_ptr<ModuleAST> > ());
 		}
-#line 796 "src/parser.cc"
+#line 836 "src/parser.cc"
     break;
 
   case 3: // stmts: %empty
-#line 96 "src/parser/parser.yy"
+#line 98 "src/parser/parser.yy"
                  {
 			yylhs.value.as < unique_ptr<ScopeAST> > () = make_unique<ScopeAST>(ScopeAST::curScope);		// the parent scope for this sequence of stmts is the curScope
 			ScopeAST::curScope = yylhs.value.as < unique_ptr<ScopeAST> > ().get();						// and now the curScope has changed
 		}
-#line 805 "src/parser.cc"
+#line 845 "src/parser.cc"
     break;
 
   case 4: // stmts: stmts stmt
-#line 100 "src/parser/parser.yy"
+#line 102 "src/parser/parser.yy"
                              {
 			yystack_[1].value.as < unique_ptr<ScopeAST> > ()->addStmt(move(yystack_[0].value.as < unique_ptr<StmtAST> > ()));
 			yylhs.value.as < unique_ptr<ScopeAST> > () = move(yystack_[1].value.as < unique_ptr<ScopeAST> > ());
 		}
-#line 814 "src/parser.cc"
+#line 854 "src/parser.cc"
     break;
 
   case 5: // stmt: expr ";"
-#line 106 "src/parser/parser.yy"
+#line 108 "src/parser/parser.yy"
                                                                                 { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<ExprStmtAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 820 "src/parser.cc"
+#line 860 "src/parser.cc"
     break;
 
   case 6: // stmt: variable_dec ";"
-#line 107 "src/parser/parser.yy"
+#line 109 "src/parser/parser.yy"
                                                                                 { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<VarDecStmtAST>(move(yystack_[1].value.as < unique_ptr<VarDecAST> > ())); }
-#line 826 "src/parser.cc"
+#line 866 "src/parser.cc"
     break;
 
   case 7: // stmt: variable_def
-#line 108 "src/parser/parser.yy"
+#line 110 "src/parser/parser.yy"
                                                                                 { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<VarDefStmtAST>(move(yystack_[0].value.as < unique_ptr<VarDefAST> > ())); }
-#line 832 "src/parser.cc"
+#line 872 "src/parser.cc"
     break;
 
   case 8: // stmt: tok_identifier "=" expr ";"
-#line 109 "src/parser/parser.yy"
+#line 111 "src/parser/parser.yy"
                                                                 { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<AssignmentStmtAST>(yystack_[3].value.as < std::string > (), move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 838 "src/parser.cc"
+#line 878 "src/parser.cc"
     break;
 
   case 9: // stmt: "return" expr ";"
-#line 110 "src/parser/parser.yy"
+#line 112 "src/parser/parser.yy"
                                                                                 { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<ReturnStmtAST>(move(yystack_[1].value.as < unique_ptr<ExprAST> > ())); }
-#line 844 "src/parser.cc"
+#line 884 "src/parser.cc"
     break;
 
   case 10: // stmt: "if" "(" expr ")" "{" stmts "}"
-#line 111 "src/parser/parser.yy"
+#line 113 "src/parser/parser.yy"
                                                                 { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<IfElseStmtAST>(move(yystack_[4].value.as < unique_ptr<ExprAST> > ()), move(yystack_[1].value.as < unique_ptr<ScopeAST> > ()), nullptr); }
-#line 850 "src/parser.cc"
+#line 890 "src/parser.cc"
     break;
 
   case 11: // stmt: "if" "(" expr ")" "{" stmts "}" "else" "{" stmts "}"
-#line 113 "src/parser/parser.yy"
+#line 115 "src/parser/parser.yy"
                                                                         { yylhs.value.as < unique_ptr<StmtAST> > () = make_unique<IfElseStmtAST>(move(yystack_[8].value.as < unique_ptr<ExprAST> > ()), move(yystack_[5].value.as < unique_ptr<ScopeAST> > ()), move(yystack_[1].value.as < unique_ptr<ScopeAST> > ())); }
-#line 856 "src/parser.cc"
+#line 896 "src/parser.cc"
     break;
 
   case 12: // variable_def: variable_dec "=" expr ";"
-#line 116 "src/parser/parser.yy"
+#line 118 "src/parser/parser.yy"
                                             {
 					yylhs.value.as < unique_ptr<VarDefAST> > () = make_unique<VarDefAST>(move(yystack_[3].value.as < unique_ptr<VarDecAST> > ()), move(yystack_[1].value.as < unique_ptr<ExprAST> > ()), make_unique<ScopeAST>(ScopeAST::curScope->parentScope));
 				}
-#line 864 "src/parser.cc"
+#line 904 "src/parser.cc"
     break;
 
   case 13: // variable_def: variable_dec "=" "{" stmts "}"
-#line 120 "src/parser/parser.yy"
+#line 122 "src/parser/parser.yy"
                                                                  {
 					yylhs.value.as < unique_ptr<VarDefAST> > () = make_unique<VarDefAST>(move(yystack_[4].value.as < unique_ptr<VarDecAST> > ()), unique_ptr<ExprAST>(nullptr), move(yystack_[1].value.as < unique_ptr<ScopeAST> > ()));
 					// the "stmts" part updated the curScope reference, it is time to change it back
 					ScopeAST::curScope = ScopeAST::curScope->parentScope;
 				}
-#line 874 "src/parser.cc"
+#line 914 "src/parser.cc"
     break;
 
   case 14: // variable_dec: tok_identifier ":" type
-#line 127 "src/parser/parser.yy"
+#line 129 "src/parser/parser.yy"
                                                 {yylhs.value.as < unique_ptr<VarDecAST> > () = make_unique<VarDecAST>(yystack_[2].value.as < std::string > (), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));}
-#line 880 "src/parser.cc"
+#line 920 "src/parser.cc"
     break;
 
   case 15: // variable_decs: %empty
-#line 130 "src/parser/parser.yy"
+#line 132 "src/parser/parser.yy"
                          {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 				}
-#line 888 "src/parser.cc"
+#line 928 "src/parser.cc"
     break;
 
   case 16: // variable_decs: variable_dec
-#line 133 "src/parser/parser.yy"
+#line 135 "src/parser/parser.yy"
                                                {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 897 "src/parser.cc"
-    break;
-
-  case 17: // variable_decs: variable_decs "," variable_dec
-#line 137 "src/parser/parser.yy"
-                                                                  {
-					yystack_[2].value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
-				}
-#line 905 "src/parser.cc"
-    break;
-
-  case 18: // type: basic_type
-#line 142 "src/parser/parser.yy"
-                        { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<BasicTypeAST>(yy::parser::token::tok_i64); }
-#line 911 "src/parser.cc"
-    break;
-
-  case 19: // type: function_type
-#line 143 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<TypeAST> > () = move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ()); }
-#line 917 "src/parser.cc"
-    break;
-
-  case 28: // function_type: "(" variable_decs ")" "->" type
-#line 150 "src/parser/parser.yy"
-                                                  {
-					yylhs.value.as < unique_ptr<FunctionTypeAST> > () = make_unique<FunctionTypeAST>(move(yystack_[3].value.as < vector<unique_ptr<VarDecAST>> > ()), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));
-				}
-#line 925 "src/parser.cc"
-    break;
-
-  case 29: // expr: term
-#line 155 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[0].value.as < unique_ptr<ExprAST> > ()); }
-#line 931 "src/parser.cc"
-    break;
-
-  case 30: // expr: expr "+" term
-#line 156 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<OpExprAST>(move(yystack_[2].value.as < unique_ptr<ExprAST> > ()), '+', move(yystack_[0].value.as < unique_ptr<ExprAST> > ())); }
 #line 937 "src/parser.cc"
     break;
 
-  case 31: // term: tok_inum
-#line 160 "src/parser/parser.yy"
-                                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<NumLiteralAST>(yystack_[0].value.as < int > ()); }
-#line 943 "src/parser.cc"
+  case 17: // variable_decs: variable_decs "," variable_dec
+#line 139 "src/parser/parser.yy"
+                                                                  {
+					yystack_[2].value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
+				}
+#line 945 "src/parser.cc"
     break;
 
-  case 32: // term: "(" expr ")"
-#line 161 "src/parser/parser.yy"
-                                                { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[1].value.as < unique_ptr<ExprAST> > ()); }
-#line 949 "src/parser.cc"
+  case 18: // type: basic_type
+#line 144 "src/parser/parser.yy"
+                        { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<BasicTypeAST>(yystack_[0].value.as < Token > ()); }
+#line 951 "src/parser.cc"
     break;
 
-  case 33: // term: tok_identifier
-#line 162 "src/parser/parser.yy"
-                                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<IdExprAST>(yystack_[0].value.as < std::string > ()); }
-#line 955 "src/parser.cc"
+  case 19: // type: function_type
+#line 145 "src/parser/parser.yy"
+                                { yylhs.value.as < unique_ptr<TypeAST> > () = move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ()); }
+#line 957 "src/parser.cc"
     break;
 
-  case 34: // term: term "(" arg_list ")"
-#line 163 "src/parser/parser.yy"
-                                        { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<FuncCallAST>(move(yystack_[3].value.as < unique_ptr<ExprAST> > ()), move(yystack_[1].value.as < vector<unique_ptr<ExprAST>> > ())); }
-#line 961 "src/parser.cc"
+  case 20: // basic_type: "i16"
+#line 149 "src/parser/parser.yy"
+                                { yylhs.value.as < Token > () = tok_i16; }
+#line 963 "src/parser.cc"
     break;
 
-  case 35: // arg_list: %empty
-#line 166 "src/parser/parser.yy"
-                         {
-				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
-			}
+  case 21: // basic_type: "i32"
+#line 150 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_i32; }
 #line 969 "src/parser.cc"
     break;
 
-  case 36: // arg_list: expr
-#line 169 "src/parser/parser.yy"
+  case 22: // basic_type: "i64"
+#line 151 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_i64; }
+#line 975 "src/parser.cc"
+    break;
+
+  case 23: // basic_type: "i128"
+#line 152 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_i128; }
+#line 981 "src/parser.cc"
+    break;
+
+  case 24: // basic_type: "f16"
+#line 153 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_f16; }
+#line 987 "src/parser.cc"
+    break;
+
+  case 25: // basic_type: "f32"
+#line 154 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_f32; }
+#line 993 "src/parser.cc"
+    break;
+
+  case 26: // basic_type: "f64"
+#line 155 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_f64; }
+#line 999 "src/parser.cc"
+    break;
+
+  case 27: // basic_type: "f128"
+#line 156 "src/parser/parser.yy"
+                                        { yylhs.value.as < Token > () = tok_f128; }
+#line 1005 "src/parser.cc"
+    break;
+
+  case 28: // function_type: "(" variable_decs ")" "->" type
+#line 160 "src/parser/parser.yy"
+                                                  {
+					yylhs.value.as < unique_ptr<FunctionTypeAST> > () = make_unique<FunctionTypeAST>(move(yystack_[3].value.as < vector<unique_ptr<VarDecAST>> > ()), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));
+				}
+#line 1013 "src/parser.cc"
+    break;
+
+  case 29: // expr: term
+#line 165 "src/parser/parser.yy"
+                                { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[0].value.as < unique_ptr<ExprAST> > ()); }
+#line 1019 "src/parser.cc"
+    break;
+
+  case 30: // expr: expr "+" term
+#line 166 "src/parser/parser.yy"
+                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<OpExprAST>(move(yystack_[2].value.as < unique_ptr<ExprAST> > ()), '+', move(yystack_[0].value.as < unique_ptr<ExprAST> > ())); }
+#line 1025 "src/parser.cc"
+    break;
+
+  case 31: // term: tok_inum
+#line 170 "src/parser/parser.yy"
+                                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<NumLiteralAST>(yystack_[0].value.as < int > ()); }
+#line 1031 "src/parser.cc"
+    break;
+
+  case 32: // term: tok_fnum
+#line 171 "src/parser/parser.yy"
+                                                        { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<NumLiteralAST>(yystack_[0].value.as < float > ()); }
+#line 1037 "src/parser.cc"
+    break;
+
+  case 33: // term: "(" expr ")"
+#line 172 "src/parser/parser.yy"
+                                                { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[1].value.as < unique_ptr<ExprAST> > ()); }
+#line 1043 "src/parser.cc"
+    break;
+
+  case 34: // term: tok_identifier
+#line 173 "src/parser/parser.yy"
+                                                { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<IdExprAST>(yystack_[0].value.as < std::string > ()); }
+#line 1049 "src/parser.cc"
+    break;
+
+  case 35: // term: term "(" arg_list ")"
+#line 174 "src/parser/parser.yy"
+                                        { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<FuncCallAST>(move(yystack_[3].value.as < unique_ptr<ExprAST> > ()), move(yystack_[1].value.as < vector<unique_ptr<ExprAST>> > ())); }
+#line 1055 "src/parser.cc"
+    break;
+
+  case 36: // arg_list: %empty
+#line 177 "src/parser/parser.yy"
+                         {
+				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
+			}
+#line 1063 "src/parser.cc"
+    break;
+
+  case 37: // arg_list: expr
+#line 180 "src/parser/parser.yy"
                                {
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 			}
-#line 978 "src/parser.cc"
+#line 1072 "src/parser.cc"
     break;
 
-  case 37: // arg_list: arg_list "," expr
-#line 173 "src/parser/parser.yy"
+  case 38: // arg_list: arg_list "," expr
+#line 184 "src/parser/parser.yy"
                                             {
 				yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = move(yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ());
 			}
-#line 987 "src/parser.cc"
+#line 1081 "src/parser.cc"
     break;
 
 
-#line 991 "src/parser.cc"
+#line 1085 "src/parser.cc"
 
             default:
               break;
@@ -1172,11 +1266,12 @@ namespace yy {
     static const char *const yy_sname[] =
     {
     "end of file", "error", "invalid token", "tok_identifier", "tok_inum",
-  "=", "-", "+", "(", ")", "{", "}", ":", ";", ",", "->", "i128", "i64",
-  "i32", "i16", "f128", "f64", "f32", "f16", "return", "if", "else",
-  "while", "for", "true", "false", "$accept", "module", "stmts", "stmt",
-  "variable_def", "variable_dec", "variable_decs", "type", "basic_type",
-  "function_type", "expr", "term", "arg_list", YY_NULLPTR
+  "tok_fnum", "=", "-", "+", "(", ")", "{", "}", ":", ";", ",", "->",
+  "i128", "i64", "i32", "i16", "f128", "f64", "f32", "f16", "bool",
+  "return", "if", "else", "while", "for", "true", "false", "$accept",
+  "module", "stmts", "stmt", "variable_def", "variable_dec",
+  "variable_decs", "type", "basic_type", "function_type", "expr", "term",
+  "arg_list", YY_NULLPTR
     };
     return yy_sname[yysymbol];
   }
@@ -1445,95 +1540,95 @@ namespace yy {
   }
 
 
-  const signed char parser::yypact_ninf_ = -39;
+  const signed char parser::yypact_ninf_ = -40;
 
   const signed char parser::yytable_ninf_ = -1;
 
   const signed char
   parser::yypact_[] =
   {
-     -39,    34,    36,   -39,     5,   -39,     3,     3,    37,   -39,
-     -39,    16,    20,    51,     3,    46,   -39,    15,    43,     3,
-      39,   -39,     3,   -39,     3,    63,    69,   -39,   -39,   -39,
-     -39,   -39,   -39,   -39,   -39,   -39,   -39,   -39,   -39,   -39,
-      48,   -39,    64,    51,    66,    32,   -39,    62,   -39,    44,
-      65,     1,   -39,   -39,     3,    67,    69,   -39,   -39,    66,
-      46,   -39,    12,   -39,    52,    70,   -39,    27,   -39
+     -40,    11,    51,   -40,    14,   -40,   -40,    76,    76,    24,
+     -40,   -40,    16,    15,    40,    76,    52,   -40,    -1,    17,
+      76,     1,   -40,    76,   -40,    76,    33,    23,   -40,   -40,
+     -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,   -40,
+     -40,    55,   -40,    74,    40,    43,    27,   -40,    39,   -40,
+      49,    72,    12,   -40,   -40,    76,    46,    23,   -40,   -40,
+      43,    52,   -40,    31,   -40,    38,    73,   -40,    41,   -40
   };
 
   const signed char
   parser::yydefact_[] =
   {
-       3,     0,     2,     1,    33,    31,     0,     0,     0,     4,
-       7,     0,     0,    29,     0,     0,    33,     0,     0,     0,
-       0,     6,     0,     5,    35,     0,    15,    23,    22,    21,
-      20,    27,    26,    25,    24,    14,    18,    19,    32,     9,
-       0,     3,     0,    30,    36,     0,     8,     0,    16,     0,
-       0,     0,    12,    34,     0,     0,     0,     3,    13,    37,
-       0,    17,     0,    28,    10,     0,     3,     0,    11
+       3,     0,     2,     1,    34,    31,    32,     0,     0,     0,
+       4,     7,     0,     0,    29,     0,     0,    34,     0,     0,
+       0,     0,     6,     0,     5,    36,     0,    15,    23,    22,
+      21,    20,    27,    26,    25,    24,    14,    18,    19,    33,
+       9,     0,     3,     0,    30,    37,     0,     8,     0,    16,
+       0,     0,     0,    12,    35,     0,     0,     0,     3,    13,
+      38,     0,    17,     0,    28,    10,     0,     3,     0,    11
   };
 
   const signed char
   parser::yypgoto_[] =
   {
-     -39,   -39,   -38,   -39,   -39,   -24,   -39,    19,   -39,   -39,
-      -6,    59,   -39
+     -40,   -40,   -39,   -40,   -40,   -25,   -40,    25,   -40,   -40,
+      -7,    64,   -40
   };
 
   const signed char
   parser::yydefgoto_[] =
   {
-       0,     1,     2,     9,    10,    11,    49,    35,    36,    37,
-      12,    13,    45
+       0,     1,     2,    10,    11,    12,    50,    36,    37,    38,
+      13,    14,    46
   };
 
   const signed char
   parser::yytable_[] =
   {
-      17,    18,    48,    51,     4,     5,    16,     5,    25,     6,
-      14,     6,    58,    40,    42,     4,     5,    15,    44,    62,
-       6,    20,    22,    64,    38,     7,     8,    22,    67,    21,
-       4,     5,    61,    23,     3,     6,     7,     8,    68,     4,
-       5,    53,    16,     5,     6,    19,    54,     6,    59,    41,
-      22,     7,     8,    55,    26,    22,    39,    50,    56,    24,
-       7,     8,    27,    28,    29,    30,    31,    32,    33,    34,
-      22,    22,    47,    22,    15,    57,    46,    52,    65,    63,
-      66,    43,    60
+      18,    19,    49,    52,    17,     5,     6,    23,    26,    39,
+       7,     3,    42,    41,    43,     4,     5,     6,    45,    63,
+      15,     7,    21,    23,    59,    23,    48,    16,    68,    24,
+      22,    40,    62,    20,     4,     5,     6,    54,     8,     9,
+       7,    23,    55,    65,     4,     5,     6,    47,    60,    25,
+       7,    23,    16,    69,     4,     5,     6,     8,     9,    56,
+       7,    27,    61,    23,    57,    51,    66,     8,     9,    28,
+      29,    30,    31,    32,    33,    34,    35,     8,     9,    17,
+       5,     6,    23,    58,    67,     7,    64,    44,    53
   };
 
   const signed char
   parser::yycheck_[] =
   {
-       6,     7,    26,    41,     3,     4,     3,     4,    14,     8,
-       5,     8,    11,    19,    20,     3,     4,    12,    24,    57,
-       8,     5,     7,    11,     9,    24,    25,     7,    66,    13,
-       3,     4,    56,    13,     0,     8,    24,    25,    11,     3,
-       4,     9,     3,     4,     8,     8,    14,     8,    54,    10,
-       7,    24,    25,     9,     8,     7,    13,     9,    14,     8,
-      24,    25,    16,    17,    18,    19,    20,    21,    22,    23,
-       7,     7,     3,     7,    12,    10,    13,    13,    26,    60,
-      10,    22,    15
+       7,     8,    27,    42,     3,     4,     5,     8,    15,    10,
+       9,     0,    11,    20,    21,     3,     4,     5,    25,    58,
+       6,     9,     6,     8,    12,     8,     3,    13,    67,    14,
+      14,    14,    57,     9,     3,     4,     5,    10,    26,    27,
+       9,     8,    15,    12,     3,     4,     5,    14,    55,     9,
+       9,     8,    13,    12,     3,     4,     5,    26,    27,    10,
+       9,     9,    16,     8,    15,    10,    28,    26,    27,    17,
+      18,    19,    20,    21,    22,    23,    24,    26,    27,     3,
+       4,     5,     8,    11,    11,     9,    61,    23,    14
   };
 
   const signed char
   parser::yystos_[] =
   {
-       0,    32,    33,     0,     3,     4,     8,    24,    25,    34,
-      35,    36,    41,    42,     5,    12,     3,    41,    41,     8,
-       5,    13,     7,    13,     8,    41,     8,    16,    17,    18,
-      19,    20,    21,    22,    23,    38,    39,    40,     9,    13,
-      41,    10,    41,    42,    41,    43,    13,     3,    36,    37,
-       9,    33,    13,     9,    14,     9,    14,    10,    11,    41,
-      15,    36,    33,    38,    11,    26,    10,    33,    11
+       0,    34,    35,     0,     3,     4,     5,     9,    26,    27,
+      36,    37,    38,    43,    44,     6,    13,     3,    43,    43,
+       9,     6,    14,     8,    14,     9,    43,     9,    17,    18,
+      19,    20,    21,    22,    23,    24,    40,    41,    42,    10,
+      14,    43,    11,    43,    44,    43,    45,    14,     3,    38,
+      39,    10,    35,    14,    10,    15,    10,    15,    11,    12,
+      43,    16,    38,    35,    40,    12,    28,    11,    35,    12
   };
 
   const signed char
   parser::yyr1_[] =
   {
-       0,    31,    32,    33,    33,    34,    34,    34,    34,    34,
-      34,    34,    35,    35,    36,    37,    37,    37,    38,    38,
-      39,    39,    39,    39,    39,    39,    39,    39,    40,    41,
-      41,    42,    42,    42,    42,    43,    43,    43
+       0,    33,    34,    35,    35,    36,    36,    36,    36,    36,
+      36,    36,    37,    37,    38,    39,    39,    39,    40,    40,
+      41,    41,    41,    41,    41,    41,    41,    41,    42,    43,
+      43,    44,    44,    44,    44,    44,    45,    45,    45
   };
 
   const signed char
@@ -1542,7 +1637,7 @@ namespace yy {
        0,     2,     1,     0,     2,     2,     2,     1,     4,     3,
        7,    11,     4,     5,     3,     0,     1,     3,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     5,     1,
-       3,     1,     3,     1,     4,     0,     1,     3
+       3,     1,     1,     3,     1,     4,     0,     1,     3
   };
 
 
@@ -1552,10 +1647,10 @@ namespace yy {
   const unsigned char
   parser::yyrline_[] =
   {
-       0,    90,    90,    96,   100,   106,   107,   108,   109,   110,
-     111,   112,   116,   120,   127,   130,   133,   137,   142,   143,
-     147,   147,   147,   147,   147,   147,   147,   147,   150,   155,
-     156,   160,   161,   162,   163,   166,   169,   173
+       0,    92,    92,    98,   102,   108,   109,   110,   111,   112,
+     113,   114,   118,   122,   129,   132,   135,   139,   144,   145,
+     149,   150,   151,   152,   153,   154,   155,   156,   160,   165,
+     166,   170,   171,   172,   173,   174,   177,   180,   184
   };
 
   void
@@ -1587,9 +1682,9 @@ namespace yy {
 
 
 } // yy
-#line 1591 "src/parser.cc"
+#line 1686 "src/parser.cc"
 
-#line 178 "src/parser/parser.yy"
+#line 189 "src/parser/parser.yy"
 
 
 void yy::parser::error (const location_type& l, const std::string& m) {
