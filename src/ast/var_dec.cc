@@ -1,7 +1,10 @@
 #include "var_dec.h"
 #include "variable.h"
+#include "type.h"
+#include <cassert>
 
 Value* VarDecAST::codegen() {
+	assert(type);
 	if (isFuncType()) {
 		auto& args = getFunctionType()->params;
 		auto& returnType = getFunctionType()->returnType;
@@ -24,7 +27,7 @@ Value* VarDecAST::codegen() {
 		unsigned idx = 0;
 		for (auto& arg : llvmFunc->args())
 			arg.setName(args[idx++]->name);
-		
+
 		// add this function to the named values
 		ScopeAST::curScope->addVar(
 			make_unique<Variable>(name, llvmFunc, type.get())
@@ -39,7 +42,7 @@ Value* VarDecAST::codegen() {
 	else {
 		if (ScopeAST::curScope->isGlobal) {
 			// global vars
-			TheModule->getOrInsertGlobal(name, Type::getInt64Ty(*TheContext));
+			TheModule->getOrInsertGlobal(name, type->toBasicType()->toLlvmType());
 			GlobalVariable* gVar = TheModule->getNamedGlobal(name);
 
 			ScopeAST::curScope->addVar(
@@ -48,15 +51,25 @@ Value* VarDecAST::codegen() {
 
 			gVar->setAlignment(Align(8));
 			return gVar;
-		} else {
+		}
+		else {
 			// scoped variables allocated on the stack
-			AllocaInst* allocaInst = Builder->CreateAlloca(Type::getInt64Ty(*TheContext), nullptr, name);
+			AllocaInst* allocaInst = Builder->CreateAlloca(type->toBasicType()->toLlvmType(), nullptr, name);
 			ScopeAST::curScope->addVar(
 				make_unique<Variable>(name, allocaInst, type.get())
 			);
 
-			// TODO: change bitsize/type to match type
-			Value* initVal = ConstantInt::get(*TheContext, llvm::APInt(64, 0, true));
+			Value* initVal;
+			if (isBasicTypeInt(type->toBasicType()->basicType))
+				initVal = ConstantInt::get(*TheContext, APInt(
+					type->toBasicType()->size,
+					0,
+					type->toBasicType()->isSigned
+				));
+			else if (isBasicTypeFloat(type->toBasicType()->basicType))
+				initVal = ConstantFP::get(*TheContext, APFloat(0.0));
+			else
+				cout << "ERROR: could not find initial value for " << name << endl;
 			Builder->CreateStore(initVal, allocaInst);
 			return allocaInst;
 		}
@@ -64,6 +77,9 @@ Value* VarDecAST::codegen() {
 }
 
 bool VarDecAST::isFuncType() {
+	if (!type) {	// the type has yet to be determined... maybe bad to return false here, but o well - suck it future me
+		return false;
+	}
 	return type->isFunc;
 	// return (bool) dynamic_cast<FunctionTypeAST*>(type.get());
 }

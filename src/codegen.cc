@@ -1,3 +1,4 @@
+#include <cassert>
 #include <string>
 #include "ast.h"
 #include "codegen.h"
@@ -120,6 +121,7 @@ AllocaInst* CreateEntryBlockAlloca(
 	Function* TheFunction,
 	string& VarName
 ) {
+	assert(false);
 	IRBuilder<> TmpB(
 		&TheFunction->getEntryBlock(),
 		TheFunction->getEntryBlock().begin()

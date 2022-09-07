@@ -30,13 +30,16 @@ my_func: () -> i64 = {
 
 # TODO
 - types
-	- support more types than just i64
-	- global vars are always initialized as 2... need some way of generating const expr code:e
+	- <del> support more types than just i64 </del>
+		- <del> basic types: `i16, i32, i64, i128, f16, ..., f128` </del>
+		- <del> type inference for basic types (`i16, ..., f128`) <del>
+		- add `typeof x` unary operator (requires strings to be implemente)
+	- global vars are always initialized as 2... need some way of generating const llvm expr code
 - strings, arrays
 - classes/structs/typedefs
 - Rust-style borrow-checking
 - First-class functions/closures
-- Figure out a name for the language
+- [ ] Figure out a name for the language
 
 
 # Known bugs

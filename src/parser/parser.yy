@@ -127,6 +127,8 @@ variable_def	: variable_dec "=" expr ";" {
 
 
 variable_dec	: tok_identifier ":" type	{$$ = make_unique<VarDecAST>($1, move($3));}
+				/* for type inference */
+				| tok_identifier ":" 		{$$ = make_unique<VarDecAST>($1, nullptr);}
 				;
 
 variable_decs	: %empty {

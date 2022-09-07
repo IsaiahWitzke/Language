@@ -1,4 +1,4 @@
 test_main: () -> i64 = {
-	test_float: f64 = 0.0;
+	test_float: = 0.0;
 	return 0;
 }

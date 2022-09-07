@@ -36,6 +36,8 @@ public:
 	FunctionTypeAST *toFunctionType() override { return nullptr; }
 
 	bool operator==(TypeAST& t) override;
+
+	llvm::Type* toLlvmType();
 };
 
 class FunctionTypeAST : public TypeAST {

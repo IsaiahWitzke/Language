@@ -25,3 +25,25 @@ bool FunctionTypeAST::operator==(TypeAST& t) {
 
 	return returnType == ft->returnType;
 }
+Type* BasicTypeAST::toLlvmType() {
+	if (isBasicTypeFloat(basicType)) {
+		switch (size) {
+		case 16:
+			return Type::getHalfTy(*TheContext);
+		case 32:
+			return Type::getFloatTy(*TheContext);
+		case 64:
+			return Type::getDoubleTy(*TheContext);
+		case 128:
+			return Type::getFP128Ty(*TheContext);
+		default:
+			cout << "bad float size in toLlvmType()" << endl;
+			return nullptr;
+		}
+	} else if (isBasicTypeInt(basicType)) {
+		return Type::getIntNTy(*TheContext, size);
+	} else {
+		cout << "ERROR: bad basic type in toLlvmType" << endl;
+		return nullptr;
+	}
+}
