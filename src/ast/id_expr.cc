@@ -33,5 +33,7 @@ TypeAST* IdExprAST::computeType() {
 		LogErrorV("No variable defined: " + id);
 		return nullptr;
 	}
+	if (!var->type)
+		cout << "id: " << this->id << "with no type yet... " << endl;
 	return var->type;
 }

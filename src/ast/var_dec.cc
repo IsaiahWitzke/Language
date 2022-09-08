@@ -3,8 +3,19 @@
 #include "type.h"
 #include <cassert>
 
+VarDecAST::VarDecAST(string name, unique_ptr<TypeAST> type) : name(name), type(move(type)) {
+	ScopeAST::curScope->addVar(
+		make_unique<Variable>(
+			name,
+			nullptr,	// no llvm value yet, we update that when we codegen
+			this->type.get()
+			)
+	);
+}
+
 Value* VarDecAST::codegen() {
 	assert(type);
+	assert(ScopeAST::curScope->searchVar(name));
 	if (isFuncType()) {
 		auto& args = getFunctionType()->params;
 		auto& returnType = getFunctionType()->returnType;
@@ -28,10 +39,8 @@ Value* VarDecAST::codegen() {
 		for (auto& arg : llvmFunc->args())
 			arg.setName(args[idx++]->name);
 
-		// add this function to the named values
-		ScopeAST::curScope->addVar(
-			make_unique<Variable>(name, llvmFunc, type.get())
-		);
+		// update the function's value to the named values
+		ScopeAST::curScope->searchVar(name)->value = llvmFunc;
 
 		// AllocaInst* allocaInst = Builder->CreateAlloca(funcType, nullptr, name);
 		// Builder->CreateStore(llvmFunc, allocaInst, false);
@@ -45,9 +54,7 @@ Value* VarDecAST::codegen() {
 			TheModule->getOrInsertGlobal(name, type->toBasicType()->toLlvmType());
 			GlobalVariable* gVar = TheModule->getNamedGlobal(name);
 
-			ScopeAST::curScope->addVar(
-				make_unique<Variable>(name, gVar, type.get())
-			);
+			ScopeAST::curScope->searchVar(name)->value = gVar;
 
 			gVar->setAlignment(Align(8));
 			return gVar;
@@ -55,9 +62,7 @@ Value* VarDecAST::codegen() {
 		else {
 			// scoped variables allocated on the stack
 			AllocaInst* allocaInst = Builder->CreateAlloca(type->toBasicType()->toLlvmType(), nullptr, name);
-			ScopeAST::curScope->addVar(
-				make_unique<Variable>(name, allocaInst, type.get())
-			);
+			ScopeAST::curScope->searchVar(name)->value = allocaInst;
 
 			Value* initVal;
 			if (isBasicTypeInt(type->toBasicType()->basicType))

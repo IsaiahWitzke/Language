@@ -126,7 +126,8 @@ variable_def	: variable_dec "=" expr ";" {
 				}
 
 
-variable_dec	: tok_identifier ":" type	{$$ = make_unique<VarDecAST>($1, move($3));}
+variable_dec	: tok_identifier ":" type	{
+					$$ = make_unique<VarDecAST>($1, move($3));}
 				/* for type inference */
 				| tok_identifier ":" 		{$$ = make_unique<VarDecAST>($1, nullptr);}
 				;
@@ -144,7 +145,10 @@ variable_decs	: %empty {
 				;
 
 type	: basic_type	{ $$ = make_unique<BasicTypeAST>($1); }
-		| function_type	{ $$ = move($1); }
+		| function_type	{
+			cout << $1->toFunctionType()->returnType->toBasicType()->basicType << endl;
+			$$ = move($1);
+		}
 		/* | tok_identifier {;} */
 		;
 

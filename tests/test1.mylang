@@ -1,4 +1,13 @@
-test_main: () -> i64 = {
-	test_float: = 0.0;
+some_global := 2;
+
+a_func: () -> i64 = {
+	some_global = 6;
 	return 0;
+}
+
+test_main: () -> i64 = {
+	test_float: f64 = 0.6 + 4.2;
+	a_func();
+	my_var: i64 = some_global;
+	return my_var;
 }

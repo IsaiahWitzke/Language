@@ -2,6 +2,7 @@
 #include "var_dec.h"
 
 bool BasicTypeAST::operator==(TypeAST& t) {
+	// if(!t) return false;
 	BasicTypeAST* bt = t.toBasicType();
 	if (!bt) return false;
 	return (

@@ -20,3 +20,19 @@ Variable* ScopeAST::searchVar(const string& name) {
 		return parentScope->searchVar(name);
 	}
 }
+
+void ScopeAST::addVar(unique_ptr<Variable> v) {
+	if (curScope->namedValues.count(v->name))
+		LogErrorV("Already defined in this scope: " + v->name);
+	else
+		curScope->namedValues[v->name] = move(v);
+}
+
+void ScopeAST::codegen() {
+	ScopeAST* oldScope = curScope;
+	curScope = this;
+	for (auto& s : stmts) {
+		s->codegen();
+	}
+	curScope = oldScope;
+}

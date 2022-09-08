@@ -11,6 +11,7 @@ public:
 		char opcode,
 		unique_ptr<ExprAST> rhsExpr
 	) : lhsExpr(move(lhsExpr)), opcode(opcode), rhsExpr(move(rhsExpr)) {
+		this->computedType = computeType();
 		cout << "OP EXPR: " << opcode << endl;
 	}
 

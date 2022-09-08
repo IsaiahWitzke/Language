@@ -5,6 +5,7 @@ llvm::Value* FuncCallAST::codegen() {
 }
 
 TypeAST *FuncCallAST::computeType() {
+	
 	TypeAST* calleeType = callee->computedType;
 	
 	if(!calleeType->isFunc) {

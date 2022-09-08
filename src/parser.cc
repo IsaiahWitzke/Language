@@ -915,179 +915,183 @@ namespace yy {
 
   case 14: // variable_dec: tok_identifier ":" type
 #line 129 "src/parser/parser.yy"
-                                                {yylhs.value.as < unique_ptr<VarDecAST> > () = make_unique<VarDecAST>(yystack_[2].value.as < std::string > (), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));}
-#line 920 "src/parser.cc"
+                                                {
+					yylhs.value.as < unique_ptr<VarDecAST> > () = make_unique<VarDecAST>(yystack_[2].value.as < std::string > (), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));}
+#line 921 "src/parser.cc"
     break;
 
   case 15: // variable_dec: tok_identifier ":"
-#line 131 "src/parser/parser.yy"
+#line 132 "src/parser/parser.yy"
                                                                 {yylhs.value.as < unique_ptr<VarDecAST> > () = make_unique<VarDecAST>(yystack_[1].value.as < std::string > (), nullptr);}
-#line 926 "src/parser.cc"
+#line 927 "src/parser.cc"
     break;
 
   case 16: // variable_decs: %empty
-#line 134 "src/parser/parser.yy"
+#line 135 "src/parser/parser.yy"
                          {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 				}
-#line 934 "src/parser.cc"
+#line 935 "src/parser.cc"
     break;
 
   case 17: // variable_decs: variable_dec
-#line 137 "src/parser/parser.yy"
+#line 138 "src/parser/parser.yy"
                                                {
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > () = vector<unique_ptr<VarDecAST>>();
 					yylhs.value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 943 "src/parser.cc"
+#line 944 "src/parser.cc"
     break;
 
   case 18: // variable_decs: variable_decs "," variable_dec
-#line 141 "src/parser/parser.yy"
+#line 142 "src/parser/parser.yy"
                                                                   {
 					yystack_[2].value.as < vector<unique_ptr<VarDecAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<VarDecAST> > ()));
 				}
-#line 951 "src/parser.cc"
+#line 952 "src/parser.cc"
     break;
 
   case 19: // type: basic_type
-#line 146 "src/parser/parser.yy"
+#line 147 "src/parser/parser.yy"
                         { yylhs.value.as < unique_ptr<TypeAST> > () = make_unique<BasicTypeAST>(yystack_[0].value.as < Token > ()); }
-#line 957 "src/parser.cc"
+#line 958 "src/parser.cc"
     break;
 
   case 20: // type: function_type
-#line 147 "src/parser/parser.yy"
-                                { yylhs.value.as < unique_ptr<TypeAST> > () = move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ()); }
-#line 963 "src/parser.cc"
+#line 148 "src/parser/parser.yy"
+                                {
+			cout << yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ()->toFunctionType()->returnType->toBasicType()->basicType << endl;
+			yylhs.value.as < unique_ptr<TypeAST> > () = move(yystack_[0].value.as < unique_ptr<FunctionTypeAST> > ());
+		}
+#line 967 "src/parser.cc"
     break;
 
   case 21: // basic_type: "i16"
-#line 151 "src/parser/parser.yy"
+#line 155 "src/parser/parser.yy"
                                 { yylhs.value.as < Token > () = tok_i16; }
-#line 969 "src/parser.cc"
+#line 973 "src/parser.cc"
     break;
 
   case 22: // basic_type: "i32"
-#line 152 "src/parser/parser.yy"
+#line 156 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_i32; }
-#line 975 "src/parser.cc"
+#line 979 "src/parser.cc"
     break;
 
   case 23: // basic_type: "i64"
-#line 153 "src/parser/parser.yy"
+#line 157 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_i64; }
-#line 981 "src/parser.cc"
+#line 985 "src/parser.cc"
     break;
 
   case 24: // basic_type: "i128"
-#line 154 "src/parser/parser.yy"
+#line 158 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_i128; }
-#line 987 "src/parser.cc"
+#line 991 "src/parser.cc"
     break;
 
   case 25: // basic_type: "f16"
-#line 155 "src/parser/parser.yy"
+#line 159 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_f16; }
-#line 993 "src/parser.cc"
+#line 997 "src/parser.cc"
     break;
 
   case 26: // basic_type: "f32"
-#line 156 "src/parser/parser.yy"
+#line 160 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_f32; }
-#line 999 "src/parser.cc"
+#line 1003 "src/parser.cc"
     break;
 
   case 27: // basic_type: "f64"
-#line 157 "src/parser/parser.yy"
+#line 161 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_f64; }
-#line 1005 "src/parser.cc"
+#line 1009 "src/parser.cc"
     break;
 
   case 28: // basic_type: "f128"
-#line 158 "src/parser/parser.yy"
+#line 162 "src/parser/parser.yy"
                                         { yylhs.value.as < Token > () = tok_f128; }
-#line 1011 "src/parser.cc"
+#line 1015 "src/parser.cc"
     break;
 
   case 29: // function_type: "(" variable_decs ")" "->" type
-#line 162 "src/parser/parser.yy"
+#line 166 "src/parser/parser.yy"
                                                   {
 					yylhs.value.as < unique_ptr<FunctionTypeAST> > () = make_unique<FunctionTypeAST>(move(yystack_[3].value.as < vector<unique_ptr<VarDecAST>> > ()), move(yystack_[0].value.as < unique_ptr<TypeAST> > ()));
 				}
-#line 1019 "src/parser.cc"
+#line 1023 "src/parser.cc"
     break;
 
   case 30: // expr: term
-#line 167 "src/parser/parser.yy"
+#line 171 "src/parser/parser.yy"
                                 { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[0].value.as < unique_ptr<ExprAST> > ()); }
-#line 1025 "src/parser.cc"
+#line 1029 "src/parser.cc"
     break;
 
   case 31: // expr: expr "+" term
-#line 168 "src/parser/parser.yy"
+#line 172 "src/parser/parser.yy"
                                 { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<OpExprAST>(move(yystack_[2].value.as < unique_ptr<ExprAST> > ()), '+', move(yystack_[0].value.as < unique_ptr<ExprAST> > ())); }
-#line 1031 "src/parser.cc"
+#line 1035 "src/parser.cc"
     break;
 
   case 32: // term: tok_inum
-#line 172 "src/parser/parser.yy"
+#line 176 "src/parser/parser.yy"
                                                 { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<NumLiteralAST>(yystack_[0].value.as < int > ()); }
-#line 1037 "src/parser.cc"
+#line 1041 "src/parser.cc"
     break;
 
   case 33: // term: tok_fnum
-#line 173 "src/parser/parser.yy"
+#line 177 "src/parser/parser.yy"
                                                         { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<NumLiteralAST>(yystack_[0].value.as < float > ()); }
-#line 1043 "src/parser.cc"
+#line 1047 "src/parser.cc"
     break;
 
   case 34: // term: "(" expr ")"
-#line 174 "src/parser/parser.yy"
+#line 178 "src/parser/parser.yy"
                                                 { yylhs.value.as < unique_ptr<ExprAST> > () = move(yystack_[1].value.as < unique_ptr<ExprAST> > ()); }
-#line 1049 "src/parser.cc"
+#line 1053 "src/parser.cc"
     break;
 
   case 35: // term: tok_identifier
-#line 175 "src/parser/parser.yy"
+#line 179 "src/parser/parser.yy"
                                                 { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<IdExprAST>(yystack_[0].value.as < std::string > ()); }
-#line 1055 "src/parser.cc"
+#line 1059 "src/parser.cc"
     break;
 
   case 36: // term: term "(" arg_list ")"
-#line 176 "src/parser/parser.yy"
+#line 180 "src/parser/parser.yy"
                                         { yylhs.value.as < unique_ptr<ExprAST> > () = make_unique<FuncCallAST>(move(yystack_[3].value.as < unique_ptr<ExprAST> > ()), move(yystack_[1].value.as < vector<unique_ptr<ExprAST>> > ())); }
-#line 1061 "src/parser.cc"
+#line 1065 "src/parser.cc"
     break;
 
   case 37: // arg_list: %empty
-#line 179 "src/parser/parser.yy"
+#line 183 "src/parser/parser.yy"
                          {
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
 			}
-#line 1069 "src/parser.cc"
+#line 1073 "src/parser.cc"
     break;
 
   case 38: // arg_list: expr
-#line 182 "src/parser/parser.yy"
+#line 186 "src/parser/parser.yy"
                                {
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = vector<unique_ptr<ExprAST>>();
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 			}
-#line 1078 "src/parser.cc"
+#line 1082 "src/parser.cc"
     break;
 
   case 39: // arg_list: arg_list "," expr
-#line 186 "src/parser/parser.yy"
+#line 190 "src/parser/parser.yy"
                                             {
 				yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ().push_back(move(yystack_[0].value.as < unique_ptr<ExprAST> > ()));
 				yylhs.value.as < vector<unique_ptr<ExprAST>> > () = move(yystack_[2].value.as < vector<unique_ptr<ExprAST>> > ());
 			}
-#line 1087 "src/parser.cc"
+#line 1091 "src/parser.cc"
     break;
 
 
-#line 1091 "src/parser.cc"
+#line 1095 "src/parser.cc"
 
             default:
               break;
@@ -1654,9 +1658,9 @@ namespace yy {
   parser::yyrline_[] =
   {
        0,    92,    92,    98,   102,   108,   109,   110,   111,   112,
-     113,   114,   118,   122,   129,   131,   134,   137,   141,   146,
-     147,   151,   152,   153,   154,   155,   156,   157,   158,   162,
-     167,   168,   172,   173,   174,   175,   176,   179,   182,   186
+     113,   114,   118,   122,   129,   132,   135,   138,   142,   147,
+     148,   155,   156,   157,   158,   159,   160,   161,   162,   166,
+     171,   172,   176,   177,   178,   179,   180,   183,   186,   190
   };
 
   void
@@ -1688,9 +1692,9 @@ namespace yy {
 
 
 } // yy
-#line 1692 "src/parser.cc"
+#line 1696 "src/parser.cc"
 
-#line 191 "src/parser/parser.yy"
+#line 195 "src/parser/parser.yy"
 
 
 void yy::parser::error (const location_type& l, const std::string& m) {

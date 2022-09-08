@@ -8,13 +8,15 @@ Value* VarDefAST::codegen() {
 			LogErrorV("Cannot infer type of function or variable declaration with no initial value.");
 			return nullptr;
 		}
+		// make the type!
 		varDec->type = make_unique<BasicTypeAST>(initExpr->computedType->toBasicType()->basicType);
+		ScopeAST::curScope->searchVar(varDec->name)->type = varDec->type.get();
 	} else {
 		// otherwise, we check to make sure that the expression type is the same as the variable
 		// ... FOR BASIC TYPES ONLY!
 		if(
 			varDec->type->toBasicType() &&
-			!(*varDec->type == *initExpr->computedType)) {
+			!(*varDec->type == *(initExpr.get()->computeType()))) {
 			LogErrorV("Non-matching types!");
 			return nullptr;
 		}

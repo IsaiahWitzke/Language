@@ -27,19 +27,8 @@ public:
 
 	// const VarDecAST* search(const string& name) const;
 	Variable* searchVar(const string& name);
-	void addVar(unique_ptr<Variable> v) {
-		if (curScope->namedValues.count(v->name))
-			LogErrorV("Already defined in this scope: " + v->name);
-		else
-			curScope->namedValues[v->name] = move(v);
-	}
 
-	void codegen() {
-		ScopeAST* oldScope = curScope;
-		curScope = this;
-		for (auto& s : stmts) {
-			s->codegen();
-		}
-		curScope = oldScope;
-	}
+	void addVar(unique_ptr<Variable> v);
+
+	void codegen();
 };
