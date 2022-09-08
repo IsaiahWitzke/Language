@@ -8,7 +8,7 @@ A compiler using LLVM, Bison, and flex
 
 Functions and variables are treated similar. To define either, the general syntax is:
 ```
-<variable name>: <type> [= <initializer>];
+<variable name>: [<type>] [= <initializer>];
 ```
 
 For example, to define a 64-bit int:
@@ -26,6 +26,17 @@ my_func: () -> i64 = {
 
 	return 4;
 }
+```
+
+## Type inference
+
+The compiler will do it's best to guess a default type when you leave the `<type>` specifier blank:
+
+```
+default_int := 2;		// i64
+default_float := 2.0;	// f64
+small_int: i16 = 2;		// i16
+small_float: f16 = 2;	// f16
 ```
 
 # TODO

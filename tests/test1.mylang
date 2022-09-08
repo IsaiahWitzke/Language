@@ -9,5 +9,9 @@ test_main: () -> i64 = {
 	test_float: f64 = 0.6 + 4.2;
 	a_func();
 	my_var: i64 = some_global;
+	default_int := 2;		// i64
+	default_float := 2.0;	// f64
+	small_int: i16 = 2;		// i16
+	small_float: f16 = 2;	// f16
 	return my_var;
 }
