@@ -39,6 +39,20 @@ small_int: i16 = 2;		// i16
 small_float: f16 = 2;	// f16
 ```
 
+## if/else
+
+Any non-zero integer is equivalent to a true value:
+
+```
+cond_func: () -> i64 {
+	if (2) {		// 2 is non-zero => true
+		return 1;	// 				 => will always return 1
+	} else {
+		return 0;
+	}
+}
+```
+
 # TODO
 - error messages for compile-time errors
 - types
