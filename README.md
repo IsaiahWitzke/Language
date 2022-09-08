@@ -20,11 +20,11 @@ Functions are similar, but a little different in the type and init value:
 ```
 my_func: () -> i64 = {
 
-	//
-	// more statements go here
-	//
+    //
+    // more statements go here
+    //
 
-	return 4;
+    return 4;
 }
 ```
 
@@ -33,10 +33,11 @@ my_func: () -> i64 = {
 The compiler will do it's best to guess a default type when you leave the `<type>` specifier blank:
 
 ```
-default_int := 2;		// i64
-default_float := 2.0;	// f64
-small_int: i16 = 2;		// i16
-small_float: f16 = 2;	// f16
+default_int := 2;       // i64
+default_float := 2.0;   // f64
+small_int: i16 = 2;     // i16
+small_float: f16 = 2;   // f16
+some_func := { ... }    // ERROR: cannot infer function types
 ```
 
 ## if/else
@@ -44,24 +45,26 @@ small_float: f16 = 2;	// f16
 Any non-zero integer is equivalent to a true value:
 
 ```
+my_global := 2;
+
 cond_func: () -> i64 {
-	if (2) {		// 2 is non-zero => true
-		return 1;	// 				 => will always return 1
-	} else {
-		return 0;
-	}
+    if (my_global) {   // 2 is non-zero => true
+        return 1;      //               => will always return 1
+    } else {
+        return 0;
+    }
 }
 ```
 
 # TODO
 - error messages for compile-time errors
 - types
-	- <del> support more types than just i64 </del>
-		- <del> basic types: `i16, i32, i64, i128, f16, ..., f128` </del>
-		- <del> type inference for basic types (`i16, ..., f128`) <del>
-		- add `typeof x` unary operator (requires strings to be implemente)
-	- global vars are always initialized as 2... need some way of generating const llvm expr code
-	- classes/structs/typedefs
+    - <del> support more types than just i64 </del>
+        - <del> basic types: `i16, i32, i64, i128, f16, ..., f128` </del>
+        - <del> type inference for basic types (`i16, ..., f128`) <del>
+        - add `typeof x` unary operator (requires strings to be implemente)
+    - global vars are always initialized as 2... need some way of generating const llvm expr code
+    - classes/structs/typedefs
 - strings, arrays
 - rust-style borrow-checking
 - first-class functions/closures
@@ -74,11 +77,11 @@ cond_func: () -> i64 {
 globalVar: i64 = 2;
 
 test_main: () -> i64 = {
-	if(globalVar) {
-		return 1;
-	} else {
-		return 2;
-	}
+    if(globalVar) {
+        return 1;
+    } else {
+        return 2;
+    }
 }
 ```
 Produces a seg fault in `llvm::BranchProbabilityInfo::getInitialEstimatedBlockWeight`.
