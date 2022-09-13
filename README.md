@@ -56,6 +56,12 @@ cond_func: () -> i64 {
 }
 ```
 
+## Run some code...
+
+The object code that is compiled after `make run` allows for any function to be extern'd in your other C/C++ code and called,
+but `make run_test` will compile and run the function `test_main: () -> i64` from `tests/test1.mylang` by default.
+
+
 # TODO
 - error messages for compile-time errors
 - types
